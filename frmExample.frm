@@ -11,42 +11,50 @@ Begin VB.Form frmExample
    StartUpPosition =   3  'Windows 기본값
    Begin VB.Frame Frame6 
       Caption         =   " 팝빌 메시징 관련 기능"
-      Height          =   6900
+      Height          =   6975
       Left            =   75
       TabIndex        =   16
       Top             =   2730
       Width           =   10725
+      Begin VB.CommandButton btnSearchPopup 
+         Caption         =   "전송내역조회 팝업"
+         Height          =   390
+         Left            =   8655
+         TabIndex        =   37
+         Top             =   195
+         Width           =   1875
+      End
       Begin VB.TextBox txtResult 
          Height          =   4680
-         Left            =   150
+         Left            =   90
          MultiLine       =   -1  'True
          ScrollBars      =   3  '양방향
          TabIndex        =   36
-         Top             =   2085
+         Top             =   2205
          Width           =   10455
       End
       Begin VB.CommandButton btnCancelReserve 
          Caption         =   "예약 전송 취소"
          Height          =   405
-         Left            =   7245
+         Left            =   7185
          TabIndex        =   35
-         Top             =   1635
+         Top             =   1755
          Width           =   2505
       End
       Begin VB.CommandButton btnGetMessages 
          Caption         =   "전송상태확인"
          Height          =   405
-         Left            =   4545
+         Left            =   4485
          TabIndex        =   34
-         Top             =   1635
+         Top             =   1755
          Width           =   2505
       End
       Begin VB.Frame Frame9 
          Caption         =   " 길이인식 자동 문자 전송 "
          Height          =   945
-         Left            =   7155
+         Left            =   7095
          TabIndex        =   30
-         Top             =   615
+         Top             =   735
          Width           =   3465
          Begin VB.CommandButton btnSendXMS_One 
             Caption         =   "1건 전송"
@@ -76,9 +84,9 @@ Begin VB.Form frmExample
       Begin VB.Frame Frame8 
          Caption         =   " 장문 문자 전송 "
          Height          =   945
-         Left            =   3630
+         Left            =   3570
          TabIndex        =   26
-         Top             =   615
+         Top             =   735
          Width           =   3465
          Begin VB.CommandButton btnSendLMS_One 
             Caption         =   "1건 전송"
@@ -107,17 +115,17 @@ Begin VB.Form frmExample
       End
       Begin VB.TextBox txtReceiptNum 
          Height          =   315
-         Left            =   1185
+         Left            =   1125
          TabIndex        =   25
-         Top             =   1665
+         Top             =   1785
          Width           =   3105
       End
       Begin VB.Frame Frame7 
          Caption         =   " 단문 문자 전송 "
          Height          =   945
-         Left            =   105
+         Left            =   45
          TabIndex        =   19
-         Top             =   615
+         Top             =   735
          Width           =   3465
          Begin VB.CommandButton btnSendSMS_Same 
             Caption         =   "동보전송"
@@ -148,16 +156,16 @@ Begin VB.Form frmExample
          Height          =   315
          Left            =   3060
          TabIndex        =   17
-         Top             =   210
+         Top             =   255
          Width           =   3105
       End
       Begin VB.Label Label4 
          AutoSize        =   -1  'True
          Caption         =   "접수번호 : "
          Height          =   180
-         Left            =   285
+         Left            =   225
          TabIndex        =   24
-         Top             =   1755
+         Top             =   1875
          Width           =   900
       End
       Begin VB.Label Label3 
@@ -166,7 +174,7 @@ Begin VB.Form frmExample
          Height          =   180
          Left            =   225
          TabIndex        =   18
-         Top             =   285
+         Top             =   330
          Width           =   2790
       End
    End
@@ -325,29 +333,29 @@ Private MessageService As New PBMSGService
 
 
 Private Sub btnCancelReserve_Click()
-    Dim response As PBResponse
+    Dim Response As PBResponse
     
-    Set response = MessageService.CancelReserve(txtCorpNum.Text, txtReceiptNum.Text, txtUserID.Text)
+    Set Response = MessageService.CancelReserve(txtCorpNum.Text, txtReceiptNum.Text, txtUserID.Text)
     
-    If response Is Nothing Then
+    If Response Is Nothing Then
         MsgBox ("[" + CStr(MessageService.LastErrCode) + "] " + MessageService.LastErrMessage)
         Exit Sub
     End If
     
-    MsgBox (response.Message)
+    MsgBox (Response.message)
 End Sub
 
 Private Sub btnCheckIsMember_Click()
-    Dim response As PBResponse
+    Dim Response As PBResponse
     
-    Set response = MessageService.CheckIsMember(txtCorpNum.Text, PartnerID)
+    Set Response = MessageService.CheckIsMember(txtCorpNum.Text, PartnerID)
     
-    If response Is Nothing Then
+    If Response Is Nothing Then
         MsgBox ("[" + CStr(MessageService.LastErrCode) + "] " + MessageService.LastErrMessage)
         Exit Sub
     End If
     
-    MsgBox (response.Message)
+    MsgBox (Response.message)
 End Sub
 
 
@@ -435,7 +443,7 @@ End Sub
 
 Private Sub btnJoinMember_Click()
     Dim joinData As New PBJoinForm
-    Dim response As PBResponse
+    Dim Response As PBResponse
     
     joinData.PartnerID = PartnerID '파트너 아이디
     joinData.CorpNum = "1231212312" '사업자번호 "-" 제외.
@@ -453,36 +461,48 @@ Private Sub btnJoinMember_Click()
     joinData.ContactFAX = "02-999-9998"
     joinData.ContactEmail = "test@test.com"
     
-    Set response = MessageService.JoinMember(joinData)
+    Set Response = MessageService.JoinMember(joinData)
     
-    If response Is Nothing Then
+    If Response Is Nothing Then
         MsgBox ("[" + CStr(MessageService.LastErrCode) + "] " + MessageService.LastErrMessage)
         Exit Sub
     End If
     
-    MsgBox (response.Message)
+    MsgBox (Response.message)
     
     
+End Sub
+
+Private Sub btnSearchPopup_Click()
+    Dim url As String
+    
+    url = MessageService.GetURL(txtCorpNum.Text, txtUserID.Text, "BOX")
+    
+    If url = "" Then
+         MsgBox ("[" + CStr(MessageService.LastErrCode) + "] " + MessageService.LastErrMessage)
+        Exit Sub
+    End If
+    MsgBox "URL : " + vbCrLf + url
 End Sub
 
 Private Sub btnSendLMS_Hundred_Click()
     Dim Messages As New Collection
     
-    Dim Message As PBMessage
+    Dim message As PBMessage
     
     Dim i As Integer
     
     For i = 0 To 100
         
-        Set Message = New PBMessage
+        Set message = New PBMessage
         
-        Message.sender = "07075106766"
-        Message.receiver = "11112222"
-        Message.receiverName = "수신자이름_" + CStr(i + 1)
-        Message.content = "발신 내용. 장문은 2000Byte로 길이가 조정되어 전송됩니다. 팝빌은 최고의 전자세금계산서 서비스를 제공하고 있습니다."
-        Message.subject = "장문 제목입니다."
+        message.sender = "07075106766"
+        message.receiver = "11112222"
+        message.receiverName = "수신자이름_" + CStr(i + 1)
+        message.content = "발신 내용. 장문은 2000Byte로 길이가 조정되어 전송됩니다. 팝빌은 최고의 전자세금계산서 서비스를 제공하고 있습니다."
+        message.subject = "장문 제목입니다."
         
-        Messages.Add Message
+        Messages.Add message
     Next
     
     Dim ReceiptNum As String
@@ -503,15 +523,15 @@ Private Sub btnSendLMS_One_Click()
     
     Dim Messages As New Collection
     
-    Dim Message As New PBMessage
+    Dim message As New PBMessage
     
-    Message.sender = "07075106766"
-    Message.receiver = "11112222"
-    Message.receiverName = "수신자이름"
-    Message.content = "발신 내용. 장문은 2000Byte로 길이가 조정되어 전송됩니다. 팝빌은 최고의 전자세금계산서 서비스를 제공하고 있습니다."
-    Message.subject = "장문 제목입니다."
+    message.sender = "07075106766"
+    message.receiver = "11112222"
+    message.receiverName = "수신자이름"
+    message.content = "발신 내용. 장문은 2000Byte로 길이가 조정되어 전송됩니다. 팝빌은 최고의 전자세금계산서 서비스를 제공하고 있습니다."
+    message.subject = "장문 제목입니다."
     
-    Messages.Add Message
+    Messages.Add message
     
     Dim ReceiptNum As String
     
@@ -532,18 +552,18 @@ Private Sub btnSendLMS_Same_Click()
         
     Dim Messages As New Collection
     
-    Dim Message As PBMessage
+    Dim message As PBMessage
     
     Dim i As Integer
     
     For i = 0 To 100
         
-        Set Message = New PBMessage
+        Set message = New PBMessage
         
-        Message.receiver = "11112222"
-        Message.receiverName = "수신자이름_" + CStr(i + 1)
+        message.receiver = "11112222"
+        message.receiverName = "수신자이름_" + CStr(i + 1)
         
-        Messages.Add Message
+        Messages.Add message
     Next
     
     Dim ReceiptNum As String
@@ -563,20 +583,20 @@ End Sub
 Private Sub btnSendSMS_hundredd_Click()
     Dim Messages As New Collection
     
-    Dim Message As PBMessage
+    Dim message As PBMessage
     
     Dim i As Integer
     
     For i = 0 To 100
         
-        Set Message = New PBMessage
+        Set message = New PBMessage
         
-        Message.sender = "07075106766"
-        Message.receiver = "11112222"
-        Message.receiverName = "수신자이름_" + CStr(i + 1)
-        Message.content = "발신 내용. 단문은 90Byte로 길이가 조정되어 전송됩니다."
+        message.sender = "07075106766"
+        message.receiver = "11112222"
+        message.receiverName = "수신자이름_" + CStr(i + 1)
+        message.content = "발신 내용. 단문은 90Byte로 길이가 조정되어 전송됩니다."
         
-        Messages.Add Message
+        Messages.Add message
     Next
     
     Dim ReceiptNum As String
@@ -598,14 +618,14 @@ Private Sub btnSendSMS_One_Click()
     
     Dim Messages As New Collection
     
-    Dim Message As New PBMessage
+    Dim message As New PBMessage
     
-    Message.sender = "07075106766"
-    Message.receiver = "11112222"
-    Message.receiverName = "수신자이름"
-    Message.content = "발신 내용. 단문은 90Byte로 길이가 조정되어 전송됩니다."
+    message.sender = "07075106766"
+    message.receiver = "11112222"
+    message.receiverName = "수신자이름"
+    message.content = "발신 내용. 단문은 90Byte로 길이가 조정되어 전송됩니다."
     
-    Messages.Add Message
+    Messages.Add message
     
     Dim ReceiptNum As String
     
@@ -626,18 +646,18 @@ Private Sub btnSendSMS_Same_Click()
         
     Dim Messages As New Collection
     
-    Dim Message As PBMessage
+    Dim message As PBMessage
     
     Dim i As Integer
     
     For i = 0 To 100
         
-        Set Message = New PBMessage
+        Set message = New PBMessage
         
-        Message.receiver = "11112222"
-        Message.receiverName = "수신자이름_" + CStr(i + 1)
+        message.receiver = "11112222"
+        message.receiverName = "수신자이름_" + CStr(i + 1)
         
-        Messages.Add Message
+        Messages.Add message
     Next
     
     Dim ReceiptNum As String
@@ -657,33 +677,33 @@ End Sub
 Private Sub btnSendXMS_Hundred_Click()
     Dim Messages As New Collection
     
-    Dim Message As PBMessage
+    Dim message As PBMessage
     
     Dim i As Integer
     
     For i = 0 To 50
         
-        Set Message = New PBMessage
+        Set message = New PBMessage
         
-        Message.sender = "07075106766"
-        Message.receiver = "11112222"
-        Message.receiverName = "수신자이름_" + CStr(i + 1)
-        Message.content = "발신 내용. 이 내용은 장문으로 전송될수 있도록 길이를 설정하였습니다. 팝빌은 국내 최고의 전자세금계산서 서비스 입니다."
-        Message.subject = "장문 제목입니다."
+        message.sender = "07075106766"
+        message.receiver = "11112222"
+        message.receiverName = "수신자이름_" + CStr(i + 1)
+        message.content = "발신 내용. 이 내용은 장문으로 전송될수 있도록 길이를 설정하였습니다. 팝빌은 국내 최고의 전자세금계산서 서비스 입니다."
+        message.subject = "장문 제목입니다."
         
-        Messages.Add Message
+        Messages.Add message
     Next
     
     For i = 0 To 50
         
-        Set Message = New PBMessage
+        Set message = New PBMessage
         
-        Message.sender = "07075106766"
-        Message.receiver = "11112222"
-        Message.receiverName = "수신자이름_" + CStr(i + 1)
-        Message.content = "발신 내용. 이 내용은 단문으로 전송됩니다."
+        message.sender = "07075106766"
+        message.receiver = "11112222"
+        message.receiverName = "수신자이름_" + CStr(i + 1)
+        message.content = "발신 내용. 이 내용은 단문으로 전송됩니다."
         
-        Messages.Add Message
+        Messages.Add message
     Next
     
     Dim ReceiptNum As String
@@ -703,15 +723,15 @@ Private Sub btnSendXMS_One_Click()
     
     Dim Messages As New Collection
     
-    Dim Message As New PBMessage
+    Dim message As New PBMessage
     
-    Message.sender = "07075106766"
-    Message.receiver = "01041680206"
-    Message.receiverName = "수신자이름"
-    Message.content = "자동인식 발송은 내용의 길이를 90Byte기준으로 이하는 단문, 이상은 장문으로 자동 전송합니다."
-    Message.subject = "장문의 경우 장문 제목입니다."
+    message.sender = "07075106766"
+    message.receiver = "01041680206"
+    message.receiverName = "수신자이름"
+    message.content = "자동인식 발송은 내용의 길이를 90Byte기준으로 이하는 단문, 이상은 장문으로 자동 전송합니다."
+    message.subject = "장문의 경우 장문 제목입니다."
     
-    Messages.Add Message
+    Messages.Add message
     
     Dim ReceiptNum As String
     
@@ -730,18 +750,18 @@ Private Sub btnSendXMS_Same_Click()
         
     Dim Messages As New Collection
     
-    Dim Message As PBMessage
+    Dim message As PBMessage
     
     Dim i As Integer
     
     For i = 0 To 100
         
-        Set Message = New PBMessage
+        Set message = New PBMessage
         
-        Message.receiver = "11112222"
-        Message.receiverName = "수신자이름_" + CStr(i + 1)
+        message.receiver = "11112222"
+        message.receiverName = "수신자이름_" + CStr(i + 1)
         
-        Messages.Add Message
+        Messages.Add message
     Next
     
     Dim ReceiptNum As String
