@@ -323,8 +323,8 @@ Attribute VB_PredeclaredId = True
 Attribute VB_Exposed = False
 Option Explicit
 
-'파트너아이디
-Private Const PartnerID = "TESTER"
+'연동아이디
+Private Const LinkID = "TESTER"
 '비밀키. 유출에 주의하시기 바랍니다.
 Private Const SecretKey = "088b1258aoeMH5OtGjK4zaOlwZGVvSK40ceI8t4j7Hw="
 
@@ -348,7 +348,7 @@ End Sub
 Private Sub btnCheckIsMember_Click()
     Dim Response As PBResponse
     
-    Set Response = MessageService.CheckIsMember(txtCorpNum.Text, PartnerID)
+    Set Response = MessageService.CheckIsMember(txtCorpNum.Text, LinkID)
     
     If Response Is Nothing Then
         MsgBox ("[" + CStr(MessageService.LastErrCode) + "] " + MessageService.LastErrMessage)
@@ -445,7 +445,7 @@ Private Sub btnJoinMember_Click()
     Dim joinData As New PBJoinForm
     Dim Response As PBResponse
     
-    joinData.PartnerID = PartnerID '파트너 아이디
+    joinData.LinkID = LinkID '연동 아이디
     joinData.CorpNum = "1231212312" '사업자번호 "-" 제외.
     joinData.CEOName = "대표자성명"
     joinData.CorpName = "회원상호"
@@ -808,7 +808,7 @@ End Sub
 
 
 Private Sub Form_Load()
-    MessageService.Initialize PartnerID, SecretKey
+    MessageService.Initialize LinkID, SecretKey
     MessageService.IsTest = True
     
     
