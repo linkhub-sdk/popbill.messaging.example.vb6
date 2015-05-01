@@ -1,4 +1,4 @@
-frmExample = 26, 182, 1217, 854, , 228, -1, 1225, 880, C
+frmExample = 204, 62, 1395, 734, , 228, -1, 1225, 880, C
 cStringBuilder = 0, 0, 0, 0, C
 Linkhub = 0, 0, 0, 0, C
 LinkhubToken = 0, 0, 0, 0, C
@@ -6,5 +6,5 @@ PBAttachFile = 198, 261, 1470, 974, C
 PBJoinForm = 54, 122, 1247, 836, C
 PBResponse = 0, 0, 0, 0, C
 PBMSGService = 130, 59, 1323, 773, 
-PBMessage = 176, 232, 1369, 945, 
+PBMessage = 310, 176, 1503, 889, 
 PBSentMsg = 176, 232, 1448, 945, C

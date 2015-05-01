@@ -10,8 +10,16 @@ Begin VB.Form frmExample
    ScaleHeight     =   11115
    ScaleWidth      =   10920
    StartUpPosition =   3  'Windows 기본값
+   Begin VB.CommandButton btnSendMMS_hundred 
+      Caption         =   "100건 전송"
+      Height          =   465
+      Left            =   1265
+      TabIndex        =   42
+      Top             =   5230
+      Width           =   1050
+   End
    Begin VB.Frame Frame10 
-      Caption         =   "MMS 전송기능"
+      Caption         =   "포토 전송기능"
       Height          =   945
       Left            =   120
       TabIndex        =   39
@@ -28,7 +36,7 @@ Begin VB.Form frmExample
       Begin VB.CommandButton btnSendMMS_Same 
          Caption         =   "동보 전송"
          Height          =   465
-         Left            =   1125
+         Left            =   2280
          TabIndex        =   40
          Top             =   315
          Width           =   1110
@@ -434,7 +442,7 @@ Private Sub btnGetMessages_Click()
     For Each sentMessage In sentMessages
     
         tmp = tmp + CStr(sentMessage.state) + " | "
-        tmp = tmp + sentMessage.Subject + " | "
+        tmp = tmp + sentMessage.subject + " | "
         tmp = tmp + sentMessage.messageType + " | "
         'tmp = tmp + sentMessage.content + " | " ' 내용 표시는 길이관계상 예제에서 생략합니다.
         tmp = tmp + sentMessage.sendNum + " | "
@@ -534,11 +542,11 @@ Private Sub btnSendLMS_Hundred_Click()
         
         Set message = New PBMessage
         
-        message.Sender = "07075106766"
+        message.sender = "07075106766"
         message.receiver = "11112222"
         message.receiverName = "수신자이름_" + CStr(i + 1)
         message.content = "발신 내용. 장문은 2000Byte로 길이가 조정되어 전송됩니다. 팝빌은 최고의 전자세금계산서 서비스를 제공하고 있습니다."
-        message.Subject = "장문 제목입니다."
+        message.subject = "장문 제목입니다."
         
         Messages.Add message
     Next
@@ -563,11 +571,11 @@ Private Sub btnSendLMS_One_Click()
     
     Dim message As New PBMessage
     
-    message.Sender = "07075106766"
+    message.sender = "07075106766"
     message.receiver = "11112222"
     message.receiverName = "수신자이름"
     message.content = "발신 내용. 장문은 2000Byte로 길이가 조정되어 전송됩니다. 팝빌은 최고의 전자세금계산서 서비스를 제공하고 있습니다."
-    message.Subject = "장문 제목입니다."
+    message.subject = "장문 제목입니다."
     
     Messages.Add message
     
@@ -631,11 +639,11 @@ Private Sub btnSendMMS_Click()
     
     Dim message As New PBMessage
     
-    message.Sender = "07075103710"
+    message.sender = "07075103710"
     message.receiver = "01043245117"
     message.receiverName = "수신자이름"
     message.content = "MMS 발신 테스트 내용."
-    message.Subject = "메시지 제목"
+    message.subject = "메시지 제목"
     
     Messages.Add message
     
@@ -651,6 +659,59 @@ Private Sub btnSendMMS_Click()
     MsgBox "접수 번호 : " + ReceiptNum
     txtReceiptNum.Text = ReceiptNum
     
+End Sub
+
+Private Sub btnSendMMS_hundred_Click()
+    Dim Messages As New Collection
+    Dim FilePaths As New Collection
+        
+    CommonDialog1.FileName = ""
+    CommonDialog1.ShowOpen
+    
+    If CommonDialog1.FileName = "" Then Exit Sub
+    
+    FilePaths.Add CommonDialog1.FileName
+  
+    Dim message As PBMessage
+    
+    Dim i As Integer
+    
+    For i = 0 To 50
+        
+        Set message = New PBMessage
+        
+        message.sender = "07075106766"
+        message.receiver = "11112222"
+        message.receiverName = "수신자이름_" + CStr(i + 1)
+        message.content = "발신 내용. 이 내용은 장문으로 전송될수 있도록 길이를 설정하였습니다. 팝빌은 국내 최고의 전자세금계산서 서비스 입니다."
+        message.subject = "장문 제목입니다."
+        
+        Messages.Add message
+    Next
+    
+    For i = 0 To 50
+        
+        Set message = New PBMessage
+        
+        message.sender = "07075106766"
+        message.receiver = "11112222"
+        message.receiverName = "수신자이름_" + CStr(i + 1)
+        message.content = "발신 내용. 이 내용은 단문으로 전송됩니다."
+        
+        Messages.Add message
+    Next
+    
+    Dim ReceiptNum As String
+    
+    ReceiptNum = MessageService.SendMMS(txtCorpNum.Text, "07075103710", "동보제목", "동보내용", Messages, FilePaths, txtReserveDT.Text, txtUserID.Text)
+    
+    If ReceiptNum = "" Then
+        MsgBox ("[" + CStr(MessageService.LastErrCode) + "] " + MessageService.LastErrMessage)
+        Exit Sub
+    End If
+    
+    MsgBox "접수 번호 : " + ReceiptNum
+    txtReceiptNum.Text = ReceiptNum
 End Sub
 
 Private Sub btnSendMMS_Same_Click()
@@ -703,7 +764,7 @@ Private Sub btnSendSMS_hundredd_Click()
         
         Set message = New PBMessage
         
-        message.Sender = "07075106766"
+        message.sender = "07075106766"
         message.receiver = "11112222"
         message.receiverName = "수신자이름_" + CStr(i + 1)
         message.content = "발신 내용. 단문은 90Byte로 길이가 조정되어 전송됩니다."
@@ -732,7 +793,7 @@ Private Sub btnSendSMS_One_Click()
     
     Dim message As New PBMessage
     
-    message.Sender = "07075106766"
+    message.sender = "07075106766"
     message.receiver = "11112222"
     message.receiverName = "수신자이름"
     message.content = "발신 내용. 단문은 90Byte로 길이가 조정되어 전송됩니다."
@@ -797,11 +858,11 @@ Private Sub btnSendXMS_Hundred_Click()
         
         Set message = New PBMessage
         
-        message.Sender = "07075106766"
+        message.sender = "07075106766"
         message.receiver = "11112222"
         message.receiverName = "수신자이름_" + CStr(i + 1)
         message.content = "발신 내용. 이 내용은 장문으로 전송될수 있도록 길이를 설정하였습니다. 팝빌은 국내 최고의 전자세금계산서 서비스 입니다."
-        message.Subject = "장문 제목입니다."
+        message.subject = "장문 제목입니다."
         
         Messages.Add message
     Next
@@ -810,7 +871,7 @@ Private Sub btnSendXMS_Hundred_Click()
         
         Set message = New PBMessage
         
-        message.Sender = "07075106766"
+        message.sender = "07075106766"
         message.receiver = "11112222"
         message.receiverName = "수신자이름_" + CStr(i + 1)
         message.content = "발신 내용. 이 내용은 단문으로 전송됩니다."
@@ -837,11 +898,11 @@ Private Sub btnSendXMS_One_Click()
     
     Dim message As New PBMessage
     
-    message.Sender = "07075106766"
+    message.sender = "07075106766"
     message.receiver = "01041680206"
     message.receiverName = "수신자이름"
     message.content = "자동인식 발송은 내용의 길이를 90Byte기준으로 이하는 단문, 이상은 장문으로 자동 전송합니다."
-    message.Subject = "장문의 경우 장문 제목입니다."
+    message.subject = "장문의 경우 장문 제목입니다."
     
     Messages.Add message
     
