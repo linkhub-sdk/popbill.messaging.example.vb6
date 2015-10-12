@@ -99,7 +99,7 @@ Begin VB.Form frmExample
          Width           =   1665
       End
       Begin VB.Frame Frame9 
-         Caption         =   " 길이인식 자동 문자 전송 "
+         Caption         =   " 단/장문 자동인식 문자 전송 "
          Height          =   945
          Left            =   8760
          TabIndex        =   29
@@ -398,7 +398,7 @@ Begin VB.Form frmExample
    End
    Begin VB.TextBox txtUserID 
       Height          =   315
-      Left            =   4560
+      Left            =   6240
       TabIndex        =   3
       Text            =   "testkorea"
       Top             =   165
@@ -406,7 +406,7 @@ Begin VB.Form frmExample
    End
    Begin VB.TextBox txtCorpNum 
       Height          =   315
-      Left            =   1335
+      Left            =   2295
       TabIndex        =   1
       Text            =   "1234567890"
       Top             =   180
@@ -421,21 +421,21 @@ Begin VB.Form frmExample
    End
    Begin VB.Label Label2 
       AutoSize        =   -1  'True
-      Caption         =   "팝빌아이디 : "
+      Caption         =   "팝빌회원 아이디 : "
       Height          =   180
-      Left            =   3480
+      Left            =   4680
       TabIndex        =   2
       Top             =   240
-      Width           =   1080
+      Width           =   1500
    End
    Begin VB.Label Label1 
       AutoSize        =   -1  'True
-      Caption         =   "사업자번호 : "
+      Caption         =   "팝빌회원 사업자번호 : "
       Height          =   180
       Left            =   240
       TabIndex        =   0
       Top             =   240
-      Width           =   1080
+      Width           =   1860
    End
 End
 Attribute VB_Name = "frmExample"
@@ -445,7 +445,7 @@ Attribute VB_PredeclaredId = True
 Attribute VB_Exposed = False
 Option Explicit
 
-'연동아이디
+'링크아이디
 Private Const LinkID = "TESTER"
 '비밀키. 유출에 주의하시기 바랍니다.
 Private Const SecretKey = "SwWxqU+0TErBXy/9TVjIPEnI0VTUMMSQZtJf3Ed8q3I="
@@ -487,7 +487,7 @@ Private Sub btnCheckIsMember_Click()
         Exit Sub
     End If
     
-    MsgBox (Response.message)
+    MsgBox ("[" + CStr(Response.code) + "] " + Response.message)
 End Sub
 
 
@@ -519,11 +519,11 @@ Private Sub btnGetCorpInfo_Click()
     
     Dim tmp As String
     
-    tmp = tmp + "ceoname : " + CorpInfo.ceoname + vbCrLf
-    tmp = tmp + "corpName : " + CorpInfo.corpName + vbCrLf
-    tmp = tmp + "addr : " + CorpInfo.addr + vbCrLf
-    tmp = tmp + "bizType : " + CorpInfo.bizType + vbCrLf
-    tmp = tmp + "bizClass : " + CorpInfo.bizClass + vbCrLf
+    tmp = tmp + "ceoname : " + CorpInfo.CEOName + vbCrLf
+    tmp = tmp + "corpName : " + CorpInfo.CorpName + vbCrLf
+    tmp = tmp + "addr : " + CorpInfo.Addr + vbCrLf
+    tmp = tmp + "bizType : " + CorpInfo.BizType + vbCrLf
+    tmp = tmp + "bizClass : " + CorpInfo.BizClass + vbCrLf
     
     MsgBox tmp
 End Sub
@@ -547,7 +547,7 @@ Private Sub btnGetMessages_Click()
     
     For Each sentMessage In sentMessages
     
-        tmp = tmp + CStr(sentMessage.State) + " | "
+        tmp = tmp + CStr(sentMessage.state) + " | "
         tmp = tmp + sentMessage.subject + " | "
         tmp = tmp + sentMessage.messageType + " | "
         'tmp = tmp + sentMessage.content + " | " ' 내용 표시는 길이관계상 예제에서 생략합니다.
@@ -611,14 +611,14 @@ Private Sub btnJoinMember_Click()
     
     joinData.LinkID = LinkID '링크 아이디
     joinData.CorpNum = "1231212312" '사업자번호 "-" 제외.
-    joinData.ceoname = "대표자성명"
-    joinData.corpName = "회원상호"
-    joinData.addr = "주소"
+    joinData.CEOName = "대표자성명"
+    joinData.CorpName = "회원상호"
+    joinData.Addr = "주소"
     joinData.ZipCode = "500-100"
-    joinData.bizType = "업태"
-    joinData.bizClass = "업종"
-    joinData.id = "userid"      '6자 이상 20자 미만.
-    joinData.pwd = "pwd_must_be_long_enough"    '6자 이상 20자 미만.
+    joinData.BizType = "업태"
+    joinData.BizClass = "업종"
+    joinData.ID = "userid"      '6자 이상 20자 미만.
+    joinData.PWD = "pwd_must_be_long_enough"    '6자 이상 20자 미만.
     joinData.ContactName = "담당자성명"
     joinData.ContactTEL = "02-999-9999"
     joinData.ContactHP = "010-1234-5678"
@@ -654,7 +654,7 @@ Private Sub btnListContact_Click()
     Dim info As PBContactInfo
     
     For Each info In resultList
-        tmp = tmp + info.id + " | " + info.email + " | " + info.hp + " | " + info.personName + " | " + CStr(info.searchAllAllowYN) _
+        tmp = tmp + info.ID + " | " + info.email + " | " + info.hp + " | " + info.personName + " | " + CStr(info.searchAllAllowYN) _
                 + info.tel + " | " + info.fax + " | " + CStr(info.mgrYN) + " | " + info.regDT + vbCrLf
     Next
     
@@ -665,8 +665,8 @@ Private Sub btnRegistContact_Click()
     Dim joinData As New PBContactInfo
     Dim Response As PBResponse
     
-    joinData.id = "testkorea_20151007"      '담당자 아이디
-    joinData.pwd = "test@test.com"          '비밀번호
+    joinData.ID = "testkorea_20151007"      '담당자 아이디
+    joinData.PWD = "test@test.com"          '비밀번호
     joinData.personName = "담당자명"        '담당자명
     joinData.tel = "070-1234-1234"          '연락처
     joinData.hp = "010-1234-1234"           '휴대폰번호
@@ -689,7 +689,7 @@ Private Sub btnSearch_Click()
     Dim msgSearchList As PBSearchList
     Dim SDate As String
     Dim EDate As String
-    Dim State As New Collection
+    Dim state As New Collection
     Dim Item As New Collection
     Dim ReserveYN As Boolean
     Dim SenderYN As Boolean
@@ -699,9 +699,9 @@ Private Sub btnSearch_Click()
     SDate = "20151001"    '[필수] 시작일자, yyyyMMdd
     EDate = "20151008"    '[필수] 종료일자, yyyyMMdd
     
-    State.Add "1"         '전송상태값 배열, 1-대기, 2-성공, 3-실패, 4-취소
-    State.Add "2"
-    State.Add "3"
+    state.Add "1"         '전송상태값 배열, 1-대기, 2-성공, 3-실패, 4-취소
+    state.Add "2"
+    state.Add "3"
     
     Item.Add "SMS"        '검색대상 배열, SMS(단문),LMS(장문),MMS(포토)
     Item.Add "LMS"
@@ -712,7 +712,7 @@ Private Sub btnSearch_Click()
     Page = 1              '페이지 번호
     PerPage = 10          '페이지 목록개수, 최대 1000건
 
-    Set msgSearchList = MessageService.Search(txtCorpNum.Text, SDate, EDate, State, Item, ReserveYN, SenderYN, Page, PerPage)
+    Set msgSearchList = MessageService.Search(txtCorpNum.Text, SDate, EDate, state, Item, ReserveYN, SenderYN, Page, PerPage)
      
     If msgSearchList Is Nothing Then
         MsgBox ("[" + CStr(MessageService.LastErrCode) + "] " + MessageService.LastErrMessage)
@@ -732,7 +732,7 @@ Private Sub btnSearch_Click()
     Dim info As PBSentMsg
     
     For Each info In msgSearchList.list
-        tmp = tmp + CStr(info.State) + " | "
+        tmp = tmp + CStr(info.state) + " | "
         tmp = tmp + info.subject + " | "
         tmp = tmp + info.messageType + " | "
         'tmp = tmp + sentMessage.content + " | " ' 내용 표시는 길이관계상 예제에서 생략합니다.
@@ -747,7 +747,7 @@ Private Sub btnSearch_Click()
         tmp = tmp + vbCrLf
     Next
         
-    MsgBox tmp
+    txtResult.Text = tmp
 End Sub
 
 Private Sub btnSearchPopup_Click()
@@ -1041,7 +1041,7 @@ Private Sub btnSendSMS_One_Click()
     Dim message As New PBMessage
     
     message.sender = "07075106766"
-    message.receiver = "01043245117"
+    message.receiver = "11112341234"
     message.receiverName = "수신자이름"
     message.content = "발신 내용. 단문은 90Byte로 길이가 조정되어 전송됩니다."
     
@@ -1274,11 +1274,11 @@ Private Sub btnUpdateCorpInfo_Click()
     Dim CorpInfo As New PBCorpInfo
     Dim Response As PBResponse
     
-    CorpInfo.ceoname = "대표자"         '대표자명
-    CorpInfo.corpName = "상호_수정"          '상호명
-    CorpInfo.addr = "서울특별시"        '주소
-    CorpInfo.bizType = "업태"           '업태
-    CorpInfo.bizClass = "업종"          '업종
+    CorpInfo.CEOName = "대표자"         '대표자명
+    CorpInfo.CorpName = "상호_수정"          '상호명
+    CorpInfo.Addr = "서울특별시"        '주소
+    CorpInfo.BizType = "업태"           '업태
+    CorpInfo.BizClass = "업종"          '업종
     
     Set Response = MessageService.UpdateCorpInfo(txtCorpNum.Text, CorpInfo, txtUserID.Text)
     
