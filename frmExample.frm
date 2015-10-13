@@ -543,7 +543,7 @@ Private Sub btnGetMessages_Click()
     
     
     Dim tmp As String
-    tmp = "state | subject | messageType | sendnum | receiveNum | receiveName | reserveDT | sendDT | sendResult" + vbCrLf
+    tmp = "state | subject | messageType | sendnum | receiveNum | receiveName | reserveDT | sendDT | sendResult | tranNet" + vbCrLf
     
     For Each sentMessage In sentMessages
     
@@ -557,7 +557,8 @@ Private Sub btnGetMessages_Click()
         tmp = tmp + sentMessage.reserveDT + " | "
         tmp = tmp + sentMessage.sendDT + " | "
         tmp = tmp + sentMessage.resultDT + " | "
-        tmp = tmp + sentMessage.sendResult
+        tmp = tmp + sentMessage.sendResult + " | "
+        tmp = tmp + sentMessage.tranNet
         
         tmp = tmp + vbCrLf
     Next
@@ -727,7 +728,7 @@ Private Sub btnSearch_Click()
     tmp = tmp + "perCount : " + CStr(msgSearchList.pageCount) + vbCrLf
     tmp = tmp + "message : " + msgSearchList.message + vbCrLf + vbCrLf
     
-    tmp = tmp + "state | subject | messageType | sendnum | receiveNum | receiveName | reserveDT | sendDT | sendResult" + vbCrLf
+    tmp = tmp + "state | subject | messageType | sendnum | receiveNum | receiveName | reserveDT | sendDT | sendResult | tranNet" + vbCrLf
             
     Dim info As PBSentMsg
     
@@ -742,8 +743,8 @@ Private Sub btnSearch_Click()
         tmp = tmp + info.reserveDT + " | "
         tmp = tmp + info.sendDT + " | "
         tmp = tmp + info.resultDT + " | "
-        tmp = tmp + info.sendResult
-        
+        tmp = tmp + info.sendResult + " | "
+        tmp = tmp + info.tranNet
         tmp = tmp + vbCrLf
     Next
         
@@ -867,7 +868,7 @@ Private Sub btnSendMMS_Click()
     Dim Messages As New Collection
     Dim FilePaths As New Collection
     Dim adsYN As Boolean
-    adsYN = False       '광고문자 전송여부
+    adsYN = True       '광고문자 전송여부
     
     CommonDialog1.FileName = ""
     CommonDialog1.ShowOpen
@@ -879,7 +880,7 @@ Private Sub btnSendMMS_Click()
     Dim message As New PBMessage
     
     message.sender = "07075103710"
-    message.receiver = "01012341234"
+    message.receiver = "010111222"
     message.receiverName = "수신자이름"
     message.content = "MMS 발신 테스트 내용."
     message.subject = "메시지 제목"
@@ -1040,8 +1041,8 @@ Private Sub btnSendSMS_One_Click()
     
     Dim message As New PBMessage
     
-    message.sender = "07075106766"
-    message.receiver = "11112341234"
+    message.sender = "07075103710"
+    message.receiver = "010111222"
     message.receiverName = "수신자이름"
     message.content = "발신 내용. 단문은 90Byte로 길이가 조정되어 전송됩니다."
     
