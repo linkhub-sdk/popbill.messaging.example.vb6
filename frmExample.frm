@@ -543,7 +543,7 @@ Private Sub btnGetMessages_Click()
     
     
     Dim tmp As String
-    tmp = "state | subject | messageType | sendnum | receiveNum | receiveName | reserveDT | sendDT | sendResult | tranNet" + vbCrLf
+    tmp = "state | subject | messageType | sendnum | receiveNum | receiveName | receiptDT | reserveDT | sendDT | sendResult | tranNet" + vbCrLf
     
     For Each sentMessage In sentMessages
     
@@ -554,6 +554,7 @@ Private Sub btnGetMessages_Click()
         tmp = tmp + sentMessage.sendNum + " | "
         tmp = tmp + sentMessage.receiveNum + " | "
         tmp = tmp + sentMessage.receiveName + " | "
+        tmp = tmp + sentMessage.receiptDT + " | "
         tmp = tmp + sentMessage.reserveDT + " | "
         tmp = tmp + sentMessage.sendDT + " | "
         tmp = tmp + sentMessage.resultDT + " | "
@@ -696,9 +697,10 @@ Private Sub btnSearch_Click()
     Dim SenderYN As Boolean
     Dim Page As Integer
     Dim PerPage As Integer
+    Dim Order As String
     
     SDate = "20151001"    '[필수] 시작일자, yyyyMMdd
-    EDate = "20151008"    '[필수] 종료일자, yyyyMMdd
+    EDate = "20151231"    '[필수] 종료일자, yyyyMMdd
     
     state.Add "1"         '전송상태값 배열, 1-대기, 2-성공, 3-실패, 4-취소
     state.Add "2"
@@ -711,9 +713,11 @@ Private Sub btnSearch_Click()
     SenderYN = False      '개인조회여부, True(개인조회), False(전체조회)
     
     Page = 1              '페이지 번호
-    PerPage = 10          '페이지 목록개수, 최대 1000건
+    PerPage = 50          '페이지 목록개수, 최대 1000건
+    
+    Order = "D"           '정렬방향, D-내림차순(기본값), A-오름차순
 
-    Set msgSearchList = MessageService.Search(txtCorpNum.Text, SDate, EDate, state, Item, ReserveYN, SenderYN, Page, PerPage)
+    Set msgSearchList = MessageService.Search(txtCorpNum.Text, SDate, EDate, state, Item, ReserveYN, SenderYN, Page, PerPage, Order)
      
     If msgSearchList Is Nothing Then
         MsgBox ("[" + CStr(MessageService.LastErrCode) + "] " + MessageService.LastErrMessage)
@@ -725,10 +729,10 @@ Private Sub btnSearch_Click()
     tmp = tmp + "total : " + CStr(msgSearchList.total) + vbCrLf
     tmp = tmp + "perPage : " + CStr(msgSearchList.PerPage) + vbCrLf
     tmp = tmp + "pageNum : " + CStr(msgSearchList.pageNum) + vbCrLf
-    tmp = tmp + "perCount : " + CStr(msgSearchList.pageCount) + vbCrLf
+    tmp = tmp + "pageCount : " + CStr(msgSearchList.pageCount) + vbCrLf
     tmp = tmp + "message : " + msgSearchList.message + vbCrLf + vbCrLf
     
-    tmp = tmp + "state | subject | messageType | sendnum | receiveNum | receiveName | reserveDT | sendDT | sendResult | tranNet" + vbCrLf
+    tmp = tmp + "state | subject | messageType | sendnum | receiveNum | receiveName | receiptDT | reserveDT | sendDT | sendResult | tranNet" + vbCrLf
             
     Dim info As PBSentMsg
     
@@ -740,6 +744,7 @@ Private Sub btnSearch_Click()
         tmp = tmp + info.sendNum + " | "
         tmp = tmp + info.receiveNum + " | "
         tmp = tmp + info.receiveName + " | "
+        tmp = tmp + info.receiptDT + " | "
         tmp = tmp + info.reserveDT + " | "
         tmp = tmp + info.sendDT + " | "
         tmp = tmp + info.resultDT + " | "
@@ -1042,7 +1047,7 @@ Private Sub btnSendSMS_One_Click()
     Dim message As New PBMessage
     
     message.sender = "07075103710"
-    message.receiver = "010111222"
+    message.receiver = "01043245117"
     message.receiverName = "수신자이름"
     message.content = "발신 내용. 단문은 90Byte로 길이가 조정되어 전송됩니다."
     
