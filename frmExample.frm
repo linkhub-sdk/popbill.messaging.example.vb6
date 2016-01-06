@@ -13,18 +13,18 @@ Begin VB.Form frmExample
    Begin VB.CommandButton btnSendMMS_hundred 
       Caption         =   "100건 전송"
       Height          =   465
-      Left            =   2040
+      Left            =   6360
       TabIndex        =   41
-      Top             =   6075
+      Top             =   5830
       Width           =   1050
    End
    Begin VB.Frame Frame10 
       Caption         =   "포토 전송기능"
       Height          =   945
-      Left            =   720
+      Left            =   5040
       TabIndex        =   38
-      Top             =   5760
-      Width           =   3825
+      Top             =   5520
+      Width           =   3705
       Begin VB.CommandButton btnSendMMS 
          Caption         =   "1건 전송"
          Height          =   465
@@ -34,12 +34,12 @@ Begin VB.Form frmExample
          Width           =   930
       End
       Begin VB.CommandButton btnSendMMS_Same 
-         Caption         =   "동보 전송"
+         Caption         =   "대량전송"
          Height          =   465
          Left            =   2520
          TabIndex        =   39
          Top             =   315
-         Width           =   1110
+         Width           =   975
       End
    End
    Begin VB.CommandButton btnUnitCost_MMS 
@@ -52,63 +52,71 @@ Begin VB.Form frmExample
    End
    Begin VB.Frame Frame6 
       Caption         =   " 팝빌 메시징 관련 기능"
-      Height          =   8415
+      Height          =   8655
       Left            =   120
       TabIndex        =   15
       Top             =   3600
       Width           =   13005
+      Begin VB.CommandButton btnGetAutoDenyList 
+         Caption         =   "080 수신거부목록 확인"
+         Height          =   495
+         Left            =   9120
+         TabIndex        =   52
+         Top             =   2400
+         Width           =   2295
+      End
       Begin VB.CommandButton btnSearch 
          Caption         =   "전송내역 목록조회"
          Height          =   495
-         Left            =   10560
+         Left            =   9120
          TabIndex        =   51
-         Top             =   240
-         Width           =   2055
+         Top             =   1800
+         Width           =   2295
       End
       Begin VB.CommandButton btnSearchPopup 
          Caption         =   "전송내역조회 팝업 URL"
          Height          =   495
-         Left            =   7800
+         Left            =   9120
          TabIndex        =   36
-         Top             =   240
-         Width           =   2475
+         Top             =   1200
+         Width           =   2295
       End
       Begin VB.TextBox txtResult 
          Height          =   4680
-         Left            =   120
+         Left            =   720
          MultiLine       =   -1  'True
          ScrollBars      =   3  '양방향
          TabIndex        =   35
-         Top             =   3480
-         Width           =   12615
+         Top             =   3720
+         Width           =   11775
       End
       Begin VB.CommandButton btnCancelReserve 
          Caption         =   "예약 전송 취소"
          Height          =   525
-         Left            =   10560
+         Left            =   6360
          TabIndex        =   34
-         Top             =   2160
+         Top             =   3000
          Width           =   1665
       End
       Begin VB.CommandButton btnGetMessages 
          Caption         =   "전송상태확인"
          Height          =   525
-         Left            =   8760
+         Left            =   4560
          TabIndex        =   33
-         Top             =   2160
+         Top             =   3000
          Width           =   1665
       End
       Begin VB.Frame Frame9 
          Caption         =   " 단/장문 자동인식 문자 전송 "
          Height          =   945
-         Left            =   8760
+         Left            =   720
          TabIndex        =   29
-         Top             =   960
+         Top             =   1920
          Width           =   3825
          Begin VB.CommandButton btnSendXMS_One 
             Caption         =   "1건 전송"
             Height          =   465
-            Left            =   240
+            Left            =   360
             TabIndex        =   32
             Top             =   315
             Width           =   930
@@ -116,13 +124,13 @@ Begin VB.Form frmExample
          Begin VB.CommandButton btnSendXMS_Hundred 
             Caption         =   "100건 전송"
             Height          =   465
-            Left            =   1320
+            Left            =   1440
             TabIndex        =   31
             Top             =   315
             Width           =   1110
          End
          Begin VB.CommandButton btnSendXMS_Same 
-            Caption         =   "동보전송"
+            Caption         =   "대량전송"
             Height          =   465
             Left            =   2640
             TabIndex        =   30
@@ -133,14 +141,14 @@ Begin VB.Form frmExample
       Begin VB.Frame Frame8 
          Caption         =   " 장문 문자 전송 "
          Height          =   945
-         Left            =   4680
+         Left            =   4920
          TabIndex        =   25
-         Top             =   960
-         Width           =   3825
+         Top             =   840
+         Width           =   3705
          Begin VB.CommandButton btnSendLMS_One 
             Caption         =   "1건 전송"
             Height          =   465
-            Left            =   360
+            Left            =   240
             TabIndex        =   28
             Top             =   315
             Width           =   930
@@ -148,15 +156,15 @@ Begin VB.Form frmExample
          Begin VB.CommandButton btnSendLMS_Hundred 
             Caption         =   "100건 전송"
             Height          =   465
-            Left            =   1440
+            Left            =   1320
             TabIndex        =   27
             Top             =   315
             Width           =   1110
          End
          Begin VB.CommandButton btnSendLMS_Same 
-            Caption         =   "동보전송"
+            Caption         =   "대량전송"
             Height          =   465
-            Left            =   2640
+            Left            =   2520
             TabIndex        =   26
             Top             =   315
             Width           =   1020
@@ -164,20 +172,20 @@ Begin VB.Form frmExample
       End
       Begin VB.TextBox txtReceiptNum 
          Height          =   315
-         Left            =   5685
+         Left            =   1485
          TabIndex        =   24
-         Top             =   2265
+         Top             =   3105
          Width           =   2850
       End
       Begin VB.Frame Frame7 
          Caption         =   " 단문 문자 전송 "
          Height          =   945
-         Left            =   600
+         Left            =   720
          TabIndex        =   18
-         Top             =   960
+         Top             =   840
          Width           =   3825
          Begin VB.CommandButton btnSendSMS_Same 
-            Caption         =   "동보전송"
+            Caption         =   "대량전송"
             Height          =   465
             Left            =   2640
             TabIndex        =   21
@@ -203,25 +211,33 @@ Begin VB.Form frmExample
       End
       Begin VB.TextBox txtReserveDT 
          Height          =   315
-         Left            =   3660
+         Left            =   3540
          TabIndex        =   16
          Top             =   375
          Width           =   3105
+      End
+      Begin VB.Frame Frame13 
+         Caption         =   "부가기능"
+         Height          =   2295
+         Left            =   8880
+         TabIndex        =   53
+         Top             =   840
+         Width           =   2775
       End
       Begin VB.Label Label4 
          AutoSize        =   -1  'True
          Caption         =   "접수번호 : "
          Height          =   180
-         Left            =   4785
+         Left            =   585
          TabIndex        =   23
-         Top             =   2355
+         Top             =   3195
          Width           =   900
       End
       Begin VB.Label Label3 
          AutoSize        =   -1  'True
          Caption         =   "예약시간(yyyyMMddHHmmss) : "
          Height          =   180
-         Left            =   825
+         Left            =   705
          TabIndex        =   17
          Top             =   450
          Width           =   2790
@@ -490,6 +506,23 @@ Private Sub btnCheckIsMember_Click()
     MsgBox ("[" + CStr(Response.code) + "] " + Response.message)
 End Sub
 
+
+Private Sub btnGetAutoDenyList_Click()
+    Dim AutoDenyList As Collection
+    
+    Set AutoDenyList = MessageService.GetAutoDenyList(txtCorpNum.Text)
+    
+    Dim tmp As String
+    tmp = "number(수신거부번호) | regDT(등록일시)" + vbCrLf
+    
+    Dim AutoDenyInfo As PBAutoDenyInfo
+    
+    For Each AutoDenyInfo In AutoDenyList
+        tmp = tmp + AutoDenyInfo.number + " | " + AutoDenyInfo.regDT + vbCrLf
+    Next
+    MsgBox tmp
+    
+End Sub
 
 Private Sub btnGetBalance_Click()
     Dim balance As Double
