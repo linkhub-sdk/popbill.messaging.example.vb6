@@ -44,10 +44,10 @@ Begin VB.Form frmExample
    End
    Begin VB.CommandButton btnUnitCost_MMS 
       Caption         =   "MMS 전송단가 확인"
-      Height          =   495
+      Height          =   410
       Left            =   2320
       TabIndex        =   37
-      Top             =   2400
+      Top             =   2160
       Width           =   1815
    End
    Begin VB.Frame Frame6 
@@ -252,22 +252,22 @@ Begin VB.Form frmExample
       Width           =   12960
       Begin VB.Frame Frame12 
          Caption         =   "회사정보 관련"
-         Height          =   2295
+         Height          =   2415
          Left            =   10920
          TabIndex        =   48
          Top             =   240
          Width           =   1815
          Begin VB.CommandButton btnUpdateCorpInfo 
             Caption         =   "회사정보 수정"
-            Height          =   495
+            Height          =   410
             Left            =   120
             TabIndex        =   50
-            Top             =   960
+            Top             =   840
             Width           =   1575
          End
          Begin VB.CommandButton btnGetCorpInfo 
             Caption         =   "회사정보 조회"
-            Height          =   495
+            Height          =   410
             Left            =   120
             TabIndex        =   49
             Top             =   360
@@ -276,30 +276,30 @@ Begin VB.Form frmExample
       End
       Begin VB.Frame Frame11 
          Caption         =   "담당자 관련"
-         Height          =   2295
+         Height          =   2415
          Left            =   8880
          TabIndex        =   44
          Top             =   240
          Width           =   1935
          Begin VB.CommandButton btnUpdateContact 
             Caption         =   "담당자 정보 수정"
-            Height          =   495
+            Height          =   410
             Left            =   120
             TabIndex        =   47
-            Top             =   1560
+            Top             =   1320
             Width           =   1695
          End
          Begin VB.CommandButton btnListContact 
             Caption         =   "담당자 목록 조회"
-            Height          =   495
+            Height          =   410
             Left            =   120
             TabIndex        =   46
-            Top             =   960
+            Top             =   840
             Width           =   1695
          End
          Begin VB.CommandButton btnRegistContact 
             Caption         =   "담당자 추가"
-            Height          =   495
+            Height          =   410
             Left            =   120
             TabIndex        =   45
             Top             =   360
@@ -308,22 +308,22 @@ Begin VB.Form frmExample
       End
       Begin VB.Frame Frame2 
          Caption         =   " 회원정보"
-         Height          =   2295
+         Height          =   2415
          Left            =   240
          TabIndex        =   11
          Top             =   240
          Width           =   1695
          Begin VB.CommandButton btnCheckID 
             Caption         =   "ID 중복 확인"
-            Height          =   495
+            Height          =   410
             Left            =   120
             TabIndex        =   42
-            Top             =   960
+            Top             =   840
             Width           =   1455
          End
          Begin VB.CommandButton btnCheckIsMember 
             Caption         =   "가입 여부 확인"
-            Height          =   495
+            Height          =   410
             Left            =   120
             TabIndex        =   13
             Top             =   360
@@ -331,31 +331,39 @@ Begin VB.Form frmExample
          End
          Begin VB.CommandButton btnJoinMember 
             Caption         =   "회원 가입"
-            Height          =   495
+            Height          =   410
             Left            =   120
             TabIndex        =   12
-            Top             =   1560
+            Top             =   1320
             Width           =   1455
          End
       End
       Begin VB.Frame Frame3 
          Caption         =   " 포인트 관련"
-         Height          =   2295
+         Height          =   2415
          Left            =   2040
          TabIndex        =   9
          Top             =   240
          Width           =   2160
+         Begin VB.CommandButton btnGetChargeInfo 
+            Caption         =   "과금정보 확인"
+            Height          =   410
+            Left            =   160
+            TabIndex        =   54
+            Top             =   1800
+            Width           =   1815
+         End
          Begin VB.CommandButton btnUnitCost_LMS 
             Caption         =   "LMS 전송단가 확인"
-            Height          =   495
-            Left            =   165
+            Height          =   410
+            Left            =   160
             TabIndex        =   14
-            Top             =   975
+            Top             =   840
             Width           =   1815
          End
          Begin VB.CommandButton btnUnitCost 
             Caption         =   "SMS 전송단가 확인"
-            Height          =   495
+            Height          =   410
             Left            =   150
             TabIndex        =   10
             Top             =   360
@@ -364,14 +372,14 @@ Begin VB.Form frmExample
       End
       Begin VB.Frame Frame4 
          Caption         =   " 파트너 관련"
-         Height          =   2295
+         Height          =   2415
          Left            =   4320
          TabIndex        =   7
          Top             =   240
          Width           =   2535
          Begin VB.CommandButton btnGetBalance 
             Caption         =   "잔여 포인트 확인"
-            Height          =   495
+            Height          =   410
             Left            =   120
             TabIndex        =   22
             Top             =   360
@@ -379,32 +387,32 @@ Begin VB.Form frmExample
          End
          Begin VB.CommandButton btnGetPartnerBalance 
             Caption         =   "파트너 잔여포인트 확인"
-            Height          =   495
+            Height          =   410
             Left            =   120
             TabIndex        =   8
-            Top             =   960
+            Top             =   840
             Width           =   2295
          End
       End
       Begin VB.Frame Frame5 
          Caption         =   " 팝빌 기본 URL"
          ClipControls    =   0   'False
-         Height          =   2295
+         Height          =   2415
          Left            =   6960
          TabIndex        =   5
          Top             =   240
          Width           =   1815
          Begin VB.CommandButton btnGetPopbillURL_CHRG 
             Caption         =   "포인트 충전 URL"
-            Height          =   495
+            Height          =   410
             Left            =   120
             TabIndex        =   43
-            Top             =   960
+            Top             =   840
             Width           =   1575
          End
          Begin VB.CommandButton btnGetPopbillURL_LOGIN 
             Caption         =   " 팝빌 로그인 URL"
-            Height          =   495
+            Height          =   410
             Left            =   120
             TabIndex        =   6
             Top             =   360
@@ -518,7 +526,7 @@ Private Sub btnGetAutoDenyList_Click()
     Dim AutoDenyInfo As PBAutoDenyInfo
     
     For Each AutoDenyInfo In AutoDenyList
-        tmp = tmp + AutoDenyInfo.number + " | " + AutoDenyInfo.regDT + vbCrLf
+        tmp = tmp + AutoDenyInfo.Number + " | " + AutoDenyInfo.regDT + vbCrLf
     Next
     MsgBox tmp
     
@@ -538,6 +546,28 @@ Private Sub btnGetBalance_Click()
     MsgBox "잔여포인트 : " + CStr(balance)
     
     
+End Sub
+
+Private Sub btnGetChargeInfo_Click()
+    Dim ChargeInfo As PBChargeInfo
+    Dim MType As MsgType
+    
+    MType = SMS     'SMS-단문, LMS-장문 MMS-포토
+            
+    Set ChargeInfo = MessageService.GetChargeInfo(txtCorpNum.Text, MType)
+     
+    If ChargeInfo Is Nothing Then
+        MsgBox ("[" + CStr(MessageService.LastErrCode) + "] " + MessageService.LastErrMessage)
+        Exit Sub
+    End If
+    
+    Dim tmp As String
+    
+    tmp = tmp + "unitCost (요금) : " + ChargeInfo.unitCost + vbCrLf
+    tmp = tmp + "chargeMethod (과금유형) : " + ChargeInfo.chargeMethod + vbCrLf
+    tmp = tmp + "rateSystem (과금제도) : " + ChargeInfo.rateSystem + vbCrLf
+    
+    MsgBox tmp
 End Sub
 
 Private Sub btnGetCorpInfo_Click()
