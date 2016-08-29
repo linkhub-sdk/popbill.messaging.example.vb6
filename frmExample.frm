@@ -526,7 +526,7 @@ Private Sub btnGetAutoDenyList_Click()
     Dim AutoDenyInfo As PBAutoDenyInfo
     
     For Each AutoDenyInfo In AutoDenyList
-        tmp = tmp + AutoDenyInfo.Number + " | " + AutoDenyInfo.regDT + vbCrLf
+        tmp = tmp + AutoDenyInfo.number + " | " + AutoDenyInfo.regDT + vbCrLf
     Next
     MsgBox tmp
     
@@ -615,7 +615,7 @@ Private Sub btnGetMessages_Click()
         tmp = tmp + sentMessage.messageType + " | "
         'tmp = tmp + sentMessage.content + " | " ' 내용 표시는 길이관계상 예제에서 생략합니다.
         tmp = tmp + sentMessage.sendNum + " | "
-        tmp = tmp + sentMessage.senderName + " | "
+        tmp = tmp + sentMessage.SenderName + " | "
         tmp = tmp + sentMessage.receiveNum + " | "
         tmp = tmp + sentMessage.receiveName + " | "
         tmp = tmp + sentMessage.receiptDT + " | "
@@ -808,7 +808,7 @@ Private Sub btnSearch_Click()
         tmp = tmp + info.messageType + " | "
         'tmp = tmp + sentMessage.content + " | " ' 내용 표시는 길이관계상 예제에서 생략합니다.
         tmp = tmp + info.sendNum + " | "
-        tmp = tmp + info.senderName + " | "
+        tmp = tmp + info.SenderName + " | "
         tmp = tmp + info.receiveNum + " | "
         tmp = tmp + info.receiveName + " | "
         tmp = tmp + info.receiptDT + " | "
@@ -847,7 +847,7 @@ Private Sub btnSendLMS_Hundred_Click()
         Set message = New PBMessage
         
         message.sender = "07075106766"
-        message.senderName = "발신자명"
+        message.SenderName = "발신자명"
         message.receiver = "010111222"
         message.receiverName = "수신자이름_" + CStr(i + 1)
         message.content = "발신 내용. 장문은 2000Byte로 길이가 조정되어 전송됩니다. 팝빌은 최고의 전자세금계산서 서비스를 제공하고 있습니다."
@@ -858,7 +858,7 @@ Private Sub btnSendLMS_Hundred_Click()
         
     adsYN = False       '광고문자 전송여부
     
-    ReceiptNum = MessageService.SendLMS(txtCorpNum.Text, "", "", "", "", Messages, txtReserveDT.Text, adsYN, txtUserID.Text)
+    ReceiptNum = MessageService.SendLMS(txtCorpNum.Text, "", "", "", Messages, txtReserveDT.Text, adsYN, txtUserID.Text)
     
     If ReceiptNum = "" Then
         MsgBox ("[" + CStr(MessageService.LastErrCode) + "] " + MessageService.LastErrMessage)
@@ -879,7 +879,7 @@ Private Sub btnSendLMS_One_Click()
     Dim message As New PBMessage
     
     message.sender = "07075103710"
-    message.senderName = "발신자명"
+    message.SenderName = "발신자명"
     message.receiver = "010111222"
     message.receiverName = "수신자이름"
     message.content = "발신 내용. 장문은 2000Byte로 길이가 조정되어 전송됩니다. 팝빌은 최고의 전자세금계산서 서비스를 제공하고 있습니다."
@@ -889,7 +889,7 @@ Private Sub btnSendLMS_One_Click()
     
     Dim ReceiptNum As String
     
-    ReceiptNum = MessageService.SendLMS(txtCorpNum.Text, "", "", "", "", Messages, txtReserveDT.Text, adsYN, txtUserID.Text)
+    ReceiptNum = MessageService.SendLMS(txtCorpNum.Text, "", "", "", Messages, txtReserveDT.Text, adsYN, txtUserID.Text)
     
     If ReceiptNum = "" Then
         MsgBox ("[" + CStr(MessageService.LastErrCode) + "] " + MessageService.LastErrMessage)
@@ -907,8 +907,7 @@ Private Sub btnSendLMS_Same_Click()
     Dim Messages As New Collection
     Dim sender As String
     Dim subject As String
-    Dim senderName As String
-    Dim contents As String
+    Dim Contents As String
     Dim adsYN As Boolean
     Dim message As PBMessage
     Dim i As Integer
@@ -918,14 +917,11 @@ Private Sub btnSendLMS_Same_Click()
     '발신번호
     sender = "07075103710"
     
-    '발신자명
-    senderName = "링크허브 발신자명"
-    
     '동보전송 제목
     subject = "동보전송 제목"
     
     '동보전송 메시지
-    contents = "발신 내용. 장문은 2000Byte로 길이가 조정되어 전송됩니다. 팝빌은 최고의 전자세금계산서 서비스를 제공하고 있습니다."
+    Contents = "발신 내용. 장문은 2000Byte로 길이가 조정되어 전송됩니다. 팝빌은 최고의 전자세금계산서 서비스를 제공하고 있습니다."
     
     For i = 0 To 100
         
@@ -940,7 +936,7 @@ Private Sub btnSendLMS_Same_Click()
     '광고문자 전송여부
     adsYN = False
     
-    ReceiptNum = MessageService.SendLMS(txtCorpNum.Text, sender, senderName, subject, contents, _
+    ReceiptNum = MessageService.SendLMS(txtCorpNum.Text, sender, subject, Contents, _
                                     Messages, txtReserveDT.Text, adsYN, txtUserID.Text)
     
     If ReceiptNum = "" Then
@@ -972,7 +968,7 @@ Private Sub btnSendMMS_Click()
     message.sender = "07075103710"
     
     '발신자명
-    message.senderName = "발신자명"
+    message.SenderName = "발신자명"
     
     '수신번호
     message.receiver = "010111222"
@@ -991,7 +987,7 @@ Private Sub btnSendMMS_Click()
     '광고문자 전송여부
     adsYN = False
     
-    ReceiptNum = MessageService.SendMMS(txtCorpNum.Text, "", "", "", "", Messages, FilePaths, txtReserveDT.Text, adsYN, txtUserID.Text)
+    ReceiptNum = MessageService.SendMMS(txtCorpNum.Text, "", "", "", Messages, FilePaths, txtReserveDT.Text, adsYN, txtUserID.Text)
     
     If ReceiptNum = "" Then
         MsgBox ("[" + CStr(MessageService.LastErrCode) + "] " + MessageService.LastErrMessage)
@@ -1023,7 +1019,7 @@ Private Sub btnSendMMS_hundred_Click()
         Set message = New PBMessage
         
         message.sender = "07075103710"
-        message.senderName = "발신자명"
+        message.SenderName = "발신자명"
         message.receiver = "010111222"
         message.receiverName = "수신자이름_" + CStr(i + 1)
         message.subject = "포토메시지 제목입니다."
@@ -1037,7 +1033,7 @@ Private Sub btnSendMMS_hundred_Click()
         Set message = New PBMessage
         
         message.sender = "07075103710"
-        message.senderName = "발신자명"
+        message.SenderName = "발신자명"
         message.receiver = "010111222"
         message.receiverName = "수신자이름_" + CStr(i + 1)
         message.subject = "포토 메시지 제목"
@@ -1051,7 +1047,7 @@ Private Sub btnSendMMS_hundred_Click()
     adsYN = False
     
     
-    ReceiptNum = MessageService.SendMMS(txtCorpNum.Text, "", "", "", "", Messages, FilePaths, txtReserveDT.Text, adsYN, txtUserID.Text)
+    ReceiptNum = MessageService.SendMMS(txtCorpNum.Text, "", "", "", Messages, FilePaths, txtReserveDT.Text, adsYN, txtUserID.Text)
     
     If ReceiptNum = "" Then
         MsgBox ("[" + CStr(MessageService.LastErrCode) + "] " + MessageService.LastErrMessage)
@@ -1069,9 +1065,8 @@ Private Sub btnSendMMS_Same_Click()
     Dim ReceiptNum As String
     Dim message As PBMessage
     Dim sender As String
-    Dim senderName As String
     Dim subject As String
-    Dim contents As String
+    Dim Contents As String
     Dim i As Integer
     
     CommonDialog1.FileName = ""
@@ -1084,14 +1079,11 @@ Private Sub btnSendMMS_Same_Click()
     '발신번호
     sender = "07075103710"
     
-    '발신자명
-    senderName = "발신자명"
-    
     '동보메시지 제목
     subject = "동보메시지 제목"
     
     '동보메시지 내용
-    contents = "동보메시지 내용"
+    Contents = "동보메시지 내용"
     
     '수신정보
     For i = 0 To 100
@@ -1108,7 +1100,7 @@ Private Sub btnSendMMS_Same_Click()
     '광고문자 전송여부
     adsYN = False
     
-    ReceiptNum = MessageService.SendMMS(txtCorpNum.Text, sender, senderName, subject, contents, Messages, FilePaths, txtReserveDT.Text, adsYN, txtUserID.Text)
+    ReceiptNum = MessageService.SendMMS(txtCorpNum.Text, sender, subject, Contents, Messages, FilePaths, txtReserveDT.Text, adsYN, txtUserID.Text)
     
     If ReceiptNum = "" Then
         MsgBox ("[" + CStr(MessageService.LastErrCode) + "] " + MessageService.LastErrMessage)
@@ -1135,7 +1127,7 @@ Private Sub btnSendSMS_hundredd_Click()
         Set message = New PBMessage
         
         message.sender = "07075103710"
-        message.senderName = "발신자명"
+        message.SenderName = "발신자명"
         message.receiver = "010111222"
         message.receiverName = "수신자이름_" + CStr(i + 1)
         message.content = "발신 내용. 단문은 90Byte로 길이가 조정되어 전송됩니다."
@@ -1145,7 +1137,7 @@ Private Sub btnSendSMS_hundredd_Click()
     
     Dim ReceiptNum As String
     
-    ReceiptNum = MessageService.SendSMS(txtCorpNum.Text, "07075103710", "", "", Messages, txtReserveDT.Text, adsYN, txtUserID.Text)
+    ReceiptNum = MessageService.SendSMS(txtCorpNum.Text, "07075103710", "", Messages, txtReserveDT.Text, adsYN, txtUserID.Text)
     
     If ReceiptNum = "" Then
         MsgBox ("[" + CStr(MessageService.LastErrCode) + "] " + MessageService.LastErrMessage)
@@ -1167,7 +1159,7 @@ Private Sub btnSendSMS_One_Click()
     Dim message As New PBMessage
     
     message.sender = "07075103710"
-    message.senderName = "발신자명"
+    message.SenderName = "발신자명"
     message.receiver = "01043245117"
     message.receiverName = "수신자이름"
     message.content = "발신 내용. 단문은 90Byte로 길이가 조정되어 전송됩니다."
@@ -1176,7 +1168,7 @@ Private Sub btnSendSMS_One_Click()
     
     Dim ReceiptNum As String
     
-    ReceiptNum = MessageService.SendSMS(txtCorpNum.Text, "", "", "", Messages, txtReserveDT.Text, adsYN, txtUserID.Text)
+    ReceiptNum = MessageService.SendSMS(txtCorpNum.Text, "", "", Messages, txtReserveDT.Text, adsYN, txtUserID.Text)
     
     If ReceiptNum = "" Then
         MsgBox ("[" + CStr(MessageService.LastErrCode) + "] " + MessageService.LastErrMessage)
@@ -1194,19 +1186,15 @@ Private Sub btnSendSMS_Same_Click()
     Dim Messages As New Collection
     Dim adsYN As Boolean
     Dim sender As String
-    Dim senderName As String
-    Dim contents As String
+    Dim Contents As String
     Dim message As PBMessage
     Dim i As Integer
     
     '발신번호
     sender = "07075103710"
-    
-    '발신자명
-    senderName = "발신자명"
-    
+        
     '메시지 내용, 90byte초과시 삭제되어 전송됨.
-    contents = "동보전송 내용 90byte로 길이가 조정되며, Messages의 내용이 없는 수신건에 동보처리됩니다."
+    Contents = "동보전송 내용 90byte로 길이가 조정되며, Messages의 내용이 없는 수신건에 동보처리됩니다."
     
     '광고문자 전송여부
     adsYN = False
@@ -1225,7 +1213,7 @@ Private Sub btnSendSMS_Same_Click()
     
     Dim ReceiptNum As String
     
-    ReceiptNum = MessageService.SendSMS(txtCorpNum.Text, sender, senderName, contents, Messages, txtReserveDT.Text, adsYN, txtUserID.Text)
+    ReceiptNum = MessageService.SendSMS(txtCorpNum.Text, sender, Contents, Messages, txtReserveDT.Text, adsYN, txtUserID.Text)
     
     If ReceiptNum = "" Then
         MsgBox ("[" + CStr(MessageService.LastErrCode) + "] " + MessageService.LastErrMessage)
@@ -1249,7 +1237,7 @@ Private Sub btnSendXMS_Hundred_Click()
         Set message = New PBMessage
         
         message.sender = "07075103710"
-        message.senderName = "발신자명"
+        message.SenderName = "발신자명"
         message.receiver = "010111222"
         message.receiverName = "수신자이름_" + CStr(i + 1)
         message.content = "발신 내용. 이 내용은 장문으로 전송될수 있도록 길이를 설정하였습니다. 팝빌은 국내 최고의 전자세금계산서 서비스 입니다."
@@ -1263,7 +1251,7 @@ Private Sub btnSendXMS_Hundred_Click()
         Set message = New PBMessage
         
         message.sender = "07075103710"
-        message.senderName = "발신자명"
+        message.SenderName = "발신자명"
         message.receiver = "010111222"
         message.receiverName = "수신자이름_" + CStr(i + 1)
         message.content = "발신 내용. 이 내용은 단문으로 전송됩니다."
@@ -1275,7 +1263,7 @@ Private Sub btnSendXMS_Hundred_Click()
     '광고문자 전송여부
     adsYN = False
     
-    ReceiptNum = MessageService.SendXMS(txtCorpNum.Text, "", "", "", "", Messages, txtReserveDT.Text, adsYN, txtUserID.Text)
+    ReceiptNum = MessageService.SendXMS(txtCorpNum.Text, "", "", "", Messages, txtReserveDT.Text, adsYN, txtUserID.Text)
     
     If ReceiptNum = "" Then
         MsgBox ("[" + CStr(MessageService.LastErrCode) + "] " + MessageService.LastErrMessage)
@@ -1295,7 +1283,7 @@ Private Sub btnSendXMS_One_Click()
     Dim message As New PBMessage
     
     message.sender = "07075103710"
-    message.senderName = "발신자명"
+    message.SenderName = "발신자명"
     message.receiver = "010111222"
     message.receiverName = "수신자이름"
     message.content = "자동인식 발송은 내용의 길이를 90Byte기준으로 이하는 단문, 이상은 장문으로 자동 전송합니다."
@@ -1305,7 +1293,7 @@ Private Sub btnSendXMS_One_Click()
     
     Dim ReceiptNum As String
     
-    ReceiptNum = MessageService.SendXMS(txtCorpNum.Text, "", "", "", "", Messages, txtReserveDT.Text, adsYN, txtUserID.Text)
+    ReceiptNum = MessageService.SendXMS(txtCorpNum.Text, "", "", "", Messages, txtReserveDT.Text, adsYN, txtUserID.Text)
     
     If ReceiptNum = "" Then
         MsgBox ("[" + CStr(MessageService.LastErrCode) + "] " + MessageService.LastErrMessage)
@@ -1320,9 +1308,8 @@ Private Sub btnSendXMS_Same_Click()
     Dim Messages As New Collection
     Dim adsYN As Boolean
     Dim sender As String
-    Dim senderName As String
     Dim subject As String
-    Dim contents As String
+    Dim Contents As String
     Dim message As PBMessage
     Dim i As Integer
     Dim ReceiptNum As String
@@ -1330,14 +1317,11 @@ Private Sub btnSendXMS_Same_Click()
     '발신번호
     sender = "07075103710"
     
-    '발신자명
-    senderName = "발신자명"
-    
     '동보메시지 제목
     subject = "동보전송 제목, 장문에 적용됨"
     
     '동보메시지 내용
-    contents = "자동인식 발송은 내용의 길이를 90Byte기준으로 이하는 단문, 이상은 장문으로 자동 전송합니다."
+    Contents = "자동인식 발송은 내용의 길이를 90Byte기준으로 이하는 단문, 이상은 장문으로 자동 전송합니다."
     
     For i = 0 To 100
         
@@ -1352,7 +1336,7 @@ Private Sub btnSendXMS_Same_Click()
     '광고문자 전송여부
     adsYN = False
     
-    ReceiptNum = MessageService.SendLMS(txtCorpNum.Text, sender, senderName, subject, contents, _
+    ReceiptNum = MessageService.SendLMS(txtCorpNum.Text, sender, subject, Contents, _
                                         Messages, txtReserveDT.Text, adsYN, txtUserID.Text)
     
     If ReceiptNum = "" Then
