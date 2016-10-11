@@ -467,26 +467,58 @@ Attribute VB_GlobalNameSpace = False
 Attribute VB_Creatable = False
 Attribute VB_PredeclaredId = True
 Attribute VB_Exposed = False
+'=========================================================================
+'
+' 팝빌 문자 API VB 6.0 SDK Example
+'
+' - VB6 SDK 연동환경 설정방법 안내 :
+' - 업데이트 일자 : 2016-10-11
+' - 연동 기술지원 연락처 : 1600-8536 / 070-4504-2991 (직통 / 정요한대리)
+' - 연동 기술지원 이메일 : support@linkhub.co.kr
+'
+' <테스트 연동개발 준비사항>
+' 1) 25, 28번 라인에 선언된 링크아이디(LinkID)와 비밀키(SecretKey)를
+'    링크허브 가입시 메일로 발급받은 인증정보를 참조하여 변경합니다.
+' 2) 팝빌 개발용 사이트(test.popbill.com)에 연동회원으로 가입합니다.
+'=========================================================================
+
 Option Explicit
+
+'=========================================================================
+' - 인증정보(링크아이디, 비밀키)는 파트너의 연동회원을 식별하는
+'   인증에 사용되는 정보로 유출되지 않도록 주의하시기 바랍니다.
+' - 상업용 전환이후에도 인증정보(링크아이디, 비밀키)는 변경되지 않습니다.
+'=========================================================================
 
 '링크아이디
 Private Const LinkID = "TESTER"
+
 '비밀키. 유출에 주의하시기 바랍니다.
 Private Const SecretKey = "SwWxqU+0TErBXy/9TVjIPEnI0VTUMMSQZtJf3Ed8q3I="
 
 Private MessageService As New PBMSGService
+
+'=========================================================================
+' 예약문자전송을 취소합니다.
+' - 예약취소는 예약전송시간 10분전까지만 가능합니다.
+'=========================================================================
 Private Sub btnCancelReserve_Click()
     Dim Response As PBResponse
     
     Set Response = MessageService.CancelReserve(txtCorpNum.Text, txtReceiptNum.Text, txtUserID.Text)
     
     If Response Is Nothing Then
-        MsgBox ("[" + CStr(MessageService.LastErrCode) + "] " + MessageService.LastErrMessage)
+        MsgBox ("응답코드 : " + CStr(MessageService.LastErrCode) + vbCrLf + "응답메시지 : " + MessageService.LastErrMessage)
         Exit Sub
     End If
     
-    MsgBox (Response.message)
+    MsgBox ("응답코드 : " + CStr(Response.code) + vbCrLf + "응답메시지 : " + Response.message)
 End Sub
+
+'=========================================================================
+' 팝빌 회원아이디 중복여부를 확인합니다.
+' 응답코드/메시지 : 1-사용중, 2-미사용중
+'=========================================================================
 
 Private Sub btnCheckID_Click()
     Dim Response As PBResponse
@@ -494,12 +526,17 @@ Private Sub btnCheckID_Click()
     Set Response = MessageService.CheckID(txtUserID.Text)
     
     If Response Is Nothing Then
-        MsgBox ("[" + CStr(MessageService.LastErrCode) + "] " + MessageService.LastErrMessage)
+        MsgBox ("응답코드 : " + CStr(MessageService.LastErrCode) + vbCrLf + "응답메시지 : " + MessageService.LastErrMessage)
         Exit Sub
     End If
     
-    MsgBox ("[" + CStr(Response.code) + "] " + Response.message)
+    MsgBox ("응답코드 : " + CStr(Response.code) + vbCrLf + "응답메시지 : " + Response.message)
 End Sub
+
+'=========================================================================
+' 해당 사업자의 파트너 연동회원 가입여부를 확인합니다.
+' - LinkID는 인증정보로 설정되어 있는 링크아이디 값입니다.
+'=========================================================================
 
 Private Sub btnCheckIsMember_Click()
     Dim Response As PBResponse
@@ -507,20 +544,29 @@ Private Sub btnCheckIsMember_Click()
     Set Response = MessageService.CheckIsMember(txtCorpNum.Text, LinkID)
     
     If Response Is Nothing Then
-        MsgBox ("[" + CStr(MessageService.LastErrCode) + "] " + MessageService.LastErrMessage)
+        MsgBox ("응답코드 : " + CStr(MessageService.LastErrCode) + vbCrLf + "응답메시지 : " + MessageService.LastErrMessage)
         Exit Sub
     End If
     
-    MsgBox ("[" + CStr(Response.code) + "] " + Response.message)
+    MsgBox ("응답코드 : " + CStr(Response.code) + vbCrLf + "응답메시지 : " + Response.message)
 End Sub
 
+'=========================================================================
+' 080 서비스 수신거부 목록을 확인합니다.
+'=========================================================================
 
 Private Sub btnGetAutoDenyList_Click()
     Dim AutoDenyList As Collection
     
     Set AutoDenyList = MessageService.GetAutoDenyList(txtCorpNum.Text)
     
+    If AutoDenyList Is Nothing Then
+        MsgBox ("응답코드 : " + CStr(MessageService.LastErrCode) + vbCrLf + "응답메시지 : " + MessageService.LastErrMessage)
+        Exit Sub
+    End If
+    
     Dim tmp As String
+    
     tmp = "number(수신거부번호) | regDT(등록일시)" + vbCrLf
     
     Dim AutoDenyInfo As PBAutoDenyInfo
@@ -528,9 +574,16 @@ Private Sub btnGetAutoDenyList_Click()
     For Each AutoDenyInfo In AutoDenyList
         tmp = tmp + AutoDenyInfo.number + " | " + AutoDenyInfo.regDT + vbCrLf
     Next
+    
     MsgBox tmp
     
 End Sub
+
+'=========================================================================
+' 연동회원의 잔여포인트를 확인합니다.
+' - 과금방식이 파트너과금인 경우 파트너 잔여포인트(GetPartnerBalance API)
+'   를 통해 확인하시기 바랍니다.
+'=========================================================================
 
 Private Sub btnGetBalance_Click()
     Dim balance As Double
@@ -538,8 +591,7 @@ Private Sub btnGetBalance_Click()
     balance = MessageService.GetBalance(txtCorpNum.Text)
     
     If balance < 0 Then
-        
-        MsgBox ("[" + CStr(MessageService.LastErrCode) + "] " + MessageService.LastErrMessage)
+        MsgBox ("응답코드 : " + CStr(MessageService.LastErrCode) + vbCrLf + "응답메시지 : " + MessageService.LastErrMessage)
         Exit Sub
     End If
     
@@ -547,6 +599,10 @@ Private Sub btnGetBalance_Click()
     
     
 End Sub
+
+'=========================================================================
+' 연동회원의 문자 API 서비스 과금정보를 확인합니다.
+'=========================================================================
 
 Private Sub btnGetChargeInfo_Click()
     Dim ChargeInfo As PBChargeInfo
@@ -557,18 +613,22 @@ Private Sub btnGetChargeInfo_Click()
     Set ChargeInfo = MessageService.GetChargeInfo(txtCorpNum.Text, MType)
      
     If ChargeInfo Is Nothing Then
-        MsgBox ("[" + CStr(MessageService.LastErrCode) + "] " + MessageService.LastErrMessage)
+        MsgBox ("응답코드 : " + CStr(MessageService.LastErrCode) + vbCrLf + "응답메시지 : " + MessageService.LastErrMessage)
         Exit Sub
     End If
     
     Dim tmp As String
     
-    tmp = tmp + "unitCost (요금) : " + ChargeInfo.unitCost + vbCrLf
+    tmp = tmp + "unitCost (전송단가) : " + ChargeInfo.unitCost + vbCrLf
     tmp = tmp + "chargeMethod (과금유형) : " + ChargeInfo.chargeMethod + vbCrLf
     tmp = tmp + "rateSystem (과금제도) : " + ChargeInfo.rateSystem + vbCrLf
     
     MsgBox tmp
 End Sub
+
+'=========================================================================
+' 연동회원의 회사정보를 확인합니다.
+'=========================================================================
 
 Private Sub btnGetCorpInfo_Click()
     Dim CorpInfo As PBCorpInfo
@@ -576,20 +636,24 @@ Private Sub btnGetCorpInfo_Click()
     Set CorpInfo = MessageService.GetCorpInfo(txtCorpNum.Text, txtUserID.Text)
      
     If CorpInfo Is Nothing Then
-        MsgBox ("[" + CStr(MessageService.LastErrCode) + "] " + MessageService.LastErrMessage)
+        MsgBox ("응답코드 : " + CStr(MessageService.LastErrCode) + vbCrLf + "응답메시지 : " + MessageService.LastErrMessage)
         Exit Sub
     End If
     
     Dim tmp As String
     
-    tmp = tmp + "ceoname : " + CorpInfo.CEOName + vbCrLf
-    tmp = tmp + "corpName : " + CorpInfo.CorpName + vbCrLf
-    tmp = tmp + "addr : " + CorpInfo.Addr + vbCrLf
-    tmp = tmp + "bizType : " + CorpInfo.BizType + vbCrLf
-    tmp = tmp + "bizClass : " + CorpInfo.BizClass + vbCrLf
+    tmp = tmp + "ceoname(대표자성명) : " + CorpInfo.CEOName + vbCrLf
+    tmp = tmp + "corpName(상호명) : " + CorpInfo.CorpName + vbCrLf
+    tmp = tmp + "addr(주소) : " + CorpInfo.Addr + vbCrLf
+    tmp = tmp + "bizType(업태) : " + CorpInfo.BizType + vbCrLf
+    tmp = tmp + "bizClass(종목) : " + CorpInfo.BizClass + vbCrLf
     
     MsgBox tmp
 End Sub
+
+'=========================================================================
+' 문자전송요청에 대한 전송결과를 확인합니다.
+'=========================================================================
 
 Private Sub btnGetMessages_Click()
     Dim sentMessages As Collection
@@ -597,7 +661,7 @@ Private Sub btnGetMessages_Click()
     Set sentMessages = MessageService.GetMessages(txtCorpNum.Text, txtReceiptNum.Text, txtUserID.Text)
     
     If sentMessages Is Nothing Then
-        MsgBox ("[" + CStr(MessageService.LastErrCode) + "] " + MessageService.LastErrMessage)
+        MsgBox ("응답코드 : " + CStr(MessageService.LastErrCode) + vbCrLf + "응답메시지 : " + MessageService.LastErrMessage)
         Exit Sub
     End If
     
@@ -615,7 +679,7 @@ Private Sub btnGetMessages_Click()
         tmp = tmp + sentMessage.messageType + " | "
         'tmp = tmp + sentMessage.content + " | " ' 내용 표시는 길이관계상 예제에서 생략합니다.
         tmp = tmp + sentMessage.sendNum + " | "
-        tmp = tmp + sentMessage.SenderName + " | "
+        tmp = tmp + sentMessage.senderName + " | "
         tmp = tmp + sentMessage.receiveNum + " | "
         tmp = tmp + sentMessage.receiveName + " | "
         tmp = tmp + sentMessage.receiptDT + " | "
@@ -633,13 +697,19 @@ Private Sub btnGetMessages_Click()
     
 End Sub
 
+'=========================================================================
+' 파트너의 잔여포인트를 확인합니다.
+' - 과금방식이 연동과금인 경우 연동회원 잔여포인트(GetBalance API)를
+'   이용하시기 바랍니다.
+'=========================================================================
+
 Private Sub btnGetPartnerBalance_Click()
     Dim balance As Double
     
     balance = MessageService.GetPartnerBalance(txtCorpNum.Text)
     
     If balance < 0 Then
-        MsgBox ("[" + CStr(MessageService.LastErrCode) + "] " + MessageService.LastErrMessage)
+        MsgBox ("응답코드 : " + CStr(MessageService.LastErrCode) + vbCrLf + "응답메시지 : " + MessageService.LastErrMessage)
         Exit Sub
     End If
     
@@ -647,17 +717,27 @@ Private Sub btnGetPartnerBalance_Click()
     
 End Sub
 
+'=========================================================================
+' 연동회원 포인트 충전 URL을 반환합니다.
+' - URL 보안정책에 따라 반환된 URL은 30초의 유효시간을 갖습니다.
+'=========================================================================
+
 Private Sub btnGetPopbillURL_CHRG_Click()
     Dim url As String
     
     url = MessageService.GetPopbillURL(txtCorpNum.Text, txtUserID.Text, "CHRG")
     
     If url = "" Then
-         MsgBox ("[" + CStr(MessageService.LastErrCode) + "] " + MessageService.LastErrMessage)
+        MsgBox ("응답코드 : " + CStr(MessageService.LastErrCode) + vbCrLf + "응답메시지 : " + MessageService.LastErrMessage)
         Exit Sub
     End If
     MsgBox "URL : " + vbCrLf + url
 End Sub
+
+'=========================================================================
+' 팝빌(www.popbill.com)에 로그인된 팝빌 URL을 반환합니다.
+' - 보안정책에 따라 반환된 URL은 30초의 유효시간을 갖습니다.
+'=========================================================================
 
 Private Sub btnGetPopbillURL_LOGIN_Click()
     Dim url As String
@@ -665,11 +745,15 @@ Private Sub btnGetPopbillURL_LOGIN_Click()
     url = MessageService.GetPopbillURL(txtCorpNum.Text, txtUserID.Text, "LOGIN")
     
     If url = "" Then
-         MsgBox ("[" + CStr(MessageService.LastErrCode) + "] " + MessageService.LastErrMessage)
+        MsgBox ("응답코드 : " + CStr(MessageService.LastErrCode) + vbCrLf + "응답메시지 : " + MessageService.LastErrMessage)
         Exit Sub
     End If
     MsgBox "URL : " + vbCrLf + url
 End Sub
+
+'=========================================================================
+' 팝빌 연동회원 가입을 요청합니다.
+'=========================================================================
 
 Private Sub btnJoinMember_Click()
     Dim joinData As New PBJoinForm
@@ -694,14 +778,18 @@ Private Sub btnJoinMember_Click()
     Set Response = MessageService.JoinMember(joinData)
     
     If Response Is Nothing Then
-        MsgBox ("[" + CStr(MessageService.LastErrCode) + "] " + MessageService.LastErrMessage)
+        MsgBox ("응답코드 : " + CStr(MessageService.LastErrCode) + vbCrLf + "응답메시지 : " + MessageService.LastErrMessage)
         Exit Sub
     End If
     
-    MsgBox (Response.message)
+    MsgBox ("응답코드 : " + CStr(Response.code) + vbCrLf + "응답메시지 : " + Response.message)
     
     
 End Sub
+
+'=========================================================================
+' 연동회원의 담당자 목록을 확인합니다.
+'=========================================================================
 
 Private Sub btnListContact_Click()
     Dim resultList As Collection
@@ -709,7 +797,7 @@ Private Sub btnListContact_Click()
     Set resultList = MessageService.ListContact(txtCorpNum.Text, txtUserID.Text)
      
     If resultList Is Nothing Then
-        MsgBox ("[" + CStr(MessageService.LastErrCode) + "] " + MessageService.LastErrMessage)
+        MsgBox ("응답코드 : " + CStr(MessageService.LastErrCode) + vbCrLf + "응답메시지 : " + MessageService.LastErrMessage)
         Exit Sub
     End If
     
@@ -726,6 +814,10 @@ Private Sub btnListContact_Click()
     
     MsgBox tmp
 End Sub
+
+'=========================================================================
+' 연동회원의 담당자를 신규로 등록합니다.
+'=========================================================================
 
 Private Sub btnRegistContact_Click()
     Dim joinData As New PBContactInfo
@@ -744,12 +836,16 @@ Private Sub btnRegistContact_Click()
     Set Response = MessageService.RegistContact(txtCorpNum.Text, joinData, txtUserID.Text)
     
     If Response Is Nothing Then
-        MsgBox ("[" + CStr(MessageService.LastErrCode) + "] " + MessageService.LastErrMessage)
+        MsgBox ("응답코드 : " + CStr(MessageService.LastErrCode) + vbCrLf + "응답메시지 : " + MessageService.LastErrMessage)
         Exit Sub
     End If
     
-    MsgBox ("[" + CStr(Response.code) + "] " + Response.message)
+    MsgBox ("응답코드 : " + CStr(Response.code) + vbCrLf + "응답메시지 : " + Response.message)
 End Sub
+
+'=========================================================================
+' 검색조건을 사용하여 문자전송 내역을 조회합니다.
+'=========================================================================
 
 Private Sub btnSearch_Click()
     Dim msgSearchList As PBSearchList
@@ -763,30 +859,42 @@ Private Sub btnSearch_Click()
     Dim PerPage As Integer
     Dim Order As String
     
-    SDate = "20160801"    '[필수] 시작일자, yyyyMMdd
-    EDate = "20160831"    '[필수] 종료일자, yyyyMMdd
+    '[필수] 시작일자, 날자형식(yyyyMMdd)
+    SDate = "20160901"
     
-    state.Add "1"         '전송상태값 배열, 1-대기, 2-성공, 3-실패, 4-취소
+    '[필수] 종료일자, 날자형식(yyyyMMdd)
+    EDate = "20161031"
+    
+    '전송상태값 배열, 1-대기, 2-성공, 3-실패, 4-취소
+    state.Add "1"
     state.Add "2"
     state.Add "3"
     state.Add "4"
     
-    Item.Add "SMS"        '검색대상 배열, SMS(단문),LMS(장문),MMS(포토)
+    '검색대상 배열, SMS(단문),LMS(장문),MMS(포토)
+    Item.Add "SMS"
     Item.Add "LMS"
     Item.Add "MMS"
     
-    ReserveYN = False     '예약문자 검색여부, True(예약문자만 조회), False(전체조회)
-    SenderYN = False      '개인조회여부, True(개인조회), False(전체조회)
+    '예약문자 검색여부, True(예약문자만 조회), False(전체조회)
+    ReserveYN = False
     
-    Page = 1              '페이지 번호
-    PerPage = 50          '페이지 목록개수, 최대 1000건
+    '개인조회여부, True(개인조회), False(전체조회)
+    SenderYN = False
     
-    Order = "D"           '정렬방향, D-내림차순(기본값), A-오름차순
+    '페이지 번호
+    Page = 1
+    
+    '페이지 목록개수, 최대 1000건
+    PerPage = 50
+    
+    '정렬방향, D-내림차순(기본값), A-오름차순
+    Order = "D"
 
     Set msgSearchList = MessageService.Search(txtCorpNum.Text, SDate, EDate, state, Item, ReserveYN, SenderYN, Page, PerPage, Order)
      
     If msgSearchList Is Nothing Then
-        MsgBox ("[" + CStr(MessageService.LastErrCode) + "] " + MessageService.LastErrMessage)
+        MsgBox ("응답코드 : " + CStr(MessageService.LastErrCode) + vbCrLf + "응답메시지 : " + MessageService.LastErrMessage)
         Exit Sub
     End If
     
@@ -808,7 +916,7 @@ Private Sub btnSearch_Click()
         tmp = tmp + info.messageType + " | "
         'tmp = tmp + sentMessage.content + " | " ' 내용 표시는 길이관계상 예제에서 생략합니다.
         tmp = tmp + info.sendNum + " | "
-        tmp = tmp + info.SenderName + " | "
+        tmp = tmp + info.senderName + " | "
         tmp = tmp + info.receiveNum + " | "
         tmp = tmp + info.receiveName + " | "
         tmp = tmp + info.receiptDT + " | "
@@ -823,13 +931,18 @@ Private Sub btnSearch_Click()
     txtResult.Text = tmp
 End Sub
 
+'=========================================================================
+' 문자메시지 전송내역 팝업 URL을 반환합니다.
+' - 보안정책에 따라 반환된 URL은 30초의 유효시간을 갖습니다.
+'=========================================================================
+
 Private Sub btnSearchPopup_Click()
     Dim url As String
     
     url = MessageService.GetURL(txtCorpNum.Text, txtUserID.Text, "BOX")
     
     If url = "" Then
-         MsgBox ("[" + CStr(MessageService.LastErrCode) + "] " + MessageService.LastErrMessage)
+        MsgBox ("응답코드 : " + CStr(MessageService.LastErrCode) + vbCrLf + "응답메시지 : " + MessageService.LastErrMessage)
         Exit Sub
     End If
     MsgBox "URL : " + vbCrLf + url
@@ -846,11 +959,22 @@ Private Sub btnSendLMS_Hundred_Click()
         
         Set message = New PBMessage
         
-        message.sender = "07075106766"
-        message.SenderName = "발신자명"
+        '발신번호
+        message.sender = "07043042991"
+        
+        '발신자명
+        message.senderName = "발신자명"
+        
+        '수신번호
         message.receiver = "010111222"
+        
+        '수신자명
         message.receiverName = "수신자이름_" + CStr(i + 1)
+        
+        '메시지 내용, 2000byte 초과된 내용은 삭제되어 전송됨.
         message.content = "발신 내용. 장문은 2000Byte로 길이가 조정되어 전송됩니다. 팝빌은 최고의 전자세금계산서 서비스를 제공하고 있습니다."
+        
+        '메시지
         message.subject = "장문 제목입니다."
         
         Messages.Add message
@@ -861,7 +985,7 @@ Private Sub btnSendLMS_Hundred_Click()
     ReceiptNum = MessageService.SendLMS(txtCorpNum.Text, "", "", "", Messages, txtReserveDT.Text, adsYN, txtUserID.Text)
     
     If ReceiptNum = "" Then
-        MsgBox ("[" + CStr(MessageService.LastErrCode) + "] " + MessageService.LastErrMessage)
+        MsgBox ("응답코드 : " + CStr(MessageService.LastErrCode) + vbCrLf + "응답메시지 : " + MessageService.LastErrMessage)
         Exit Sub
     End If
     
@@ -871,28 +995,41 @@ Private Sub btnSendLMS_Hundred_Click()
 End Sub
 
 Private Sub btnSendLMS_One_Click()
-    
     Dim Messages As New Collection
     Dim adsYN As Boolean
-    adsYN = False       '광고문자 전송여부
-    
     Dim message As New PBMessage
     
-    message.sender = "07075103710"
-    message.SenderName = "발신자명"
+    '발신번호
+    message.sender = "07043042991"
+    
+    '발신자명
+    message.senderName = "발신자명"
+    
+    '수신번호
     message.receiver = "010111222"
+    
+    '수신자명
     message.receiverName = "수신자이름"
-    message.content = "발신 내용. 장문은 2000Byte로 길이가 조정되어 전송됩니다. 팝빌은 최고의 전자세금계산서 서비스를 제공하고 있습니다."
+    
+    
+    '장문메시지 제목
     message.subject = "장문 제목입니다."
     
+    '메시지내용, 2000byte 초과한 내용은 삭제되어 전송됨
+    message.content = "발신 내용. 장문은 2000Byte로 길이가 조정되어 전송됩니다. 팝빌은 최고의 전자세금계산서 서비스를 제공하고 있습니다."
+    
     Messages.Add message
+    
+    
+    '광고문자 전송여부
+    adsYN = False
     
     Dim ReceiptNum As String
     
     ReceiptNum = MessageService.SendLMS(txtCorpNum.Text, "", "", "", Messages, txtReserveDT.Text, adsYN, txtUserID.Text)
     
     If ReceiptNum = "" Then
-        MsgBox ("[" + CStr(MessageService.LastErrCode) + "] " + MessageService.LastErrMessage)
+        MsgBox ("응답코드 : " + CStr(MessageService.LastErrCode) + vbCrLf + "응답메시지 : " + MessageService.LastErrMessage)
         Exit Sub
     End If
     
@@ -915,7 +1052,7 @@ Private Sub btnSendLMS_Same_Click()
     
     
     '발신번호
-    sender = "07075103710"
+    sender = "07043042991"
     
     '동보전송 제목
     subject = "동보전송 제목"
@@ -927,7 +1064,10 @@ Private Sub btnSendLMS_Same_Click()
         
         Set message = New PBMessage
         
+        '수신번호
         message.receiver = "010111222"
+        
+        '수신자명
         message.receiverName = "수신자이름_" + CStr(i + 1)
         
         Messages.Add message
@@ -940,7 +1080,7 @@ Private Sub btnSendLMS_Same_Click()
                                     Messages, txtReserveDT.Text, adsYN, txtUserID.Text)
     
     If ReceiptNum = "" Then
-        MsgBox ("[" + CStr(MessageService.LastErrCode) + "] " + MessageService.LastErrMessage)
+        MsgBox ("응답코드 : " + CStr(MessageService.LastErrCode) + vbCrLf + "응답메시지 : " + MessageService.LastErrMessage)
         Exit Sub
     End If
     
@@ -965,10 +1105,10 @@ Private Sub btnSendMMS_Click()
     
     
     '발신번호
-    message.sender = "07075103710"
+    message.sender = "07043042991"
     
     '발신자명
-    message.SenderName = "발신자명"
+    message.senderName = "발신자명"
     
     '수신번호
     message.receiver = "010111222"
@@ -990,7 +1130,7 @@ Private Sub btnSendMMS_Click()
     ReceiptNum = MessageService.SendMMS(txtCorpNum.Text, "", "", "", Messages, FilePaths, txtReserveDT.Text, adsYN, txtUserID.Text)
     
     If ReceiptNum = "" Then
-        MsgBox ("[" + CStr(MessageService.LastErrCode) + "] " + MessageService.LastErrMessage)
+        MsgBox ("응답코드 : " + CStr(MessageService.LastErrCode) + vbCrLf + "응답메시지 : " + MessageService.LastErrMessage)
         Exit Sub
     End If
     
@@ -1018,11 +1158,22 @@ Private Sub btnSendMMS_hundred_Click()
         
         Set message = New PBMessage
         
-        message.sender = "07075103710"
-        message.SenderName = "발신자명"
+        '발신번호
+        message.sender = "07043042991"
+        
+        '발신자명
+        message.senderName = "발신자명"
+        
+        '수신번호
         message.receiver = "010111222"
+        
+        '수신자명
         message.receiverName = "수신자이름_" + CStr(i + 1)
+        
+        '메시지 제목
         message.subject = "포토메시지 제목입니다."
+        
+        '메시지 내용
         message.content = "발신 내용. 이 내용은 장문으로 전송될수 있도록 길이를 설정하였습니다. 팝빌은 국내 최고의 전자세금계산서 서비스 입니다."
         
         Messages.Add message
@@ -1032,11 +1183,22 @@ Private Sub btnSendMMS_hundred_Click()
         
         Set message = New PBMessage
         
-        message.sender = "07075103710"
-        message.SenderName = "발신자명"
+        '발신번호
+        message.sender = "07043042991"
+        
+        '발신자명
+        message.senderName = "발신자명"
+        
+        '수신번호
         message.receiver = "010111222"
+        
+        '수신자명
         message.receiverName = "수신자이름_" + CStr(i + 1)
+        
+        '메시지 제목
         message.subject = "포토 메시지 제목"
+        
+        '메시지 내용
         message.content = "발신 내용. 이 내용은 단문으로 전송됩니다."
         
         Messages.Add message
@@ -1050,7 +1212,7 @@ Private Sub btnSendMMS_hundred_Click()
     ReceiptNum = MessageService.SendMMS(txtCorpNum.Text, "", "", "", Messages, FilePaths, txtReserveDT.Text, adsYN, txtUserID.Text)
     
     If ReceiptNum = "" Then
-        MsgBox ("[" + CStr(MessageService.LastErrCode) + "] " + MessageService.LastErrMessage)
+        MsgBox ("응답코드 : " + CStr(MessageService.LastErrCode) + vbCrLf + "응답메시지 : " + MessageService.LastErrMessage)
         Exit Sub
     End If
     
@@ -1077,7 +1239,7 @@ Private Sub btnSendMMS_Same_Click()
     FilePaths.Add CommonDialog1.FileName
     
     '발신번호
-    sender = "07075103710"
+    sender = "07043042991"
     
     '동보메시지 제목
     subject = "동보메시지 제목"
@@ -1085,12 +1247,15 @@ Private Sub btnSendMMS_Same_Click()
     '동보메시지 내용
     Contents = "동보메시지 내용"
     
-    '수신정보
+    
     For i = 0 To 100
         
         Set message = New PBMessage
         
+        '수신번호
         message.receiver = "010111222"
+        
+        '수신자명
         message.receiverName = "수신자이름_" + CStr(i + 1)
         
         Messages.Add message
@@ -1103,7 +1268,7 @@ Private Sub btnSendMMS_Same_Click()
     ReceiptNum = MessageService.SendMMS(txtCorpNum.Text, sender, subject, Contents, Messages, FilePaths, txtReserveDT.Text, adsYN, txtUserID.Text)
     
     If ReceiptNum = "" Then
-        MsgBox ("[" + CStr(MessageService.LastErrCode) + "] " + MessageService.LastErrMessage)
+        MsgBox ("응답코드 : " + CStr(MessageService.LastErrCode) + vbCrLf + "응답메시지 : " + MessageService.LastErrMessage)
         Exit Sub
     End If
     
@@ -1116,8 +1281,6 @@ End Sub
 Private Sub btnSendSMS_hundredd_Click()
     Dim Messages As New Collection
     Dim adsYN As Boolean
-    adsYN = False       '광고문자 전송여부
-    
     Dim message As PBMessage
     
     Dim i As Integer
@@ -1126,21 +1289,33 @@ Private Sub btnSendSMS_hundredd_Click()
         
         Set message = New PBMessage
         
-        message.sender = "07075103710"
-        message.SenderName = "발신자명"
+        '발신번호
+        message.sender = "07043042991"
+        
+        '발신자명
+        message.senderName = "발신자명"
+        
+        '수신번호
         message.receiver = "010111222"
+        
+        '수신자명
         message.receiverName = "수신자이름_" + CStr(i + 1)
+        
+        '메시지 내용, 90Byte 초과된 내용은 삭제되어 전송됨
         message.content = "발신 내용. 단문은 90Byte로 길이가 조정되어 전송됩니다."
         
         Messages.Add message
     Next
     
+    adsYN = False       '광고문자 전송여부
+    
+    
     Dim ReceiptNum As String
     
-    ReceiptNum = MessageService.SendSMS(txtCorpNum.Text, "07075103710", "", Messages, txtReserveDT.Text, adsYN, txtUserID.Text)
+    ReceiptNum = MessageService.SendSMS(txtCorpNum.Text, "", "", Messages, txtReserveDT.Text, adsYN, txtUserID.Text)
     
     If ReceiptNum = "" Then
-        MsgBox ("[" + CStr(MessageService.LastErrCode) + "] " + MessageService.LastErrMessage)
+        MsgBox ("응답코드 : " + CStr(MessageService.LastErrCode) + vbCrLf + "응답메시지 : " + MessageService.LastErrMessage)
         Exit Sub
     End If
     
@@ -1151,38 +1326,46 @@ Private Sub btnSendSMS_hundredd_Click()
 End Sub
 
 Private Sub btnSendSMS_One_Click()
-    
     Dim Messages As New Collection
     Dim adsYN As Boolean
-    adsYN = False       '광고문자 전송여부
-    
     Dim message As New PBMessage
     
-    message.sender = "07075103710"
-    message.SenderName = "발신자명"
+    '발신번호
+    message.sender = "07043042991"
+    
+    '발신자명
+    message.senderName = "발신자명"
+    
+    '수신번호
     message.receiver = "01043245117"
+    
+    '수신자명
     message.receiverName = "수신자이름"
+    
+    '메시지 내용
     message.content = "발신 내용. 단문은 90Byte로 길이가 조정되어 전송됩니다."
     
     Messages.Add message
+    
+    
+    '광고문자 전송여부
+    adsYN = False
     
     Dim ReceiptNum As String
     
     ReceiptNum = MessageService.SendSMS(txtCorpNum.Text, "", "", Messages, txtReserveDT.Text, adsYN, txtUserID.Text)
     
     If ReceiptNum = "" Then
-        MsgBox ("[" + CStr(MessageService.LastErrCode) + "] " + MessageService.LastErrMessage)
+        MsgBox ("응답코드 : " + CStr(MessageService.LastErrCode) + vbCrLf + "응답메시지 : " + MessageService.LastErrMessage)
         Exit Sub
     End If
     
     MsgBox "접수 번호 : " + ReceiptNum
     txtReceiptNum.Text = ReceiptNum
     
-    
 End Sub
 
 Private Sub btnSendSMS_Same_Click()
-        
     Dim Messages As New Collection
     Dim adsYN As Boolean
     Dim sender As String
@@ -1193,19 +1376,20 @@ Private Sub btnSendSMS_Same_Click()
     '발신번호
     sender = "07075103710"
         
-    '메시지 내용, 90byte초과시 삭제되어 전송됨.
+    '메시지 내용, 90byte 초과된 내용은 삭제되어 전송됨.
     Contents = "동보전송 내용 90byte로 길이가 조정되며, Messages의 내용이 없는 수신건에 동보처리됩니다."
     
     '광고문자 전송여부
     adsYN = False
     
-    
-    
     For i = 0 To 100
         
         Set message = New PBMessage
         
+        '수신번호
         message.receiver = "010111222"
+        
+        '수신자명
         message.receiverName = "수신자이름_" + CStr(i + 1)
         
         Messages.Add message
@@ -1216,7 +1400,7 @@ Private Sub btnSendSMS_Same_Click()
     ReceiptNum = MessageService.SendSMS(txtCorpNum.Text, sender, Contents, Messages, txtReserveDT.Text, adsYN, txtUserID.Text)
     
     If ReceiptNum = "" Then
-        MsgBox ("[" + CStr(MessageService.LastErrCode) + "] " + MessageService.LastErrMessage)
+        MsgBox ("응답코드 : " + CStr(MessageService.LastErrCode) + vbCrLf + "응답메시지 : " + MessageService.LastErrMessage)
         Exit Sub
     End If
     
@@ -1236,12 +1420,23 @@ Private Sub btnSendXMS_Hundred_Click()
         
         Set message = New PBMessage
         
-        message.sender = "07075103710"
-        message.SenderName = "발신자명"
+        '발신번호
+        message.sender = "07043042991"
+        
+        '발신자명
+        message.senderName = "발신자명"
+        
+        '수신번호
         message.receiver = "010111222"
+        
+        '수신자명
         message.receiverName = "수신자이름_" + CStr(i + 1)
-        message.content = "발신 내용. 이 내용은 장문으로 전송될수 있도록 길이를 설정하였습니다. 팝빌은 국내 최고의 전자세금계산서 서비스 입니다."
+        
+        '장문메시지 제목
         message.subject = "장문 제목입니다."
+        
+        '메시지 내용
+        message.content = "발신 내용. 이 내용은 장문으로 전송될수 있도록 길이를 설정하였습니다. 팝빌은 국내 최고의 전자세금계산서 서비스 입니다."
         
         Messages.Add message
     Next
@@ -1250,10 +1445,19 @@ Private Sub btnSendXMS_Hundred_Click()
         
         Set message = New PBMessage
         
-        message.sender = "07075103710"
-        message.SenderName = "발신자명"
+        '발신번호
+        message.sender = "07043042992"
+        
+        '발신자명
+        message.senderName = "발신자명"
+        
+        '수신번호
         message.receiver = "010111222"
+        
+        '수신자명
         message.receiverName = "수신자이름_" + CStr(i + 1)
+        
+        '메시지 내용
         message.content = "발신 내용. 이 내용은 단문으로 전송됩니다."
         
         Messages.Add message
@@ -1266,7 +1470,7 @@ Private Sub btnSendXMS_Hundred_Click()
     ReceiptNum = MessageService.SendXMS(txtCorpNum.Text, "", "", "", Messages, txtReserveDT.Text, adsYN, txtUserID.Text)
     
     If ReceiptNum = "" Then
-        MsgBox ("[" + CStr(MessageService.LastErrCode) + "] " + MessageService.LastErrMessage)
+        MsgBox ("응답코드 : " + CStr(MessageService.LastErrCode) + vbCrLf + "응답메시지 : " + MessageService.LastErrMessage)
         Exit Sub
     End If
     
@@ -1275,28 +1479,39 @@ Private Sub btnSendXMS_Hundred_Click()
 End Sub
 
 Private Sub btnSendXMS_One_Click()
-    
     Dim Messages As New Collection
     Dim adsYN As Boolean
-    adsYN = False       '광고문자 전송여부
-    
     Dim message As New PBMessage
     
-    message.sender = "07075103710"
-    message.SenderName = "발신자명"
+    '발신번호
+    message.sender = "07043042991"
+    
+    '발신자명
+    message.senderName = "발신자명"
+    
+    '수신번호
     message.receiver = "010111222"
+    
+    '수신자명
     message.receiverName = "수신자이름"
-    message.content = "자동인식 발송은 내용의 길이를 90Byte기준으로 이하는 단문, 이상은 장문으로 자동 전송합니다."
+    
+    '장문 메시지 제목
     message.subject = "장문의 경우 장문 제목입니다."
     
+    '메시지 내용, 90byte 기준으로 문자타입(단/장문)이 자동으로 인식되어 전송됨.
+    message.content = "자동인식 발송은 내용의 길이를 90Byte기준으로 이하는 단문, 이상은 장문으로 자동 전송합니다."
+    
     Messages.Add message
+    
+    '광고문자 전송여부
+    adsYN = False
     
     Dim ReceiptNum As String
     
     ReceiptNum = MessageService.SendXMS(txtCorpNum.Text, "", "", "", Messages, txtReserveDT.Text, adsYN, txtUserID.Text)
     
     If ReceiptNum = "" Then
-        MsgBox ("[" + CStr(MessageService.LastErrCode) + "] " + MessageService.LastErrMessage)
+        MsgBox ("응답코드 : " + CStr(MessageService.LastErrCode) + vbCrLf + "응답메시지 : " + MessageService.LastErrMessage)
         Exit Sub
     End If
     
@@ -1315,7 +1530,7 @@ Private Sub btnSendXMS_Same_Click()
     Dim ReceiptNum As String
     
     '발신번호
-    sender = "07075103710"
+    sender = "07043042991"
     
     '동보메시지 제목
     subject = "동보전송 제목, 장문에 적용됨"
@@ -1327,7 +1542,10 @@ Private Sub btnSendXMS_Same_Click()
         
         Set message = New PBMessage
         
+        '수신번호
         message.receiver = "010111222"
+        
+        '수신자명
         message.receiverName = "수신자이름_" + CStr(i + 1)
         
         Messages.Add message
@@ -1340,7 +1558,7 @@ Private Sub btnSendXMS_Same_Click()
                                         Messages, txtReserveDT.Text, adsYN, txtUserID.Text)
     
     If ReceiptNum = "" Then
-        MsgBox ("[" + CStr(MessageService.LastErrCode) + "] " + MessageService.LastErrMessage)
+        MsgBox ("응답코드 : " + CStr(MessageService.LastErrCode) + vbCrLf + "응답메시지 : " + MessageService.LastErrMessage)
         Exit Sub
     End If
     
@@ -1348,13 +1566,17 @@ Private Sub btnSendXMS_Same_Click()
     txtReceiptNum.Text = ReceiptNum
 End Sub
 
+'=========================================================================
+' 단문(SMS) 전송단가를 확인합니다.
+'=========================================================================
+
 Private Sub btnUnitCost_Click()
     Dim unitCost As Single
     
     unitCost = MessageService.GetUnitCost(txtCorpNum.Text, SMS)
     
     If unitCost < 0 Then
-        MsgBox ("[" + CStr(MessageService.LastErrCode) + "] " + MessageService.LastErrMessage)
+        MsgBox ("응답코드 : " + CStr(MessageService.LastErrCode) + vbCrLf + "응답메시지 : " + MessageService.LastErrMessage)
         Exit Sub
     End If
     
@@ -1362,19 +1584,26 @@ Private Sub btnUnitCost_Click()
     
 End Sub
 
+'=========================================================================
+' 장문(LMS) 전송단가를 확인합니다.
+'=========================================================================
+
 Private Sub btnUnitCost_LMS_Click()
     Dim unitCost As Single
     
     unitCost = MessageService.GetUnitCost(txtCorpNum.Text, LMS)
     
     If unitCost < 0 Then
-        MsgBox ("[" + CStr(MessageService.LastErrCode) + "] " + MessageService.LastErrMessage)
+        MsgBox ("응답코드 : " + CStr(MessageService.LastErrCode) + vbCrLf + "응답메시지 : " + MessageService.LastErrMessage)
         Exit Sub
     End If
     
     MsgBox "LMS 전송 단가 : " + CStr(unitCost)
 End Sub
 
+'=========================================================================
+' 포토(MMS)메시지 전송단가를 확인합니다.
+'=========================================================================
 
 Private Sub btnUnitCost_MMS_Click()
     Dim unitCost As Single
@@ -1382,12 +1611,16 @@ Private Sub btnUnitCost_MMS_Click()
     unitCost = MessageService.GetUnitCost(txtCorpNum.Text, MMS)
     
     If unitCost < 0 Then
-        MsgBox ("[" + CStr(MessageService.LastErrCode) + "] " + MessageService.LastErrMessage)
+        MsgBox ("응답코드 : " + CStr(MessageService.LastErrCode) + vbCrLf + "응답메시지 : " + MessageService.LastErrMessage)
         Exit Sub
     End If
     
     MsgBox "MMS 전송 단가 : " + CStr(unitCost)
 End Sub
+
+'=========================================================================
+' 연동회원의 담당자 정보를 수정합니다.
+'=========================================================================
 
 Private Sub btnUpdateContact_Click()
     Dim joinData As New PBContactInfo
@@ -1404,12 +1637,16 @@ Private Sub btnUpdateContact_Click()
     Set Response = MessageService.UpdateContact(txtCorpNum.Text, joinData, txtUserID.Text)
     
     If Response Is Nothing Then
-        MsgBox ("[" + CStr(MessageService.LastErrCode) + "] " + MessageService.LastErrMessage)
+        MsgBox ("응답코드 : " + CStr(MessageService.LastErrCode) + vbCrLf + "응답메시지 : " + MessageService.LastErrMessage)
         Exit Sub
     End If
     
-    MsgBox ("[" + CStr(Response.code) + "] " + Response.message)
+    MsgBox ("응답코드 : " + CStr(Response.code) + vbCrLf + "응답메시지 : " + Response.message)
 End Sub
+
+'=========================================================================
+' 연동회원의 회사정보를 수정합니다
+'=========================================================================
 
 Private Sub btnUpdateCorpInfo_Click()
     Dim CorpInfo As New PBCorpInfo
@@ -1424,17 +1661,18 @@ Private Sub btnUpdateCorpInfo_Click()
     Set Response = MessageService.UpdateCorpInfo(txtCorpNum.Text, CorpInfo, txtUserID.Text)
     
     If Response Is Nothing Then
-        MsgBox ("[" + CStr(MessageService.LastErrCode) + "] " + MessageService.LastErrMessage)
+        MsgBox ("응답코드 : " + CStr(MessageService.LastErrCode) + vbCrLf + "응답메시지 : " + MessageService.LastErrMessage)
         Exit Sub
     End If
     
-    MsgBox ("[" + CStr(Response.code) + "] " + Response.message)
+    MsgBox ("응답코드 : " + CStr(Response.code) + vbCrLf + "응답메시지 : " + Response.message)
 End Sub
 
 Private Sub Form_Load()
     MessageService.Initialize LinkID, SecretKey
     
-    '연동환경 설정값 True-테스트용, False-상업용
+    '연동환경 설정값 True-개발용, False-상업용
     MessageService.IsTest = True
     
 End Sub
+
