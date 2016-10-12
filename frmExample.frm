@@ -557,6 +557,8 @@ End Sub
 
 Private Sub btnGetAutoDenyList_Click()
     Dim AutoDenyList As Collection
+    Dim tmp As String
+    Dim AutoDenyInfo As PBAutoDenyInfo
     
     Set AutoDenyList = MessageService.GetAutoDenyList(txtCorpNum.Text)
     
@@ -565,11 +567,7 @@ Private Sub btnGetAutoDenyList_Click()
         Exit Sub
     End If
     
-    Dim tmp As String
-    
     tmp = "number(수신거부번호) | regDT(등록일시)" + vbCrLf
-    
-    Dim AutoDenyInfo As PBAutoDenyInfo
     
     For Each AutoDenyInfo In AutoDenyList
         tmp = tmp + AutoDenyInfo.number + " | " + AutoDenyInfo.regDT + vbCrLf
@@ -597,7 +595,6 @@ Private Sub btnGetBalance_Click()
     
     MsgBox "잔여포인트 : " + CStr(balance)
     
-    
 End Sub
 
 '=========================================================================
@@ -607,6 +604,7 @@ End Sub
 Private Sub btnGetChargeInfo_Click()
     Dim ChargeInfo As PBChargeInfo
     Dim MType As MsgType
+    Dim tmp As String
     
     MType = SMS     'SMS-단문, LMS-장문 MMS-포토
             
@@ -616,8 +614,6 @@ Private Sub btnGetChargeInfo_Click()
         MsgBox ("응답코드 : " + CStr(MessageService.LastErrCode) + vbCrLf + "응답메시지 : " + MessageService.LastErrMessage)
         Exit Sub
     End If
-    
-    Dim tmp As String
     
     tmp = tmp + "unitCost (전송단가) : " + ChargeInfo.unitCost + vbCrLf
     tmp = tmp + "chargeMethod (과금유형) : " + ChargeInfo.chargeMethod + vbCrLf
@@ -632,6 +628,7 @@ End Sub
 
 Private Sub btnGetCorpInfo_Click()
     Dim CorpInfo As PBCorpInfo
+    Dim tmp As String
     
     Set CorpInfo = MessageService.GetCorpInfo(txtCorpNum.Text, txtUserID.Text)
      
@@ -639,8 +636,6 @@ Private Sub btnGetCorpInfo_Click()
         MsgBox ("응답코드 : " + CStr(MessageService.LastErrCode) + vbCrLf + "응답메시지 : " + MessageService.LastErrMessage)
         Exit Sub
     End If
-    
-    Dim tmp As String
     
     tmp = tmp + "ceoname(대표자성명) : " + CorpInfo.CEOName + vbCrLf
     tmp = tmp + "corpName(상호명) : " + CorpInfo.CorpName + vbCrLf
@@ -657,6 +652,8 @@ End Sub
 
 Private Sub btnGetMessages_Click()
     Dim sentMessages As Collection
+    Dim sentMessage As PBSentMsg
+    Dim tmp As String
     
     Set sentMessages = MessageService.GetMessages(txtCorpNum.Text, txtReceiptNum.Text, txtUserID.Text)
     
@@ -665,11 +662,6 @@ Private Sub btnGetMessages_Click()
         Exit Sub
     End If
     
-    
-    Dim sentMessage As PBSentMsg
-    
-    
-    Dim tmp As String
     tmp = "state | subject | messageType | sendnum | senderName | receiveNum | receiveName | receiptDT | reserveDT | sendDT | sendResult | tranNet" + vbCrLf
     
     For Each sentMessage In sentMessages
@@ -691,7 +683,6 @@ Private Sub btnGetMessages_Click()
         
         tmp = tmp + vbCrLf
     Next
-    
     
     txtResult.Text = tmp
     
@@ -731,6 +722,7 @@ Private Sub btnGetPopbillURL_CHRG_Click()
         MsgBox ("응답코드 : " + CStr(MessageService.LastErrCode) + vbCrLf + "응답메시지 : " + MessageService.LastErrMessage)
         Exit Sub
     End If
+    
     MsgBox "URL : " + vbCrLf + url
 End Sub
 
@@ -748,6 +740,7 @@ Private Sub btnGetPopbillURL_LOGIN_Click()
         MsgBox ("응답코드 : " + CStr(MessageService.LastErrCode) + vbCrLf + "응답메시지 : " + MessageService.LastErrMessage)
         Exit Sub
     End If
+    
     MsgBox "URL : " + vbCrLf + url
 End Sub
 
@@ -810,7 +803,6 @@ Private Sub btnJoinMember_Click()
     
     MsgBox ("응답코드 : " + CStr(Response.code) + vbCrLf + "응답메시지 : " + Response.message)
     
-    
 End Sub
 
 '=========================================================================
@@ -819,7 +811,9 @@ End Sub
 
 Private Sub btnListContact_Click()
     Dim resultList As Collection
-        
+    Dim tmp As String
+    Dim info As PBContactInfo
+    
     Set resultList = MessageService.ListContact(txtCorpNum.Text, txtUserID.Text)
      
     If resultList Is Nothing Then
@@ -827,11 +821,7 @@ Private Sub btnListContact_Click()
         Exit Sub
     End If
     
-    Dim tmp As String
-    
     tmp = "id | email | hp | personName | searchAllAllowYN | tel | fax | mgrYN | regDT " + vbCrLf
-    
-    Dim info As PBContactInfo
     
     For Each info In resultList
         tmp = tmp + info.ID + " | " + info.email + " | " + info.hp + " | " + info.personName + " | " + CStr(info.searchAllAllowYN) _
@@ -849,7 +839,6 @@ Private Sub btnRegistContact_Click()
     Dim joinData As New PBContactInfo
     Dim Response As PBResponse
     
-
     '담당자 아이디, 6자 이상 20자 미만
     joinData.ID = "testkorea_20161011"
     
@@ -902,6 +891,8 @@ Private Sub btnSearch_Click()
     Dim Page As Integer
     Dim PerPage As Integer
     Dim Order As String
+    Dim tmp As String
+    Dim info As PBSentMsg
     
     '[필수] 시작일자, 날자형식(yyyyMMdd)
     SDate = "20160901"
@@ -942,7 +933,6 @@ Private Sub btnSearch_Click()
         Exit Sub
     End If
     
-    Dim tmp As String
     tmp = "code : " + CStr(msgSearchList.code) + vbCrLf
     tmp = tmp + "total : " + CStr(msgSearchList.total) + vbCrLf
     tmp = tmp + "perPage : " + CStr(msgSearchList.PerPage) + vbCrLf
@@ -952,8 +942,6 @@ Private Sub btnSearch_Click()
     
     tmp = tmp + "state | subject | messageType | sendnum | senderName | receiveNum | receiveName | receiptDT | reserveDT | sendDT | sendResult | tranNet" + vbCrLf
             
-    Dim info As PBSentMsg
-    
     For Each info In msgSearchList.list
         tmp = tmp + CStr(info.state) + " | "
         tmp = tmp + info.subject + " | "
@@ -989,6 +977,7 @@ Private Sub btnSearchPopup_Click()
         MsgBox ("응답코드 : " + CStr(MessageService.LastErrCode) + vbCrLf + "응답메시지 : " + MessageService.LastErrMessage)
         Exit Sub
     End If
+    
     MsgBox "URL : " + vbCrLf + url
 End Sub
 
@@ -1034,6 +1023,7 @@ Private Sub btnSendLMS_Hundred_Click()
     End If
     
     MsgBox "접수 번호 : " + ReceiptNum
+    
     txtReceiptNum.Text = ReceiptNum
     
 End Sub
@@ -1042,6 +1032,7 @@ Private Sub btnSendLMS_One_Click()
     Dim Messages As New Collection
     Dim adsYN As Boolean
     Dim message As New PBMessage
+    Dim ReceiptNum As String
     
     '발신번호
     message.sender = "07043042991"
@@ -1068,8 +1059,6 @@ Private Sub btnSendLMS_One_Click()
     '광고문자 전송여부
     adsYN = False
     
-    Dim ReceiptNum As String
-    
     ReceiptNum = MessageService.SendLMS(txtCorpNum.Text, "", "", "", Messages, txtReserveDT.Text, adsYN, txtUserID.Text)
     
     If ReceiptNum = "" Then
@@ -1078,13 +1067,12 @@ Private Sub btnSendLMS_One_Click()
     End If
     
     MsgBox "접수 번호 : " + ReceiptNum
-    txtReceiptNum.Text = ReceiptNum
     
+    txtReceiptNum.Text = ReceiptNum
     
 End Sub
 
 Private Sub btnSendLMS_Same_Click()
-        
     Dim Messages As New Collection
     Dim sender As String
     Dim subject As String
@@ -1093,7 +1081,6 @@ Private Sub btnSendLMS_Same_Click()
     Dim message As PBMessage
     Dim i As Integer
     Dim ReceiptNum As String
-    
     
     '발신번호
     sender = "07043042991"
@@ -1129,6 +1116,7 @@ Private Sub btnSendLMS_Same_Click()
     End If
     
     MsgBox "접수 번호 : " + ReceiptNum
+    
     txtReceiptNum.Text = ReceiptNum
 End Sub
 
@@ -1179,6 +1167,7 @@ Private Sub btnSendMMS_Click()
     End If
     
     MsgBox "접수 번호 : " + ReceiptNum
+    
     txtReceiptNum.Text = ReceiptNum
     
 End Sub
@@ -1252,7 +1241,6 @@ Private Sub btnSendMMS_hundred_Click()
     '광고문자 전송여부
     adsYN = False
     
-    
     ReceiptNum = MessageService.SendMMS(txtCorpNum.Text, "", "", "", Messages, FilePaths, txtReserveDT.Text, adsYN, txtUserID.Text)
     
     If ReceiptNum = "" Then
@@ -1317,8 +1305,8 @@ Private Sub btnSendMMS_Same_Click()
     End If
     
     MsgBox "접수 번호 : " + ReceiptNum
-    txtReceiptNum.Text = ReceiptNum
     
+    txtReceiptNum.Text = ReceiptNum
     
 End Sub
 
@@ -1326,8 +1314,8 @@ Private Sub btnSendSMS_hundredd_Click()
     Dim Messages As New Collection
     Dim adsYN As Boolean
     Dim message As PBMessage
-    
     Dim i As Integer
+    Dim ReceiptNum As String
     
     For i = 0 To 100
         
@@ -1353,9 +1341,6 @@ Private Sub btnSendSMS_hundredd_Click()
     
     adsYN = False       '광고문자 전송여부
     
-    
-    Dim ReceiptNum As String
-    
     ReceiptNum = MessageService.SendSMS(txtCorpNum.Text, "", "", Messages, txtReserveDT.Text, adsYN, txtUserID.Text)
     
     If ReceiptNum = "" Then
@@ -1364,8 +1349,8 @@ Private Sub btnSendSMS_hundredd_Click()
     End If
     
     MsgBox "접수 번호 : " + ReceiptNum
-    txtReceiptNum.Text = ReceiptNum
     
+    txtReceiptNum.Text = ReceiptNum
     
 End Sub
 
@@ -1373,6 +1358,7 @@ Private Sub btnSendSMS_One_Click()
     Dim Messages As New Collection
     Dim adsYN As Boolean
     Dim message As New PBMessage
+    Dim ReceiptNum As String
     
     '발신번호
     message.sender = "07043042991"
@@ -1391,11 +1377,8 @@ Private Sub btnSendSMS_One_Click()
     
     Messages.Add message
     
-    
     '광고문자 전송여부
     adsYN = False
-    
-    Dim ReceiptNum As String
     
     ReceiptNum = MessageService.SendSMS(txtCorpNum.Text, "", "", Messages, txtReserveDT.Text, adsYN, txtUserID.Text)
     
@@ -1416,6 +1399,7 @@ Private Sub btnSendSMS_Same_Click()
     Dim Contents As String
     Dim message As PBMessage
     Dim i As Integer
+    Dim ReceiptNum As String
     
     '발신번호
     sender = "07075103710"
@@ -1439,8 +1423,6 @@ Private Sub btnSendSMS_Same_Click()
         Messages.Add message
     Next
     
-    Dim ReceiptNum As String
-    
     ReceiptNum = MessageService.SendSMS(txtCorpNum.Text, sender, Contents, Messages, txtReserveDT.Text, adsYN, txtUserID.Text)
     
     If ReceiptNum = "" Then
@@ -1449,6 +1431,7 @@ Private Sub btnSendSMS_Same_Click()
     End If
     
     MsgBox "접수 번호 : " + ReceiptNum
+    
     txtReceiptNum.Text = ReceiptNum
     
 End Sub
@@ -1519,13 +1502,16 @@ Private Sub btnSendXMS_Hundred_Click()
     End If
     
     MsgBox "접수 번호 : " + ReceiptNum
+    
     txtReceiptNum.Text = ReceiptNum
+    
 End Sub
 
 Private Sub btnSendXMS_One_Click()
     Dim Messages As New Collection
     Dim adsYN As Boolean
     Dim message As New PBMessage
+    Dim ReceiptNum As String
     
     '발신번호
     message.sender = "07043042991"
@@ -1549,8 +1535,6 @@ Private Sub btnSendXMS_One_Click()
     
     '광고문자 전송여부
     adsYN = False
-    
-    Dim ReceiptNum As String
     
     ReceiptNum = MessageService.SendXMS(txtCorpNum.Text, "", "", "", Messages, txtReserveDT.Text, adsYN, txtUserID.Text)
     
@@ -1607,6 +1591,7 @@ Private Sub btnSendXMS_Same_Click()
     End If
     
     MsgBox "접수 번호 : " + ReceiptNum
+    
     txtReceiptNum.Text = ReceiptNum
 End Sub
 
@@ -1685,7 +1670,7 @@ Private Sub btnUpdateContact_Click()
     '팩스번호
     joinData.fax = "070-1234-1234"
     
-    '전체조회여부, Ture-회사조회, False-개인조
+    '전체조회여부, Ture-회사조회, False-개인조회
     joinData.searchAllAllowYN = True
     
     '관리자 권한여부
