@@ -758,21 +758,47 @@ End Sub
 Private Sub btnJoinMember_Click()
     Dim joinData As New PBJoinForm
     Dim Response As PBResponse
+ 
+    '링크 아이디
+    joinData.LinkID = LinkID
     
-    joinData.LinkID = LinkID '링크 아이디
-    joinData.CorpNum = "1231212312" '사업자번호 "-" 제외.
+    '사업자번호, '-'제외, 10자리
+    joinData.CorpNum = "1231212312"
+    
+    '대표자성명, 최대 30자
     joinData.CEOName = "대표자성명"
+    
+    '상호명, 최대 70자
     joinData.CorpName = "회원상호"
+    
+    '주소, 최대 300자
     joinData.Addr = "주소"
-    joinData.ZipCode = "500-100"
+    
+    '업태, 최대 40자
     joinData.BizType = "업태"
-    joinData.BizClass = "업종"
-    joinData.ID = "userid"      '6자 이상 20자 미만.
-    joinData.PWD = "pwd_must_be_long_enough"    '6자 이상 20자 미만.
+    
+    '종목, 최대 40자
+    joinData.BizClass = "종목"
+    
+    '아이디, 6자이상 20자 미만
+    joinData.ID = "userid"
+    
+    '비밀번호, 6자이상 20자 미만
+    joinData.PWD = "pwd_must_be_long_enough"
+    
+    '담당자명, 최대 30자
     joinData.ContactName = "담당자성명"
+    
+    '담당자 연락처, 최대 20자
     joinData.ContactTEL = "02-999-9999"
+    
+    '담당자 휴대폰번호, 최대 20자
     joinData.ContactHP = "010-1234-5678"
+    
+    '담당자 팩스번호, 최대 20자
     joinData.ContactFAX = "02-999-9998"
+    
+    '담당자 메일, 최대 70자
     joinData.ContactEmail = "test@test.com"
     
     Set Response = MessageService.JoinMember(joinData)
@@ -823,15 +849,33 @@ Private Sub btnRegistContact_Click()
     Dim joinData As New PBContactInfo
     Dim Response As PBResponse
     
-    joinData.ID = "testkorea_20151007"      '담당자 아이디
-    joinData.PWD = "test@test.com"          '비밀번호
-    joinData.personName = "담당자명"        '담당자명
-    joinData.tel = "070-1234-1234"          '연락처
-    joinData.hp = "010-1234-1234"           '휴대폰번호
-    joinData.email = "test@test.com"        '이메일 주소
-    joinData.fax = "070-1234-1234"          '팩스번호
-    joinData.searchAllAllowYN = True        '전체조회여부, Ture-회사조회, False-개인조회
-    joinData.mgrYN = False                  '관리자 권한여부
+
+    '담당자 아이디, 6자 이상 20자 미만
+    joinData.ID = "testkorea_20161011"
+    
+    '비밀번호, 6자 이상 20자 미만
+    joinData.PWD = "test@test.com"
+    
+    '담당자명, 최대 30자
+    joinData.personName = "담당자명"
+    
+    '담당자 연락처
+    joinData.tel = "070-1234-1234"
+    
+    '담당자 휴대폰번호
+    joinData.hp = "010-1234-1234"
+    
+    '담당자 메일주소
+    joinData.email = "test@test.com"
+    
+    '담당자 팩스번호
+    joinData.fax = "070-1234-1234"
+    
+    '회사조회 권한여부, true-회사조회 / false-개인조회
+    joinData.searchAllAllowYN = True
+    
+    '관리자 권한여부
+    joinData.mgrYN = False
         
     Set Response = MessageService.RegistContact(txtCorpNum.Text, joinData, txtUserID.Text)
     
@@ -1625,15 +1669,28 @@ End Sub
 Private Sub btnUpdateContact_Click()
     Dim joinData As New PBContactInfo
     Dim Response As PBResponse
+
+    '담당자명
+    joinData.personName = "담당자명_수정"
     
-    joinData.personName = "담당자명_수정"  '담당자명
-    joinData.tel = "070-1234-1234"         '연락처
-    joinData.hp = "010-1234-1234"          '휴대폰번호
-    joinData.email = "test@test.com"       '이메일 주소
-    joinData.fax = "070-1234-1234"         '팩스번호
-    joinData.searchAllAllowYN = True       '전체조회여부, Ture-회사조회, False-개인조
-    joinData.mgrYN = False                 '관리자 권한여부
-                
+    '연락처
+    joinData.tel = "070-4304-2991"
+    
+    '휴대폰번호
+    joinData.hp = "010-1234-1234"
+    
+    '이메일 주소
+    joinData.email = "test@test.com"
+    
+    '팩스번호
+    joinData.fax = "070-1234-1234"
+    
+    '전체조회여부, Ture-회사조회, False-개인조
+    joinData.searchAllAllowYN = True
+    
+    '관리자 권한여부
+    joinData.mgrYN = False
+    
     Set Response = MessageService.UpdateContact(txtCorpNum.Text, joinData, txtUserID.Text)
     
     If Response Is Nothing Then
@@ -1652,11 +1709,20 @@ Private Sub btnUpdateCorpInfo_Click()
     Dim CorpInfo As New PBCorpInfo
     Dim Response As PBResponse
     
-    CorpInfo.CEOName = "대표자"         '대표자명
-    CorpInfo.CorpName = "상호_수정"          '상호명
-    CorpInfo.Addr = "서울특별시"        '주소
-    CorpInfo.BizType = "업태"           '업태
-    CorpInfo.BizClass = "업종"          '업종
+    '대표자명
+    CorpInfo.CEOName = "대표자"
+    
+    '상호
+    CorpInfo.CorpName = "상호"
+    
+    '주소
+    CorpInfo.Addr = "서울특별시"
+    
+    '업태
+    CorpInfo.BizType = "업태"
+    
+    '종목
+    CorpInfo.BizClass = "종목"
     
     Set Response = MessageService.UpdateCorpInfo(txtCorpNum.Text, CorpInfo, txtUserID.Text)
     
