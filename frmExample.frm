@@ -1367,7 +1367,7 @@ Private Sub btnSendSMS_One_Click()
     message.senderName = "발신자명"
     
     '수신번호
-    message.receiver = "01043245117"
+    message.receiver = "010111222"
     
     '수신자명
     message.receiverName = "수신자이름"
