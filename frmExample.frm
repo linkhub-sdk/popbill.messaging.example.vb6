@@ -954,7 +954,7 @@ Private Sub btnSearch_Click()
         tmp = tmp + info.reserveDT + " | "
         tmp = tmp + info.sendDT + " | "
         tmp = tmp + info.resultDT + " | "
-        tmp = tmp + info.result + " | "
+        tmp = tmp + CStr(info.result) + " | "
         tmp = tmp + info.tranNet
         tmp = tmp + vbCrLf
     Next
