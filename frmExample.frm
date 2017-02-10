@@ -661,7 +661,7 @@ Private Sub btnGetMessages_Click()
         Exit Sub
     End If
     
-    tmp = "state | subject | messageType | sendnum | senderName | receiveNum | receiveName | receiptDT | reserveDT | sendDT | sendResult | tranNet" + vbCrLf
+    tmp = "state | subject | messageType | sendnum | senderName | receiveNum | receiveName | receiptDT | reserveDT | sendDT | result | tranNet" + vbCrLf
     
     For Each sentMessage In sentMessages
     
@@ -677,7 +677,7 @@ Private Sub btnGetMessages_Click()
         tmp = tmp + sentMessage.reserveDT + " | "
         tmp = tmp + sentMessage.sendDT + " | "
         tmp = tmp + sentMessage.resultDT + " | "
-        tmp = tmp + sentMessage.sendResult + " | "
+        tmp = tmp + CStr(sentMessage.result) + " | "
         tmp = tmp + sentMessage.tranNet
         
         tmp = tmp + vbCrLf
@@ -894,10 +894,10 @@ Private Sub btnSearch_Click()
     Dim info As PBSentMsg
     
     '[필수] 시작일자, 날자형식(yyyyMMdd)
-    SDate = "20160901"
+    SDate = "20170101"
     
     '[필수] 종료일자, 날자형식(yyyyMMdd)
-    EDate = "20161031"
+    EDate = "20170301"
     
     '전송상태값 배열, 1-대기, 2-성공, 3-실패, 4-취소
     state.Add "1"
@@ -939,7 +939,7 @@ Private Sub btnSearch_Click()
     tmp = tmp + "pageCount : " + CStr(msgSearchList.pageCount) + vbCrLf
     tmp = tmp + "message : " + msgSearchList.message + vbCrLf + vbCrLf
     
-    tmp = tmp + "state | subject | messageType | sendnum | senderName | receiveNum | receiveName | receiptDT | reserveDT | sendDT | sendResult | tranNet" + vbCrLf
+    tmp = tmp + "state | subject | messageType | sendnum | senderName | receiveNum | receiveName | receiptDT | reserveDT | sendDT | result | tranNet" + vbCrLf
             
     For Each info In msgSearchList.list
         tmp = tmp + CStr(info.state) + " | "
@@ -954,7 +954,7 @@ Private Sub btnSearch_Click()
         tmp = tmp + info.reserveDT + " | "
         tmp = tmp + info.sendDT + " | "
         tmp = tmp + info.resultDT + " | "
-        tmp = tmp + info.sendResult + " | "
+        tmp = tmp + info.result + " | "
         tmp = tmp + info.tranNet
         tmp = tmp + vbCrLf
     Next
