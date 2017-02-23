@@ -472,9 +472,9 @@ Attribute VB_Exposed = False
 ' 팝빌 문자 API VB 6.0 SDK Example
 '
 ' - VB6 SDK 연동환경 설정방법 안내 :
-' - 업데이트 일자 : 2016-10-11
-' - 연동 기술지원 연락처 : 1600-8536 / 070-4304-2991 (직통 / 정요한대리)
-' - 연동 기술지원 이메일 : dev@linkhub.co.kr
+' - 업데이트 일자 : 2017-02-23
+' - 연동 기술지원 연락처 : 1600-8536 / 070-4304-2991
+' - 연동 기술지원 이메일 : code@linkhub.co.kr
 '
 ' <테스트 연동개발 준비사항>
 ' 1) 25, 28번 라인에 선언된 링크아이디(LinkID)와 비밀키(SecretKey)를
@@ -505,7 +505,7 @@ Private MessageService As New PBMSGService
 Private Sub btnCancelReserve_Click()
     Dim Response As PBResponse
     
-    Set Response = MessageService.CancelReserve(txtCorpNum.Text, txtReceiptNum.Text, txtUserID.Text)
+    Set Response = MessageService.CancelReserve(txtCorpNum.Text, txtReceiptNum.Text)
     
     If Response Is Nothing Then
         MsgBox ("응답코드 : " + CStr(MessageService.LastErrCode) + vbCrLf + "응답메시지 : " + MessageService.LastErrMessage)
@@ -629,7 +629,7 @@ Private Sub btnGetCorpInfo_Click()
     Dim CorpInfo As PBCorpInfo
     Dim tmp As String
     
-    Set CorpInfo = MessageService.GetCorpInfo(txtCorpNum.Text, txtUserID.Text)
+    Set CorpInfo = MessageService.GetCorpInfo(txtCorpNum.Text)
      
     If CorpInfo Is Nothing Then
         MsgBox ("응답코드 : " + CStr(MessageService.LastErrCode) + vbCrLf + "응답메시지 : " + MessageService.LastErrMessage)
@@ -654,7 +654,7 @@ Private Sub btnGetMessages_Click()
     Dim sentMessage As PBSentMsg
     Dim tmp As String
     
-    Set sentMessages = MessageService.GetMessages(txtCorpNum.Text, txtReceiptNum.Text, txtUserID.Text)
+    Set sentMessages = MessageService.GetMessages(txtCorpNum.Text, txtReceiptNum.Text)
     
     If sentMessages Is Nothing Then
         MsgBox ("응답코드 : " + CStr(MessageService.LastErrCode) + vbCrLf + "응답메시지 : " + MessageService.LastErrMessage)
@@ -813,7 +813,7 @@ Private Sub btnListContact_Click()
     Dim tmp As String
     Dim info As PBContactInfo
     
-    Set resultList = MessageService.ListContact(txtCorpNum.Text, txtUserID.Text)
+    Set resultList = MessageService.ListContact(txtCorpNum.Text)
      
     If resultList Is Nothing Then
         MsgBox ("응답코드 : " + CStr(MessageService.LastErrCode) + vbCrLf + "응답메시지 : " + MessageService.LastErrMessage)
@@ -865,7 +865,7 @@ Private Sub btnRegistContact_Click()
     '관리자 권한여부
     joinData.mgrYN = False
         
-    Set Response = MessageService.RegistContact(txtCorpNum.Text, joinData, txtUserID.Text)
+    Set Response = MessageService.RegistContact(txtCorpNum.Text, joinData)
     
     If Response Is Nothing Then
         MsgBox ("응답코드 : " + CStr(MessageService.LastErrCode) + vbCrLf + "응답메시지 : " + MessageService.LastErrMessage)
@@ -1014,7 +1014,7 @@ Private Sub btnSendLMS_Hundred_Click()
         
     adsYN = False       '광고문자 전송여부
     
-    ReceiptNum = MessageService.SendLMS(txtCorpNum.Text, "", "", "", Messages, txtReserveDT.Text, adsYN, txtUserID.Text)
+    ReceiptNum = MessageService.SendLMS(txtCorpNum.Text, "", "", "", Messages, txtReserveDT.Text, adsYN)
     
     If ReceiptNum = "" Then
         MsgBox ("응답코드 : " + CStr(MessageService.LastErrCode) + vbCrLf + "응답메시지 : " + MessageService.LastErrMessage)
@@ -1058,7 +1058,7 @@ Private Sub btnSendLMS_One_Click()
     '광고문자 전송여부
     adsYN = False
     
-    ReceiptNum = MessageService.SendLMS(txtCorpNum.Text, "", "", "", Messages, txtReserveDT.Text, adsYN, txtUserID.Text)
+    ReceiptNum = MessageService.SendLMS(txtCorpNum.Text, "", "", "", Messages, txtReserveDT.Text, adsYN)
     
     If ReceiptNum = "" Then
         MsgBox ("응답코드 : " + CStr(MessageService.LastErrCode) + vbCrLf + "응답메시지 : " + MessageService.LastErrMessage)
@@ -1107,7 +1107,7 @@ Private Sub btnSendLMS_Same_Click()
     adsYN = False
     
     ReceiptNum = MessageService.SendLMS(txtCorpNum.Text, sender, subject, Contents, _
-                                    Messages, txtReserveDT.Text, adsYN, txtUserID.Text)
+                                    Messages, txtReserveDT.Text, adsYN)
     
     If ReceiptNum = "" Then
         MsgBox ("응답코드 : " + CStr(MessageService.LastErrCode) + vbCrLf + "응답메시지 : " + MessageService.LastErrMessage)
@@ -1158,7 +1158,7 @@ Private Sub btnSendMMS_Click()
     '광고문자 전송여부
     adsYN = False
     
-    ReceiptNum = MessageService.SendMMS(txtCorpNum.Text, "", "", "", Messages, FilePaths, txtReserveDT.Text, adsYN, txtUserID.Text)
+    ReceiptNum = MessageService.SendMMS(txtCorpNum.Text, "", "", "", Messages, FilePaths, txtReserveDT.Text, adsYN)
     
     If ReceiptNum = "" Then
         MsgBox ("응답코드 : " + CStr(MessageService.LastErrCode) + vbCrLf + "응답메시지 : " + MessageService.LastErrMessage)
@@ -1240,7 +1240,7 @@ Private Sub btnSendMMS_hundred_Click()
     '광고문자 전송여부
     adsYN = False
     
-    ReceiptNum = MessageService.SendMMS(txtCorpNum.Text, "", "", "", Messages, FilePaths, txtReserveDT.Text, adsYN, txtUserID.Text)
+    ReceiptNum = MessageService.SendMMS(txtCorpNum.Text, "", "", "", Messages, FilePaths, txtReserveDT.Text, adsYN)
     
     If ReceiptNum = "" Then
         MsgBox ("응답코드 : " + CStr(MessageService.LastErrCode) + vbCrLf + "응답메시지 : " + MessageService.LastErrMessage)
@@ -1296,7 +1296,7 @@ Private Sub btnSendMMS_Same_Click()
     '광고문자 전송여부
     adsYN = False
     
-    ReceiptNum = MessageService.SendMMS(txtCorpNum.Text, sender, subject, Contents, Messages, FilePaths, txtReserveDT.Text, adsYN, txtUserID.Text)
+    ReceiptNum = MessageService.SendMMS(txtCorpNum.Text, sender, subject, Contents, Messages, FilePaths, txtReserveDT.Text, adsYN)
     
     If ReceiptNum = "" Then
         MsgBox ("응답코드 : " + CStr(MessageService.LastErrCode) + vbCrLf + "응답메시지 : " + MessageService.LastErrMessage)
@@ -1340,7 +1340,7 @@ Private Sub btnSendSMS_hundredd_Click()
     
     adsYN = False       '광고문자 전송여부
     
-    ReceiptNum = MessageService.SendSMS(txtCorpNum.Text, "", "", Messages, txtReserveDT.Text, adsYN, txtUserID.Text)
+    ReceiptNum = MessageService.SendSMS(txtCorpNum.Text, "", "", Messages, txtReserveDT.Text, adsYN)
     
     If ReceiptNum = "" Then
         MsgBox ("응답코드 : " + CStr(MessageService.LastErrCode) + vbCrLf + "응답메시지 : " + MessageService.LastErrMessage)
@@ -1379,7 +1379,7 @@ Private Sub btnSendSMS_One_Click()
     '광고문자 전송여부
     adsYN = False
     
-    ReceiptNum = MessageService.SendSMS(txtCorpNum.Text, "", "", Messages, txtReserveDT.Text, adsYN, txtUserID.Text)
+    ReceiptNum = MessageService.SendSMS(txtCorpNum.Text, "", "", Messages, txtReserveDT.Text, adsYN)
     
     If ReceiptNum = "" Then
         MsgBox ("응답코드 : " + CStr(MessageService.LastErrCode) + vbCrLf + "응답메시지 : " + MessageService.LastErrMessage)
@@ -1422,7 +1422,7 @@ Private Sub btnSendSMS_Same_Click()
         Messages.Add message
     Next
     
-    ReceiptNum = MessageService.SendSMS(txtCorpNum.Text, sender, Contents, Messages, txtReserveDT.Text, adsYN, txtUserID.Text)
+    ReceiptNum = MessageService.SendSMS(txtCorpNum.Text, sender, Contents, Messages, txtReserveDT.Text, adsYN)
     
     If ReceiptNum = "" Then
         MsgBox ("응답코드 : " + CStr(MessageService.LastErrCode) + vbCrLf + "응답메시지 : " + MessageService.LastErrMessage)
@@ -1493,7 +1493,7 @@ Private Sub btnSendXMS_Hundred_Click()
     '광고문자 전송여부
     adsYN = False
     
-    ReceiptNum = MessageService.SendXMS(txtCorpNum.Text, "", "", "", Messages, txtReserveDT.Text, adsYN, txtUserID.Text)
+    ReceiptNum = MessageService.SendXMS(txtCorpNum.Text, "", "", "", Messages, txtReserveDT.Text, adsYN)
     
     If ReceiptNum = "" Then
         MsgBox ("응답코드 : " + CStr(MessageService.LastErrCode) + vbCrLf + "응답메시지 : " + MessageService.LastErrMessage)
@@ -1535,7 +1535,7 @@ Private Sub btnSendXMS_One_Click()
     '광고문자 전송여부
     adsYN = False
     
-    ReceiptNum = MessageService.SendXMS(txtCorpNum.Text, "", "", "", Messages, txtReserveDT.Text, adsYN, txtUserID.Text)
+    ReceiptNum = MessageService.SendXMS(txtCorpNum.Text, "", "", "", Messages, txtReserveDT.Text, adsYN)
     
     If ReceiptNum = "" Then
         MsgBox ("응답코드 : " + CStr(MessageService.LastErrCode) + vbCrLf + "응답메시지 : " + MessageService.LastErrMessage)
@@ -1582,7 +1582,7 @@ Private Sub btnSendXMS_Same_Click()
     adsYN = False
     
     ReceiptNum = MessageService.SendLMS(txtCorpNum.Text, sender, subject, Contents, _
-                                        Messages, txtReserveDT.Text, adsYN, txtUserID.Text)
+                                        Messages, txtReserveDT.Text, adsYN)
     
     If ReceiptNum = "" Then
         MsgBox ("응답코드 : " + CStr(MessageService.LastErrCode) + vbCrLf + "응답메시지 : " + MessageService.LastErrMessage)
@@ -1708,7 +1708,7 @@ Private Sub btnUpdateCorpInfo_Click()
     '종목
     CorpInfo.BizClass = "종목"
     
-    Set Response = MessageService.UpdateCorpInfo(txtCorpNum.Text, CorpInfo, txtUserID.Text)
+    Set Response = MessageService.UpdateCorpInfo(txtCorpNum.Text, CorpInfo)
     
     If Response Is Nothing Then
         MsgBox ("응답코드 : " + CStr(MessageService.LastErrCode) + vbCrLf + "응답메시지 : " + MessageService.LastErrMessage)
