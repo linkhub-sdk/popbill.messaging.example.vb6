@@ -12,4 +12,5 @@ PBContactInfo = 110, 145, 1352, 854,
 PBCorpInfo = 132, 174, 1374, 883, 
 PBSearchList = 44, 58, 1286, 766, 
 PBChargeInfo = 220, 290, 1472, 908, 
-PBAutoDenyInfo = 0, 0, 0, 0, C
+PBAutoDenyInfo = 0, 0, 1255, 590, 
+PBMsgSenderNumber = 36, 125, 1291, 715, 

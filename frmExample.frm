@@ -13,7 +13,7 @@ Begin VB.Form frmExample
    Begin VB.CommandButton btnSendMMS_hundred 
       Caption         =   "100건 전송"
       Height          =   465
-      Left            =   6360
+      Left            =   6120
       TabIndex        =   41
       Top             =   5830
       Width           =   1050
@@ -21,7 +21,7 @@ Begin VB.Form frmExample
    Begin VB.Frame Frame10 
       Caption         =   "포토 전송기능"
       Height          =   945
-      Left            =   5040
+      Left            =   4800
       TabIndex        =   38
       Top             =   5520
       Width           =   3705
@@ -57,38 +57,62 @@ Begin VB.Form frmExample
       TabIndex        =   15
       Top             =   3600
       Width           =   13005
+      Begin VB.Frame Frame14 
+         Caption         =   "발신번호 관리"
+         Height          =   1695
+         Left            =   10800
+         TabIndex        =   55
+         Top             =   840
+         Width           =   2055
+         Begin VB.CommandButton btnGetURL_SENDER 
+            Caption         =   "발신번호 관리 팝업"
+            Height          =   495
+            Left            =   120
+            TabIndex        =   57
+            Top             =   960
+            Width           =   1815
+         End
+         Begin VB.CommandButton btnGetSenderNumberList 
+            Caption         =   "발신번호 목록 조회"
+            Height          =   495
+            Left            =   120
+            TabIndex        =   56
+            Top             =   360
+            Width           =   1815
+         End
+      End
       Begin VB.CommandButton btnGetAutoDenyList 
-         Caption         =   "080 수신거부목록 확인"
+         Caption         =   "080 수신거부목록"
          Height          =   495
-         Left            =   9120
+         Left            =   8760
          TabIndex        =   52
          Top             =   2400
-         Width           =   2295
+         Width           =   1695
       End
       Begin VB.CommandButton btnSearch 
          Caption         =   "전송내역 목록조회"
          Height          =   495
-         Left            =   9120
+         Left            =   8760
          TabIndex        =   51
          Top             =   1800
-         Width           =   2295
+         Width           =   1695
       End
       Begin VB.CommandButton btnSearchPopup 
-         Caption         =   "전송내역조회 팝업 URL"
+         Caption         =   "전송내역조회 팝업"
          Height          =   495
-         Left            =   9120
+         Left            =   8760
          TabIndex        =   36
          Top             =   1200
-         Width           =   2295
+         Width           =   1695
       End
       Begin VB.TextBox txtResult 
          Height          =   4680
-         Left            =   720
+         Left            =   480
          MultiLine       =   -1  'True
          ScrollBars      =   3  '양방향
          TabIndex        =   35
          Top             =   3720
-         Width           =   11775
+         Width           =   12255
       End
       Begin VB.CommandButton btnCancelReserve 
          Caption         =   "예약 전송 취소"
@@ -109,7 +133,7 @@ Begin VB.Form frmExample
       Begin VB.Frame Frame9 
          Caption         =   " 단/장문 자동인식 문자 전송 "
          Height          =   945
-         Left            =   720
+         Left            =   480
          TabIndex        =   29
          Top             =   1920
          Width           =   3825
@@ -141,7 +165,7 @@ Begin VB.Form frmExample
       Begin VB.Frame Frame8 
          Caption         =   " 장문 문자 전송 "
          Height          =   945
-         Left            =   4920
+         Left            =   4680
          TabIndex        =   25
          Top             =   840
          Width           =   3705
@@ -180,7 +204,7 @@ Begin VB.Form frmExample
       Begin VB.Frame Frame7 
          Caption         =   " 단문 문자 전송 "
          Height          =   945
-         Left            =   720
+         Left            =   480
          TabIndex        =   18
          Top             =   840
          Width           =   3825
@@ -219,10 +243,10 @@ Begin VB.Form frmExample
       Begin VB.Frame Frame13 
          Caption         =   "부가기능"
          Height          =   2295
-         Left            =   8880
+         Left            =   8640
          TabIndex        =   53
          Top             =   840
-         Width           =   2775
+         Width           =   1935
       End
       Begin VB.Label Label4 
          AutoSize        =   -1  'True
@@ -472,7 +496,7 @@ Attribute VB_Exposed = False
 ' 팝빌 문자 API VB 6.0 SDK Example
 '
 ' - VB6 SDK 연동환경 설정방법 안내 : http://blog.linkhub.co.kr/569/
-' - 업데이트 일자 : 2017-05-24
+' - 업데이트 일자 : 2017-05-29
 ' - 연동 기술지원 연락처 : 1600-8536 / 070-4304-2991
 ' - 연동 기술지원 이메일 : code@linkhub.co.kr
 '
@@ -740,6 +764,51 @@ Private Sub btnGetPopbillURL_LOGIN_Click()
         Exit Sub
     End If
     
+    MsgBox "URL : " + vbCrLf + url
+End Sub
+
+'=========================================================================
+' 문자 발신번호 목록을 조회합니다.
+'=========================================================================
+
+Private Sub btnGetSenderNumberList_Click()
+    Dim SenderNumberList As Collection
+    Dim tmp As String
+    Dim SenderNumber As PBMsgSenderNumber
+    
+    Set SenderNumberList = MessageService.GetSenderNumberList(txtCorpNum.Text)
+    
+    If SenderNumberList Is Nothing Then
+        MsgBox ("응답코드 : " + CStr(MessageService.LastErrCode) + vbCrLf + "응답메시지 : " + MessageService.LastErrMessage)
+        Exit Sub
+    End If
+        
+    For Each SenderNumber In SenderNumberList
+        tmp = tmp + "발신번호(number) : " + SenderNumber.number + vbCrLf
+        tmp = tmp + "대표번호 지정여부(representYN) : " + CStr(SenderNumber.representYN) + vbCrLf
+        tmp = tmp + "등록상태(state) : " + CStr(SenderNumber.state) + vbCrLf + vbCrLf
+        
+    Next
+    
+    MsgBox tmp
+    
+End Sub
+
+'=========================================================================
+' 발신번호 관리 팝업 URL을 반환합니다.
+' - 반환된 URL은 보안정책에 따라 30초의 유효시간을 갖습니다.
+'=========================================================================
+
+Private Sub btnGetURL_SENDER_Click()
+    Dim url As String
+    
+    url = MessageService.GetURL(txtCorpNum.Text, txtUserID.Text, "SENDER")
+    
+    If url = "" Then
+        MsgBox ("응답코드 : " + CStr(MessageService.LastErrCode) + vbCrLf + "응답메시지 : " + MessageService.LastErrMessage)
+        Exit Sub
+    End If
+        
     MsgBox "URL : " + vbCrLf + url
 End Sub
 
