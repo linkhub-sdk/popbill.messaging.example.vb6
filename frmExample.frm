@@ -496,8 +496,8 @@ Attribute VB_Exposed = False
 ' 팝빌 문자 API VB 6.0 SDK Example
 '
 ' - VB6 SDK 연동환경 설정방법 안내 : http://blog.linkhub.co.kr/569/
-' - 업데이트 일자 : 2017-05-29
-' - 연동 기술지원 연락처 : 1600-8536 / 070-4304-2991
+' - 업데이트 일자 : 2017-07-19
+' - 연동 기술지원 연락처 : 1600-9854 / 070-4304-2991
 ' - 연동 기술지원 이메일 : code@linkhub.co.kr
 '
 ' <테스트 연동개발 준비사항>
@@ -685,23 +685,50 @@ Private Sub btnGetMessages_Click()
         Exit Sub
     End If
     
-    tmp = "state | subject | messageType | sendnum | senderName | receiveNum | receiveName | receiptDT | reserveDT | sendDT | result | tranNet" + vbCrLf
+    tmp = "state | result | subject | messageType | sendnum | senderName | receiveNum | receiveName | receiptDT | reserveDT | sendDT | tranNet" + vbCrLf
     
     For Each sentMessage In sentMessages
-    
+            
+        ' 전송상태 코드
         tmp = tmp + CStr(sentMessage.state) + " | "
-        tmp = tmp + sentMessage.subject + " | "
-        tmp = tmp + sentMessage.messageType + " | "
-        'tmp = tmp + sentMessage.content + " | " ' 내용 표시는 길이관계상 예제에서 생략합니다.
-        tmp = tmp + sentMessage.sendNum + " | "
-        tmp = tmp + sentMessage.senderName + " | "
-        tmp = tmp + sentMessage.receiveNum + " | "
-        tmp = tmp + sentMessage.receiveName + " | "
-        tmp = tmp + sentMessage.receiptDT + " | "
-        tmp = tmp + sentMessage.reserveDT + " | "
-        tmp = tmp + sentMessage.sendDT + " | "
-        tmp = tmp + sentMessage.resultDT + " | "
+        
+        ' 전송결과 코드
         tmp = tmp + CStr(sentMessage.result) + " | "
+        
+        ' 메시지 제목
+        tmp = tmp + sentMessage.subject + " | "
+        
+        ' 메시지 유형
+        tmp = tmp + sentMessage.messageType + " | "
+        
+        ' 메시지 내용
+        'tmp = tmp + sentMessage.content + " | " ' 내용 표시는 길이관계상 예제에서 생략합니다.
+        
+        ' 발신번호
+        tmp = tmp + sentMessage.sendNum + " | "
+        
+        ' 발신자명
+        tmp = tmp + sentMessage.senderName + " | "
+        
+        ' 수신번호
+        tmp = tmp + sentMessage.receiveNum + " | "
+        
+        ' 수신자명
+        tmp = tmp + sentMessage.receiveName + " | "
+        
+        ' 접수일시
+        tmp = tmp + sentMessage.receiptDT + " | "
+        
+        ' 예약일시
+        tmp = tmp + sentMessage.reserveDT + " | "
+        
+        ' 전송일시
+        tmp = tmp + sentMessage.sendDT + " | "
+        
+        ' 전송결과 수신일시
+        tmp = tmp + sentMessage.resultDT + " | "
+        
+        ' 전송처리 이동통신사명
         tmp = tmp + sentMessage.tranNet
         
         tmp = tmp + vbCrLf
@@ -963,10 +990,10 @@ Private Sub btnSearch_Click()
     Dim info As PBSentMsg
     
     '[필수] 시작일자, 날자형식(yyyyMMdd)
-    SDate = "20170101"
+    SDate = "20170601"
     
     '[필수] 종료일자, 날자형식(yyyyMMdd)
-    EDate = "20170301"
+    EDate = "20171231"
     
     '전송상태값 배열, 1-대기, 2-성공, 3-실패, 4-취소
     state.Add "1"
@@ -1008,22 +1035,50 @@ Private Sub btnSearch_Click()
     tmp = tmp + "pageCount : " + CStr(msgSearchList.pageCount) + vbCrLf
     tmp = tmp + "message : " + msgSearchList.message + vbCrLf + vbCrLf
     
-    tmp = tmp + "state | subject | messageType | sendnum | senderName | receiveNum | receiveName | receiptDT | reserveDT | sendDT | result | tranNet" + vbCrLf
+    tmp = tmp + "state | result | subject | messageType | sendnum | senderName | receiveNum | receiveName | receiptDT | reserveDT | sendDT |  tranNet" + vbCrLf
             
     For Each info In msgSearchList.list
+    
+        ' 전송상태 코드
         tmp = tmp + CStr(info.state) + " | "
-        tmp = tmp + info.subject + " | "
-        tmp = tmp + info.messageType + " | "
-        'tmp = tmp + sentMessage.content + " | " ' 내용 표시는 길이관계상 예제에서 생략합니다.
-        tmp = tmp + info.sendNum + " | "
-        tmp = tmp + info.senderName + " | "
-        tmp = tmp + info.receiveNum + " | "
-        tmp = tmp + info.receiveName + " | "
-        tmp = tmp + info.receiptDT + " | "
-        tmp = tmp + info.reserveDT + " | "
-        tmp = tmp + info.sendDT + " | "
-        tmp = tmp + info.resultDT + " | "
+        
+        ' 전송결과 코드
         tmp = tmp + CStr(info.result) + " | "
+        
+        ' 메시지 제목
+        tmp = tmp + info.subject + " | "
+        
+        ' 메시지 유형
+        tmp = tmp + info.messageType + " | "
+        
+        ' 메시지 내용
+        'tmp = tmp + sentMessage.content + " | " ' 내용 표시는 길이관계상 예제에서 생략합니다.
+        
+        ' 발신번호
+        tmp = tmp + info.sendNum + " | "
+        
+        ' 발신자명
+        tmp = tmp + info.senderName + " | "
+        
+        ' 수신번호
+        tmp = tmp + info.receiveNum + " | "
+        
+        ' 수신자명
+        tmp = tmp + info.receiveName + " | "
+        
+        ' 접수일시
+        tmp = tmp + info.receiptDT + " | "
+        
+        ' 예약일시
+        tmp = tmp + info.reserveDT + " | "
+        
+        ' 전송시간
+        tmp = tmp + info.sendDT + " | "
+        
+        ' 전송결과 수신시간
+        tmp = tmp + info.resultDT + " | "
+        
+        ' 전송처리 이동통신사명
         tmp = tmp + info.tranNet
         tmp = tmp + vbCrLf
     Next
