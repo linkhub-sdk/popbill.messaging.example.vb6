@@ -676,11 +676,11 @@ Private Sub btnGetCorpInfo_Click()
         Exit Sub
     End If
     
-    tmp = tmp + "ceoname(대표자성명) : " + CorpInfo.CEOName + vbCrLf
-    tmp = tmp + "corpName(상호명) : " + CorpInfo.CorpName + vbCrLf
-    tmp = tmp + "addr(주소) : " + CorpInfo.Addr + vbCrLf
-    tmp = tmp + "bizType(업태) : " + CorpInfo.BizType + vbCrLf
-    tmp = tmp + "bizClass(종목) : " + CorpInfo.BizClass + vbCrLf
+    tmp = tmp + "ceoname(대표자성명) : " + CorpInfo.ceoname + vbCrLf
+    tmp = tmp + "corpName(상호명) : " + CorpInfo.corpName + vbCrLf
+    tmp = tmp + "addr(주소) : " + CorpInfo.addr + vbCrLf
+    tmp = tmp + "bizType(업태) : " + CorpInfo.bizType + vbCrLf
+    tmp = tmp + "bizClass(종목) : " + CorpInfo.bizClass + vbCrLf
     
     MsgBox tmp
 End Sub
@@ -887,25 +887,25 @@ Private Sub btnJoinMember_Click()
     joinData.CorpNum = "1231212312"
     
     '대표자성명, 최대 30자
-    joinData.CEOName = "대표자성명"
+    joinData.ceoname = "대표자성명"
     
     '상호명, 최대 70자
-    joinData.CorpName = "회원상호"
+    joinData.corpName = "회원상호"
     
     '주소, 최대 300자
-    joinData.Addr = "주소"
+    joinData.addr = "주소"
     
     '업태, 최대 40자
-    joinData.BizType = "업태"
+    joinData.bizType = "업태"
     
     '종목, 최대 40자
-    joinData.BizClass = "종목"
+    joinData.bizClass = "종목"
     
     '아이디, 6자이상 20자 미만
-    joinData.ID = "userid"
+    joinData.id = "userid"
     
     '비밀번호, 6자이상 20자 미만
-    joinData.PWD = "pwd_must_be_long_enough"
+    joinData.pwd = "pwd_must_be_long_enough"
     
     '담당자명, 최대 30자
     joinData.ContactName = "담당자성명"
@@ -952,8 +952,8 @@ Private Sub btnListContact_Click()
     tmp = "id | email | hp | personName | searchAllAllowYN | tel | fax | mgrYN | regDT " + vbCrLf
     
     For Each info In resultList
-        tmp = tmp + info.ID + " | " + info.email + " | " + info.hp + " | " + info.personName + " | " + CStr(info.searchAllAllowYN) _
-                + info.tel + " | " + info.fax + " | " + CStr(info.mgrYN) + " | " + info.regDT + vbCrLf
+        tmp = tmp + info.id + " | " + info.email + " | " + info.hp + " | " + info.personName + " | " + CStr(info.searchAllAllowYN) _
+                + info.tel + " | " + info.fax + " | " + CStr(info.mgrYN) + " | " + info.regDT + " | " + CStr(info.state) + vbCrLf
     Next
     
     MsgBox tmp
@@ -968,10 +968,10 @@ Private Sub btnRegistContact_Click()
     Dim Response As PBResponse
     
     '담당자 아이디, 6자 이상 20자 미만
-    joinData.ID = "testkorea_20161011"
+    joinData.id = "testkorea_20161011"
     
     '비밀번호, 6자 이상 20자 미만
-    joinData.PWD = "test@test.com"
+    joinData.pwd = "test@test.com"
     
     '담당자명, 최대 30자
     joinData.personName = "담당자명"
@@ -1812,7 +1812,7 @@ Private Sub btnUpdateContact_Click()
     Dim Response As PBResponse
     
     '담당자 아이디
-    joinData.ID = txtUserID.Text
+    joinData.id = txtUserID.Text
     
     '담당자명
     joinData.personName = "담당자명_수정"
@@ -1854,19 +1854,19 @@ Private Sub btnUpdateCorpInfo_Click()
     Dim Response As PBResponse
     
     '대표자명
-    CorpInfo.CEOName = "대표자"
+    CorpInfo.ceoname = "대표자"
     
     '상호
-    CorpInfo.CorpName = "상호"
+    CorpInfo.corpName = "상호"
     
     '주소
-    CorpInfo.Addr = "서울특별시"
+    CorpInfo.addr = "서울특별시"
     
     '업태
-    CorpInfo.BizType = "업태"
+    CorpInfo.bizType = "업태"
     
     '종목
-    CorpInfo.BizClass = "종목"
+    CorpInfo.bizClass = "종목"
     
     Set Response = MessageService.UpdateCorpInfo(txtCorpNum.Text, CorpInfo)
     
