@@ -17,6 +17,7 @@ Class=PBSearchList; PopbillMessaging\PBSearchList.cls
 Class=PBChargeInfo; PopbillMessaging\PBChargeInfo.cls
 Class=PBAutoDenyInfo; PopbillMessaging\PBAutoDenyInfo.cls
 Class=PBMsgSenderNumber; PopbillMessaging\PBMSGSenderNumber.cls
+Class=PBMessageBriefInfo; PopbillMessaging\PBMessageBriefInfo.cls
 IconForm="frmExample"
 Startup="frmExample"
 ExeName32="msg_example.exe"

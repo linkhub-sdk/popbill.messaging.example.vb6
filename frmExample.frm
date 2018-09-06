@@ -62,7 +62,7 @@ Begin VB.Form frmExample
          Height          =   1695
          Left            =   10800
          TabIndex        =   51
-         Top             =   840
+         Top             =   240
          Width           =   2055
          Begin VB.CommandButton btnGetURL_SENDER 
             Caption         =   "발신번호 관리 팝업"
@@ -86,7 +86,7 @@ Begin VB.Form frmExample
          Height          =   495
          Left            =   8760
          TabIndex        =   48
-         Top             =   2400
+         Top             =   2280
          Width           =   1695
       End
       Begin VB.CommandButton btnSearch 
@@ -94,7 +94,7 @@ Begin VB.Form frmExample
          Height          =   495
          Left            =   8760
          TabIndex        =   47
-         Top             =   1800
+         Top             =   1680
          Width           =   1695
       End
       Begin VB.CommandButton btnSearchPopup 
@@ -102,7 +102,7 @@ Begin VB.Form frmExample
          Height          =   495
          Left            =   8760
          TabIndex        =   33
-         Top             =   1200
+         Top             =   480
          Width           =   1695
       End
       Begin VB.TextBox txtResult 
@@ -242,11 +242,19 @@ Begin VB.Form frmExample
       End
       Begin VB.Frame Frame13 
          Caption         =   "부가기능"
-         Height          =   2295
+         Height          =   2655
          Left            =   8640
          TabIndex        =   49
-         Top             =   840
+         Top             =   240
          Width           =   1935
+         Begin VB.CommandButton btnGetStates 
+            Caption         =   "전송내역 요약정보"
+            Height          =   495
+            Left            =   120
+            TabIndex        =   60
+            Top             =   840
+            Width           =   1695
+         End
       End
       Begin VB.Label Label4 
          AutoSize        =   -1  'True
@@ -852,6 +860,41 @@ Private Sub btnGetSenderNumberList_Click()
     
     MsgBox tmp
     
+End Sub
+
+'=========================================================================
+' 문자전송요청에 대한 전송결과를 확인합니다.
+'=========================================================================
+
+Private Sub btnGetStates_Click()
+    Dim resultList As Collection
+    Dim ReciptNumList As New Collection
+    
+    ', 최대 1000건
+    ReciptNumList.Add "018061814000000039"
+    ReciptNumList.Add "018061815000000002"
+
+    
+    Set resultList = MessageService.GetStates(txtCorpNum.Text, ReciptNumList)
+     
+    If resultList Is Nothing Then
+        MsgBox ("응답코드 : " + CStr(MessageService.LastErrCode) + vbCrLf + "응답메시지 : " + MessageService.LastErrMessage)
+        Exit Sub
+    End If
+    
+    Dim tmp As String
+    
+    tmp = "rNum | sn | stat | rlt | sDT | rDT | net" + vbCrLf
+    
+    Dim info As PBMessageBriefInfo
+    
+    For Each info In resultList
+        tmp = tmp + info.rNum + " | " + info.sn + " | " + info.stat + " | " + info.rlt + " | " + info.sDT + " | "
+        tmp = tmp + info.rDT + " | " + info.net + vbCrLf
+    Next
+    
+    MsgBox tmp
+
 End Sub
 
 '=========================================================================
