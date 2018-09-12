@@ -13,23 +13,23 @@ Begin VB.Form frmExample
    Begin VB.CommandButton btnSendMMS_hundred 
       Caption         =   "100건 전송"
       Height          =   465
-      Left            =   6120
-      TabIndex        =   38
+      Left            =   6240
+      TabIndex        =   37
       Top             =   5475
       Width           =   1050
    End
    Begin VB.Frame Frame10 
       Caption         =   "포토 전송기능"
       Height          =   945
-      Left            =   4800
-      TabIndex        =   35
+      Left            =   4920
+      TabIndex        =   34
       Top             =   5160
       Width           =   3705
       Begin VB.CommandButton btnSendMMS 
          Caption         =   "1건 전송"
          Height          =   465
          Left            =   240
-         TabIndex        =   37
+         TabIndex        =   36
          Top             =   315
          Width           =   930
       End
@@ -37,7 +37,7 @@ Begin VB.Form frmExample
          Caption         =   "대량전송"
          Height          =   465
          Left            =   2520
-         TabIndex        =   36
+         TabIndex        =   35
          Top             =   315
          Width           =   975
       End
@@ -46,29 +46,68 @@ Begin VB.Form frmExample
       Caption         =   "MMS 전송단가 확인"
       Height          =   410
       Left            =   2320
-      TabIndex        =   34
+      TabIndex        =   33
       Top             =   2160
       Width           =   1815
    End
    Begin VB.Frame Frame6 
       Caption         =   " 팝빌 메시징 관련 기능"
       Height          =   8655
-      Left            =   120
+      Left            =   240
       TabIndex        =   13
       Top             =   3240
       Width           =   13005
+      Begin VB.Frame Frame17 
+         Caption         =   "요청번호 할당 전송건 처리"
+         Height          =   1335
+         Left            =   4920
+         TabIndex        =   62
+         Top             =   3000
+         Width           =   4215
+         Begin VB.CommandButton btnCancelReserveRN 
+            Caption         =   "예약 전송 취소"
+            Height          =   525
+            Left            =   2160
+            TabIndex        =   65
+            Top             =   720
+            Width           =   1935
+         End
+         Begin VB.CommandButton btnGetMessagesRN 
+            Caption         =   "전송상태확인"
+            Height          =   525
+            Left            =   120
+            TabIndex        =   64
+            Top             =   720
+            Width           =   1905
+         End
+         Begin VB.TextBox txtRequestNum 
+            Height          =   435
+            Left            =   1200
+            TabIndex        =   63
+            Top             =   240
+            Width           =   2850
+         End
+         Begin VB.Label 요청번호 
+            Caption         =   "요청번호 : "
+            Height          =   375
+            Left            =   240
+            TabIndex        =   66
+            Top             =   360
+            Width           =   1095
+         End
+      End
       Begin VB.Frame Frame14 
          Caption         =   "발신번호 관리"
          Height          =   1695
          Left            =   10800
-         TabIndex        =   51
+         TabIndex        =   50
          Top             =   240
          Width           =   2055
          Begin VB.CommandButton btnGetURL_SENDER 
             Caption         =   "발신번호 관리 팝업"
             Height          =   495
             Left            =   120
-            TabIndex        =   53
+            TabIndex        =   52
             Top             =   960
             Width           =   1815
          End
@@ -76,7 +115,7 @@ Begin VB.Form frmExample
             Caption         =   "발신번호 목록 조회"
             Height          =   495
             Left            =   120
-            TabIndex        =   52
+            TabIndex        =   51
             Top             =   360
             Width           =   1815
          End
@@ -85,7 +124,7 @@ Begin VB.Form frmExample
          Caption         =   "080 수신거부목록"
          Height          =   495
          Left            =   8760
-         TabIndex        =   48
+         TabIndex        =   47
          Top             =   2280
          Width           =   1695
       End
@@ -93,7 +132,7 @@ Begin VB.Form frmExample
          Caption         =   "전송내역 목록조회"
          Height          =   495
          Left            =   8760
-         TabIndex        =   47
+         TabIndex        =   46
          Top             =   1680
          Width           =   1695
       End
@@ -101,47 +140,47 @@ Begin VB.Form frmExample
          Caption         =   "전송내역조회 팝업"
          Height          =   495
          Left            =   8760
-         TabIndex        =   33
+         TabIndex        =   32
          Top             =   480
          Width           =   1695
       End
       Begin VB.TextBox txtResult 
-         Height          =   4680
+         Height          =   3840
          Left            =   480
          MultiLine       =   -1  'True
          ScrollBars      =   3  '양방향
-         TabIndex        =   32
-         Top             =   3720
+         TabIndex        =   31
+         Top             =   4560
          Width           =   12255
       End
       Begin VB.CommandButton btnCancelReserve 
          Caption         =   "예약 전송 취소"
          Height          =   525
-         Left            =   6360
-         TabIndex        =   31
-         Top             =   3000
-         Width           =   1665
+         Left            =   2640
+         TabIndex        =   30
+         Top             =   3720
+         Width           =   1905
       End
       Begin VB.CommandButton btnGetMessages 
          Caption         =   "전송상태확인"
          Height          =   525
-         Left            =   4560
-         TabIndex        =   30
-         Top             =   3000
-         Width           =   1665
+         Left            =   600
+         TabIndex        =   29
+         Top             =   3720
+         Width           =   1905
       End
       Begin VB.Frame Frame9 
          Caption         =   " 단/장문 자동인식 문자 전송 "
          Height          =   945
          Left            =   480
-         TabIndex        =   26
+         TabIndex        =   25
          Top             =   1920
          Width           =   3825
          Begin VB.CommandButton btnSendXMS_One 
             Caption         =   "1건 전송"
             Height          =   465
             Left            =   360
-            TabIndex        =   29
+            TabIndex        =   28
             Top             =   315
             Width           =   930
          End
@@ -149,7 +188,7 @@ Begin VB.Form frmExample
             Caption         =   "100건 전송"
             Height          =   465
             Left            =   1440
-            TabIndex        =   28
+            TabIndex        =   27
             Top             =   315
             Width           =   1110
          End
@@ -157,7 +196,7 @@ Begin VB.Form frmExample
             Caption         =   "대량전송"
             Height          =   465
             Left            =   2640
-            TabIndex        =   27
+            TabIndex        =   26
             Top             =   315
             Width           =   1020
          End
@@ -166,14 +205,14 @@ Begin VB.Form frmExample
          Caption         =   " 장문 문자 전송 "
          Height          =   945
          Left            =   4680
-         TabIndex        =   22
+         TabIndex        =   21
          Top             =   840
          Width           =   3705
          Begin VB.CommandButton btnSendLMS_One 
             Caption         =   "1건 전송"
             Height          =   465
             Left            =   240
-            TabIndex        =   25
+            TabIndex        =   24
             Top             =   315
             Width           =   930
          End
@@ -181,7 +220,7 @@ Begin VB.Form frmExample
             Caption         =   "100건 전송"
             Height          =   465
             Left            =   1320
-            TabIndex        =   24
+            TabIndex        =   23
             Top             =   315
             Width           =   1110
          End
@@ -189,16 +228,16 @@ Begin VB.Form frmExample
             Caption         =   "대량전송"
             Height          =   465
             Left            =   2520
-            TabIndex        =   23
+            TabIndex        =   22
             Top             =   315
             Width           =   1020
          End
       End
       Begin VB.TextBox txtReceiptNum 
-         Height          =   315
-         Left            =   1485
-         TabIndex        =   21
-         Top             =   3105
+         Height          =   435
+         Left            =   1680
+         TabIndex        =   20
+         Top             =   3240
          Width           =   2850
       End
       Begin VB.Frame Frame7 
@@ -244,26 +283,33 @@ Begin VB.Form frmExample
          Caption         =   "부가기능"
          Height          =   2655
          Left            =   8640
-         TabIndex        =   49
+         TabIndex        =   48
          Top             =   240
          Width           =   1935
          Begin VB.CommandButton btnGetStates 
             Caption         =   "전송내역 요약정보"
             Height          =   495
             Left            =   120
-            TabIndex        =   60
+            TabIndex        =   59
             Top             =   840
             Width           =   1695
          End
       End
-      Begin VB.Label Label4 
-         AutoSize        =   -1  'True
-         Caption         =   "접수번호 : "
-         Height          =   180
-         Left            =   585
-         TabIndex        =   20
-         Top             =   3195
-         Width           =   900
+      Begin VB.Frame Frame4 
+         Caption         =   "접수번호 관련 기능 (요청번호 미할당)"
+         Height          =   1335
+         Left            =   480
+         TabIndex        =   60
+         Top             =   3000
+         Width           =   4335
+         Begin VB.Label 접수번호 
+            Caption         =   "접수번호 : "
+            Height          =   255
+            Left            =   240
+            TabIndex        =   61
+            Top             =   360
+            Width           =   1095
+         End
       End
       Begin VB.Label Label3 
          AutoSize        =   -1  'True
@@ -286,14 +332,14 @@ Begin VB.Form frmExample
          Caption         =   "파트너과금 포인트"
          Height          =   1935
          Left            =   8040
-         TabIndex        =   55
+         TabIndex        =   54
          Top             =   240
          Width           =   2415
          Begin VB.CommandButton btnGetPartnerURL_CHRG 
             Caption         =   "파트너 포인트 충전 URL"
             Height          =   410
             Left            =   120
-            TabIndex        =   59
+            TabIndex        =   58
             Top             =   840
             Width           =   2175
          End
@@ -301,7 +347,7 @@ Begin VB.Form frmExample
             Caption         =   "파트너 잔여포인트 확인"
             Height          =   410
             Left            =   120
-            TabIndex        =   58
+            TabIndex        =   57
             Top             =   360
             Width           =   2175
          End
@@ -310,14 +356,14 @@ Begin VB.Form frmExample
          Caption         =   "연동과금 포인트"
          Height          =   1935
          Left            =   6000
-         TabIndex        =   54
+         TabIndex        =   53
          Top             =   240
          Width           =   1935
          Begin VB.CommandButton btnGetPopbillURL_CHRG 
             Caption         =   "포인트 충전 URL"
             Height          =   410
             Left            =   120
-            TabIndex        =   57
+            TabIndex        =   56
             Top             =   840
             Width           =   1695
          End
@@ -325,7 +371,7 @@ Begin VB.Form frmExample
             Caption         =   "잔여 포인트 확인"
             Height          =   410
             Left            =   120
-            TabIndex        =   56
+            TabIndex        =   55
             Top             =   360
             Width           =   1695
          End
@@ -334,14 +380,14 @@ Begin VB.Form frmExample
          Caption         =   "회사정보 관련"
          Height          =   1935
          Left            =   14520
-         TabIndex        =   44
+         TabIndex        =   43
          Top             =   240
          Width           =   1815
          Begin VB.CommandButton btnUpdateCorpInfo 
             Caption         =   "회사정보 수정"
             Height          =   410
             Left            =   120
-            TabIndex        =   46
+            TabIndex        =   45
             Top             =   840
             Width           =   1575
          End
@@ -349,7 +395,7 @@ Begin VB.Form frmExample
             Caption         =   "회사정보 조회"
             Height          =   410
             Left            =   120
-            TabIndex        =   45
+            TabIndex        =   44
             Top             =   360
             Width           =   1575
          End
@@ -358,14 +404,14 @@ Begin VB.Form frmExample
          Caption         =   "담당자 관련"
          Height          =   1935
          Left            =   12480
-         TabIndex        =   40
+         TabIndex        =   39
          Top             =   240
          Width           =   1935
          Begin VB.CommandButton btnUpdateContact 
             Caption         =   "담당자 정보 수정"
             Height          =   410
             Left            =   120
-            TabIndex        =   43
+            TabIndex        =   42
             Top             =   1320
             Width           =   1695
          End
@@ -373,7 +419,7 @@ Begin VB.Form frmExample
             Caption         =   "담당자 목록 조회"
             Height          =   410
             Left            =   120
-            TabIndex        =   42
+            TabIndex        =   41
             Top             =   840
             Width           =   1695
          End
@@ -381,7 +427,7 @@ Begin VB.Form frmExample
             Caption         =   "담당자 추가"
             Height          =   410
             Left            =   120
-            TabIndex        =   41
+            TabIndex        =   40
             Top             =   360
             Width           =   1695
          End
@@ -397,7 +443,7 @@ Begin VB.Form frmExample
             Caption         =   "ID 중복 확인"
             Height          =   410
             Left            =   120
-            TabIndex        =   39
+            TabIndex        =   38
             Top             =   840
             Width           =   1455
          End
@@ -429,7 +475,7 @@ Begin VB.Form frmExample
             Caption         =   "과금정보 확인"
             Height          =   410
             Left            =   2160
-            TabIndex        =   50
+            TabIndex        =   49
             Top             =   360
             Width           =   1455
          End
@@ -554,6 +600,23 @@ Private Sub btnCancelReserve_Click()
     Dim Response As PBResponse
     
     Set Response = MessageService.CancelReserve(txtCorpNum.Text, txtReceiptNum.Text)
+    
+    If Response Is Nothing Then
+        MsgBox ("응답코드 : " + CStr(MessageService.LastErrCode) + vbCrLf + "응답메시지 : " + MessageService.LastErrMessage)
+        Exit Sub
+    End If
+    
+    MsgBox ("응답코드 : " + CStr(Response.code) + vbCrLf + "응답메시지 : " + Response.message)
+End Sub
+
+'=========================================================================
+' 문자전송요청시 할당한 전송요청번호(requestNum)로 예약문자 전송을 취소합니다.
+' - 예예약취소는 예약전송시간 10분전까지만 가능합니다.
+'=========================================================================
+Private Sub btnCancelReserveRN_Click()
+    Dim Response As PBResponse
+    
+    Set Response = MessageService.CancelReserveRN(txtCorpNum.Text, txtRequestNum.Text)
     
     If Response Is Nothing Then
         MsgBox ("응답코드 : " + CStr(MessageService.LastErrCode) + vbCrLf + "응답메시지 : " + MessageService.LastErrMessage)
@@ -761,6 +824,77 @@ Private Sub btnGetMessages_Click()
     txtResult.Text = tmp
     
 End Sub
+
+'=========================================================================
+' 문자전송요청시 할당한 전송요청번호(requestNum)로 전송상태를 확인합니다
+' - 응답항목에 대한 자세한 사항은 "[문자 API 연동매뉴얼] >
+'  3.3.2. GetMessagesRN (전송내역 확인 - 요청번호 할당)을 참조하시기 바랍니다.
+'=========================================================================
+Private Sub btnGetMessagesRN_Click()
+Dim sentMessages As Collection
+    Dim sentMessage As PBSentMsg
+    Dim tmp As String
+    
+    Set sentMessages = MessageService.GetMessagesRN(txtCorpNum.Text, txtRequestNum.Text)
+    
+    If sentMessages Is Nothing Then
+        MsgBox ("응답코드 : " + CStr(MessageService.LastErrCode) + vbCrLf + "응답메시지 : " + MessageService.LastErrMessage)
+        Exit Sub
+    End If
+    
+    tmp = "state | result | subject | messageType | sendnum | senderName | receiveNum | receiveName | receiptDT | reserveDT | sendDT | tranNet" + vbCrLf
+    
+    For Each sentMessage In sentMessages
+            
+        ' 전송상태 코드
+        tmp = tmp + CStr(sentMessage.state) + " | "
+        
+        ' 전송결과 코드
+        tmp = tmp + CStr(sentMessage.result) + " | "
+        
+        ' 메시지 제목
+        tmp = tmp + sentMessage.subject + " | "
+        
+        ' 메시지 유형
+        tmp = tmp + sentMessage.messageType + " | "
+        
+        ' 메시지 내용
+        'tmp = tmp + sentMessage.content + " | " ' 내용 표시는 길이관계상 예제에서 생략합니다.
+        
+        ' 발신번호
+        tmp = tmp + sentMessage.sendNum + " | "
+        
+        ' 발신자명
+        tmp = tmp + sentMessage.senderName + " | "
+        
+        ' 수신번호
+        tmp = tmp + sentMessage.receiveNum + " | "
+        
+        ' 수신자명
+        tmp = tmp + sentMessage.receiveName + " | "
+        
+        ' 접수일시
+        tmp = tmp + sentMessage.receiptDT + " | "
+        
+        ' 예약일시
+        tmp = tmp + sentMessage.reserveDT + " | "
+        
+        ' 전송일시
+        tmp = tmp + sentMessage.sendDT + " | "
+        
+        ' 전송결과 수신일시
+        tmp = tmp + sentMessage.resultDT + " | "
+        
+        ' 전송처리 이동통신사명
+        tmp = tmp + sentMessage.tranNet
+        
+        tmp = tmp + vbCrLf
+    Next
+    
+    txtResult.Text = tmp
+    
+End Sub
+
 
 '=========================================================================
 ' 파트너의 잔여포인트를 확인합니다.
@@ -992,7 +1126,7 @@ Private Sub btnListContact_Click()
         Exit Sub
     End If
     
-    tmp = "id | email | hp | personName | searchAllAllowYN | tel | fax | mgrYN | regDT " + vbCrLf
+    tmp = "id | email | hp | personName | searchAllAllowYN | tel | fax | mgrYN | regDT | state" + vbCrLf
     
     For Each info In resultList
         tmp = tmp + info.id + " | " + info.email + " | " + info.hp + " | " + info.personName + " | " + CStr(info.searchAllAllowYN) _
@@ -1186,6 +1320,8 @@ Private Sub btnSendLMS_Hundred_Click()
     Dim message As PBMessage
     Dim i As Integer
     Dim ReceiptNum As String
+    Dim requestNum As String
+    Dim UserID As String
     
     For i = 0 To 100
         
@@ -1212,9 +1348,17 @@ Private Sub btnSendLMS_Hundred_Click()
         Messages.Add message
     Next
         
-    adsYN = False       '광고문자 전송여부
+    '광고문자 전송여부
+    adsYN = False
     
-    ReceiptNum = MessageService.SendLMS(txtCorpNum.Text, "", "", "", Messages, txtReserveDT.Text, adsYN)
+    '전송요청번호, 파트너가 전송요청에 대한 관리번호를 직접 할당하여 관리하는 경우 기재
+    '최대 36자리, 영문, 숫자, 언더바('_'), 하이픈('-')을 조합하여 사업자별로 중복되지 않도록 구성
+    requestNum = ""
+    
+    '팝빌 회원아이디
+    UserID = txtUserID.Text
+    
+    ReceiptNum = MessageService.SendLMS(txtCorpNum.Text, "", "", "", Messages, txtReserveDT.Text, adsYN, UserID, requestNum)
     
     If ReceiptNum = "" Then
         MsgBox ("응답코드 : " + CStr(MessageService.LastErrCode) + vbCrLf + "응답메시지 : " + MessageService.LastErrMessage)
@@ -1232,6 +1376,8 @@ Private Sub btnSendLMS_One_Click()
     Dim adsYN As Boolean
     Dim message As New PBMessage
     Dim ReceiptNum As String
+    Dim requestNum As String
+    Dim UserID As String
     
     '발신번호
     message.sender = "07043042991"
@@ -1245,7 +1391,6 @@ Private Sub btnSendLMS_One_Click()
     '수신자명
     message.receiverName = "수신자이름"
     
-    
     '장문메시지 제목
     message.subject = "장문 제목입니다."
     
@@ -1258,7 +1403,14 @@ Private Sub btnSendLMS_One_Click()
     '광고문자 전송여부
     adsYN = False
     
-    ReceiptNum = MessageService.SendLMS(txtCorpNum.Text, "", "", "", Messages, txtReserveDT.Text, adsYN)
+    '전송요청번호, 파트너가 전송요청에 대한 관리번호를 직접 할당하여 관리하는 경우 기재
+    '최대 36자리, 영문, 숫자, 언더바('_'), 하이픈('-')을 조합하여 사업자별로 중복되지 않도록 구성
+    requestNum = ""
+    
+    '팝빌 회원아이디
+    UserID = txtUserID.Text
+    
+    ReceiptNum = MessageService.SendLMS(txtCorpNum.Text, "", "", "", Messages, txtReserveDT.Text, adsYN, UserID, requestNum)
     
     If ReceiptNum = "" Then
         MsgBox ("응답코드 : " + CStr(MessageService.LastErrCode) + vbCrLf + "응답메시지 : " + MessageService.LastErrMessage)
@@ -1280,6 +1432,8 @@ Private Sub btnSendLMS_Same_Click()
     Dim message As PBMessage
     Dim i As Integer
     Dim ReceiptNum As String
+    Dim requestNum As String
+    Dim UserID As String
     
     '발신번호
     sender = "07043042991"
@@ -1306,8 +1460,15 @@ Private Sub btnSendLMS_Same_Click()
     '광고문자 전송여부
     adsYN = False
     
+    '전송요청번호, 파트너가 전송요청에 대한 관리번호를 직접 할당하여 관리하는 경우 기재
+    '최대 36자리, 영문, 숫자, 언더바('_'), 하이픈('-')을 조합하여 사업자별로 중복되지 않도록 구성
+    requestNum = ""
+    
+    '팝빌 회원아이디
+    UserID = txtUserID.Text
+    
     ReceiptNum = MessageService.SendLMS(txtCorpNum.Text, sender, subject, Contents, _
-                                    Messages, txtReserveDT.Text, adsYN)
+                                    Messages, txtReserveDT.Text, adsYN, UserID, requestNum)
     
     If ReceiptNum = "" Then
         MsgBox ("응답코드 : " + CStr(MessageService.LastErrCode) + vbCrLf + "응답메시지 : " + MessageService.LastErrMessage)
@@ -1325,6 +1486,8 @@ Private Sub btnSendMMS_Click()
     Dim adsYN As Boolean
     Dim ReceiptNum As String
     Dim message As New PBMessage
+    Dim requestNum As String
+    Dim UserID As String
     
     CommonDialog1.FileName = ""
     CommonDialog1.ShowOpen
@@ -1358,7 +1521,14 @@ Private Sub btnSendMMS_Click()
     '광고문자 전송여부
     adsYN = False
     
-    ReceiptNum = MessageService.SendMMS(txtCorpNum.Text, "", "", "", Messages, FilePaths, txtReserveDT.Text, adsYN)
+    '전송요청번호, 파트너가 전송요청에 대한 관리번호를 직접 할당하여 관리하는 경우 기재
+    '최대 36자리, 영문, 숫자, 언더바('_'), 하이픈('-')을 조합하여 사업자별로 중복되지 않도록 구성
+    requestNum = ""
+    
+    '팝빌 회원아이디
+    UserID = txtUserID.Text
+    
+    ReceiptNum = MessageService.SendMMS(txtCorpNum.Text, "", "", "", Messages, FilePaths, txtReserveDT.Text, adsYN, UserID, requestNum)
     
     If ReceiptNum = "" Then
         MsgBox ("응답코드 : " + CStr(MessageService.LastErrCode) + vbCrLf + "응답메시지 : " + MessageService.LastErrMessage)
@@ -1378,6 +1548,8 @@ Private Sub btnSendMMS_hundred_Click()
     Dim message As PBMessage
     Dim i As Integer
     Dim ReceiptNum As String
+    Dim requestNum As String
+    Dim UserID As String
     
     CommonDialog1.FileName = ""
     CommonDialog1.ShowOpen
@@ -1436,11 +1608,17 @@ Private Sub btnSendMMS_hundred_Click()
         Messages.Add message
     Next
     
-    
     '광고문자 전송여부
     adsYN = False
     
-    ReceiptNum = MessageService.SendMMS(txtCorpNum.Text, "", "", "", Messages, FilePaths, txtReserveDT.Text, adsYN)
+    '전송요청번호, 파트너가 전송요청에 대한 관리번호를 직접 할당하여 관리하는 경우 기재
+    '최대 36자리, 영문, 숫자, 언더바('_'), 하이픈('-')을 조합하여 사업자별로 중복되지 않도록 구성
+    requestNum = ""
+    
+    '팝빌 회원아이디
+    UserID = txtUserID.Text
+    
+    ReceiptNum = MessageService.SendMMS(txtCorpNum.Text, "", "", "", Messages, FilePaths, txtReserveDT.Text, adsYN, UserID, requestNum)
     
     If ReceiptNum = "" Then
         MsgBox ("응답코드 : " + CStr(MessageService.LastErrCode) + vbCrLf + "응답메시지 : " + MessageService.LastErrMessage)
@@ -1461,6 +1639,8 @@ Private Sub btnSendMMS_Same_Click()
     Dim subject As String
     Dim Contents As String
     Dim i As Integer
+    Dim requestNum As String
+    Dim UserID As String
     
     CommonDialog1.FileName = ""
     CommonDialog1.ShowOpen
@@ -1477,7 +1657,6 @@ Private Sub btnSendMMS_Same_Click()
     
     '동보메시지 내용
     Contents = "동보메시지 내용"
-    
     
     For i = 0 To 100
         
@@ -1496,7 +1675,14 @@ Private Sub btnSendMMS_Same_Click()
     '광고문자 전송여부
     adsYN = False
     
-    ReceiptNum = MessageService.SendMMS(txtCorpNum.Text, sender, subject, Contents, Messages, FilePaths, txtReserveDT.Text, adsYN)
+    '전송요청번호, 파트너가 전송요청에 대한 관리번호를 직접 할당하여 관리하는 경우 기재
+    '최대 36자리, 영문, 숫자, 언더바('_'), 하이픈('-')을 조합하여 사업자별로 중복되지 않도록 구성
+    requestNum = ""
+    
+    '팝빌 회원아이디
+    UserID = txtUserID.Text
+    
+    ReceiptNum = MessageService.SendMMS(txtCorpNum.Text, sender, subject, Contents, Messages, FilePaths, txtReserveDT.Text, adsYN, UserID, requestNum)
     
     If ReceiptNum = "" Then
         MsgBox ("응답코드 : " + CStr(MessageService.LastErrCode) + vbCrLf + "응답메시지 : " + MessageService.LastErrMessage)
@@ -1515,6 +1701,8 @@ Private Sub btnSendSMS_hundredd_Click()
     Dim message As PBMessage
     Dim i As Integer
     Dim ReceiptNum As String
+    Dim requestNum As String
+    Dim UserID As String
     
     For i = 0 To 100
         
@@ -1538,9 +1726,18 @@ Private Sub btnSendSMS_hundredd_Click()
         Messages.Add message
     Next
     
-    adsYN = False       '광고문자 전송여부
+    '광고문자 전송여부
+    adsYN = False
     
-    ReceiptNum = MessageService.SendSMS(txtCorpNum.Text, "", "", Messages, txtReserveDT.Text, adsYN)
+    '전송요청번호, 파트너가 전송요청에 대한 관리번호를 직접 할당하여 관리하는 경우 기재
+    '최대 36자리, 영문, 숫자, 언더바('_'), 하이픈('-')을 조합하여 사업자별로 중복되지 않도록 구성
+    requestNum = ""
+    
+    '팝빌 회원아이디
+    UserID = txtUserID.Text
+    
+    
+    ReceiptNum = MessageService.SendSMS(txtCorpNum.Text, "", "", Messages, txtReserveDT.Text, adsYN, UserID, requestNum)
     
     If ReceiptNum = "" Then
         MsgBox ("응답코드 : " + CStr(MessageService.LastErrCode) + vbCrLf + "응답메시지 : " + MessageService.LastErrMessage)
@@ -1558,6 +1755,8 @@ Private Sub btnSendSMS_One_Click()
     Dim adsYN As Boolean
     Dim message As New PBMessage
     Dim ReceiptNum As String
+    Dim requestNum As String
+    Dim UserID As String
     
     '발신번호
     message.sender = "07043042991"
@@ -1579,7 +1778,14 @@ Private Sub btnSendSMS_One_Click()
     '광고문자 전송여부
     adsYN = False
     
-    ReceiptNum = MessageService.SendSMS(txtCorpNum.Text, "", "", Messages, txtReserveDT.Text, adsYN)
+    '전송요청번호, 파트너가 전송요청에 대한 관리번호를 직접 할당하여 관리하는 경우 기재
+    '최대 36자리, 영문, 숫자, 언더바('_'), 하이픈('-')을 조합하여 사업자별로 중복되지 않도록 구성
+    requestNum = ""
+    
+    '팝빌 회원아이디
+    UserID = txtUserID.Text
+    
+    ReceiptNum = MessageService.SendSMS(txtCorpNum.Text, "", "", Messages, txtReserveDT.Text, adsYN, UserID, requestNum)
     
     If ReceiptNum = "" Then
         MsgBox ("응답코드 : " + CStr(MessageService.LastErrCode) + vbCrLf + "응답메시지 : " + MessageService.LastErrMessage)
@@ -1599,10 +1805,12 @@ Private Sub btnSendSMS_Same_Click()
     Dim message As PBMessage
     Dim i As Integer
     Dim ReceiptNum As String
+    Dim requestNum As String
+    Dim UserID As String
     
     '발신번호
-    sender = "07075103710"
-        
+    sender = "07043042991"
+    
     '메시지 내용, 90byte 초과된 내용은 삭제되어 전송됨.
     Contents = "동보전송 내용 90byte로 길이가 조정되며, Messages의 내용이 없는 수신건에 동보처리됩니다."
     
@@ -1622,7 +1830,14 @@ Private Sub btnSendSMS_Same_Click()
         Messages.Add message
     Next
     
-    ReceiptNum = MessageService.SendSMS(txtCorpNum.Text, sender, Contents, Messages, txtReserveDT.Text, adsYN)
+    '전송요청번호, 파트너가 전송요청에 대한 관리번호를 직접 할당하여 관리하는 경우 기재
+    '최대 36자리, 영문, 숫자, 언더바('_'), 하이픈('-')을 조합하여 사업자별로 중복되지 않도록 구성
+    requestNum = ""
+    
+    '팝빌 회원아이디
+    UserID = txtUserID.Text
+    
+    ReceiptNum = MessageService.SendSMS(txtCorpNum.Text, sender, Contents, Messages, txtReserveDT.Text, adsYN, UserID, requestNum)
     
     If ReceiptNum = "" Then
         MsgBox ("응답코드 : " + CStr(MessageService.LastErrCode) + vbCrLf + "응답메시지 : " + MessageService.LastErrMessage)
@@ -1641,6 +1856,8 @@ Private Sub btnSendXMS_Hundred_Click()
     Dim ReceiptNum As String
     Dim message As PBMessage
     Dim i As Integer
+    Dim requestNum As String
+    Dim UserID As String
     
     For i = 0 To 50
         
@@ -1693,7 +1910,14 @@ Private Sub btnSendXMS_Hundred_Click()
     '광고문자 전송여부
     adsYN = False
     
-    ReceiptNum = MessageService.SendXMS(txtCorpNum.Text, "", "", "", Messages, txtReserveDT.Text, adsYN)
+    '전송요청번호, 파트너가 전송요청에 대한 관리번호를 직접 할당하여 관리하는 경우 기재
+    '최대 36자리, 영문, 숫자, 언더바('_'), 하이픈('-')을 조합하여 사업자별로 중복되지 않도록 구성
+    requestNum = ""
+    
+    '팝빌 회원아이디
+    UserID = txtUserID.Text
+    
+    ReceiptNum = MessageService.SendXMS(txtCorpNum.Text, "", "", "", Messages, txtReserveDT.Text, adsYN, UserID, requestNum)
     
     If ReceiptNum = "" Then
         MsgBox ("응답코드 : " + CStr(MessageService.LastErrCode) + vbCrLf + "응답메시지 : " + MessageService.LastErrMessage)
@@ -1711,6 +1935,8 @@ Private Sub btnSendXMS_One_Click()
     Dim adsYN As Boolean
     Dim message As New PBMessage
     Dim ReceiptNum As String
+    Dim requestNum As String
+    Dim UserID As String
     
     '발신번호
     message.sender = "07043042991"
@@ -1735,7 +1961,14 @@ Private Sub btnSendXMS_One_Click()
     '광고문자 전송여부
     adsYN = False
     
-    ReceiptNum = MessageService.SendXMS(txtCorpNum.Text, "", "", "", Messages, txtReserveDT.Text, adsYN)
+    '전송요청번호, 파트너가 전송요청에 대한 관리번호를 직접 할당하여 관리하는 경우 기재
+    '최대 36자리, 영문, 숫자, 언더바('_'), 하이픈('-')을 조합하여 사업자별로 중복되지 않도록 구성
+    requestNum = ""
+    
+    '팝빌 회원아이디
+    UserID = txtUserID.Text
+    
+    ReceiptNum = MessageService.SendXMS(txtCorpNum.Text, "", "", "", Messages, txtReserveDT.Text, adsYN, UserID, requestNum)
     
     If ReceiptNum = "" Then
         MsgBox ("응답코드 : " + CStr(MessageService.LastErrCode) + vbCrLf + "응답메시지 : " + MessageService.LastErrMessage)
@@ -1755,6 +1988,8 @@ Private Sub btnSendXMS_Same_Click()
     Dim message As PBMessage
     Dim i As Integer
     Dim ReceiptNum As String
+    Dim requestNum As String
+    Dim UserID As String
     
     '발신번호
     sender = "07043042991"
@@ -1781,8 +2016,15 @@ Private Sub btnSendXMS_Same_Click()
     '광고문자 전송여부
     adsYN = False
     
+    '전송요청번호, 파트너가 전송요청에 대한 관리번호를 직접 할당하여 관리하는 경우 기재
+    '최대 36자리, 영문, 숫자, 언더바('_'), 하이픈('-')을 조합하여 사업자별로 중복되지 않도록 구성
+    requestNum = ""
+    
+    '팝빌 회원아이디
+    UserID = txtUserID.Text
+    
     ReceiptNum = MessageService.SendLMS(txtCorpNum.Text, sender, subject, Contents, _
-                                        Messages, txtReserveDT.Text, adsYN)
+                                        Messages, txtReserveDT.Text, adsYN, UserID, requestNum)
     
     If ReceiptNum = "" Then
         MsgBox ("응답코드 : " + CStr(MessageService.LastErrCode) + vbCrLf + "응답메시지 : " + MessageService.LastErrMessage)
