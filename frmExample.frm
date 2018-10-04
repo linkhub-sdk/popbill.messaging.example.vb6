@@ -772,7 +772,7 @@ Private Sub btnGetMessages_Click()
         Exit Sub
     End If
     
-    tmp = "state | result | subject | messageType | sendnum | senderName | receiveNum | receiveName | receiptDT | reserveDT | sendDT | tranNet" + vbCrLf
+    tmp = "state | result | subject | messageType | sendnum | senderName | receiveNum | receiveName | receiptDT | reserveDT | sendDT | tranNet | receiptNum | requestNum" + vbCrLf
     
     For Each sentMessage In sentMessages
             
@@ -816,7 +816,13 @@ Private Sub btnGetMessages_Click()
         tmp = tmp + sentMessage.resultDT + " | "
         
         ' 전송처리 이동통신사명
-        tmp = tmp + sentMessage.tranNet
+        tmp = tmp + sentMessage.tranNet + " | "
+        
+        ' 접수번호
+        tmp = tmp + sentMessage.receiptNum + " | "
+        
+        ' 요청번호
+        tmp = tmp + sentMessage.requestNum
         
         tmp = tmp + vbCrLf
     Next
@@ -842,7 +848,7 @@ Dim sentMessages As Collection
         Exit Sub
     End If
     
-    tmp = "state | result | subject | messageType | sendnum | senderName | receiveNum | receiveName | receiptDT | reserveDT | sendDT | tranNet" + vbCrLf
+    tmp = "state | result | subject | messageType | sendnum | senderName | receiveNum | receiveName | receiptDT | reserveDT | sendDT | tranNet | receiptNum | requestNum" + vbCrLf
     
     For Each sentMessage In sentMessages
             
@@ -886,7 +892,13 @@ Dim sentMessages As Collection
         tmp = tmp + sentMessage.resultDT + " | "
         
         ' 전송처리 이동통신사명
-        tmp = tmp + sentMessage.tranNet
+        tmp = tmp + sentMessage.tranNet + " | "
+        
+        ' 접수번호
+        tmp = tmp + sentMessage.receiptNum + " | "
+                
+        ' 요청번호
+        tmp = tmp + sentMessage.requestNum
         
         tmp = tmp + vbCrLf
     Next
@@ -1183,6 +1195,7 @@ End Sub
 
 '=========================================================================
 ' 검색조건을 사용하여 문자전송 내역을 조회합니다.
+'  - 최대 검색기간 : 6개월 이내
 '=========================================================================
 
 Private Sub btnSearch_Click()
@@ -1198,12 +1211,13 @@ Private Sub btnSearch_Click()
     Dim Order As String
     Dim tmp As String
     Dim info As PBSentMsg
+    Dim QString As String
     
     '[필수] 시작일자, 날자형식(yyyyMMdd)
-    SDate = "20170601"
+    SDate = "20180801"
     
     '[필수] 종료일자, 날자형식(yyyyMMdd)
-    EDate = "20171231"
+    EDate = "20180820"
     
     '전송상태값 배열, 1-대기, 2-성공, 3-실패, 4-취소
     state.Add "1"
@@ -1230,8 +1244,11 @@ Private Sub btnSearch_Click()
     
     '정렬방향, D-내림차순(기본값), A-오름차순
     Order = "D"
+    
+    '조회 검색어, 발신자명 또는 수신자명 기재
+    QString = "발신자"
 
-    Set msgSearchList = MessageService.Search(txtCorpNum.Text, SDate, EDate, state, Item, ReserveYN, SenderYN, Page, PerPage, Order)
+    Set msgSearchList = MessageService.Search(txtCorpNum.Text, SDate, EDate, state, Item, ReserveYN, SenderYN, Page, PerPage, Order, QString)
      
     If msgSearchList Is Nothing Then
         MsgBox ("응답코드 : " + CStr(MessageService.LastErrCode) + vbCrLf + "응답메시지 : " + MessageService.LastErrMessage)
@@ -1245,7 +1262,7 @@ Private Sub btnSearch_Click()
     tmp = tmp + "pageCount : " + CStr(msgSearchList.pageCount) + vbCrLf
     tmp = tmp + "message : " + msgSearchList.message + vbCrLf + vbCrLf
     
-    tmp = tmp + "state | result | subject | messageType | sendnum | senderName | receiveNum | receiveName | receiptDT | reserveDT | sendDT |  tranNet" + vbCrLf
+    tmp = tmp + "state | result | subject | messageType | sendnum | senderName | receiveNum | receiveName | receiptDT | reserveDT | sendDT |  tranNet | receiptNum | requestNum" + vbCrLf
             
     For Each info In msgSearchList.list
     
@@ -1289,7 +1306,13 @@ Private Sub btnSearch_Click()
         tmp = tmp + info.resultDT + " | "
         
         ' 전송처리 이동통신사명
-        tmp = tmp + info.tranNet
+        tmp = tmp + info.tranNet + " | "
+        
+        ' 접수번호
+        tmp = tmp + info.receiptNum + " | "
+        
+        ' 요청번호
+        tmp = tmp + info.requestNum
         tmp = tmp + vbCrLf
     Next
         
@@ -1319,7 +1342,7 @@ Private Sub btnSendLMS_Hundred_Click()
     Dim adsYN As Boolean
     Dim message As PBMessage
     Dim i As Integer
-    Dim ReceiptNum As String
+    Dim receiptNum As String
     Dim requestNum As String
     Dim UserID As String
     
@@ -1358,16 +1381,16 @@ Private Sub btnSendLMS_Hundred_Click()
     '팝빌 회원아이디
     UserID = txtUserID.Text
     
-    ReceiptNum = MessageService.SendLMS(txtCorpNum.Text, "", "", "", Messages, txtReserveDT.Text, adsYN, UserID, requestNum)
+    receiptNum = MessageService.SendLMS(txtCorpNum.Text, "", "", "", Messages, txtReserveDT.Text, adsYN, UserID, requestNum)
     
-    If ReceiptNum = "" Then
+    If receiptNum = "" Then
         MsgBox ("응답코드 : " + CStr(MessageService.LastErrCode) + vbCrLf + "응답메시지 : " + MessageService.LastErrMessage)
         Exit Sub
     End If
     
-    MsgBox "접수 번호 : " + ReceiptNum
+    MsgBox "접수 번호 : " + receiptNum
     
-    txtReceiptNum.Text = ReceiptNum
+    txtReceiptNum.Text = receiptNum
     
 End Sub
 
@@ -1375,7 +1398,7 @@ Private Sub btnSendLMS_One_Click()
     Dim Messages As New Collection
     Dim adsYN As Boolean
     Dim message As New PBMessage
-    Dim ReceiptNum As String
+    Dim receiptNum As String
     Dim requestNum As String
     Dim UserID As String
     
@@ -1410,16 +1433,16 @@ Private Sub btnSendLMS_One_Click()
     '팝빌 회원아이디
     UserID = txtUserID.Text
     
-    ReceiptNum = MessageService.SendLMS(txtCorpNum.Text, "", "", "", Messages, txtReserveDT.Text, adsYN, UserID, requestNum)
+    receiptNum = MessageService.SendLMS(txtCorpNum.Text, "", "", "", Messages, txtReserveDT.Text, adsYN, UserID, requestNum)
     
-    If ReceiptNum = "" Then
+    If receiptNum = "" Then
         MsgBox ("응답코드 : " + CStr(MessageService.LastErrCode) + vbCrLf + "응답메시지 : " + MessageService.LastErrMessage)
         Exit Sub
     End If
     
-    MsgBox "접수 번호 : " + ReceiptNum
+    MsgBox "접수 번호 : " + receiptNum
     
-    txtReceiptNum.Text = ReceiptNum
+    txtReceiptNum.Text = receiptNum
     
 End Sub
 
@@ -1431,7 +1454,7 @@ Private Sub btnSendLMS_Same_Click()
     Dim adsYN As Boolean
     Dim message As PBMessage
     Dim i As Integer
-    Dim ReceiptNum As String
+    Dim receiptNum As String
     Dim requestNum As String
     Dim UserID As String
     
@@ -1467,24 +1490,24 @@ Private Sub btnSendLMS_Same_Click()
     '팝빌 회원아이디
     UserID = txtUserID.Text
     
-    ReceiptNum = MessageService.SendLMS(txtCorpNum.Text, sender, subject, Contents, _
+    receiptNum = MessageService.SendLMS(txtCorpNum.Text, sender, subject, Contents, _
                                     Messages, txtReserveDT.Text, adsYN, UserID, requestNum)
     
-    If ReceiptNum = "" Then
+    If receiptNum = "" Then
         MsgBox ("응답코드 : " + CStr(MessageService.LastErrCode) + vbCrLf + "응답메시지 : " + MessageService.LastErrMessage)
         Exit Sub
     End If
     
-    MsgBox "접수 번호 : " + ReceiptNum
+    MsgBox "접수 번호 : " + receiptNum
     
-    txtReceiptNum.Text = ReceiptNum
+    txtReceiptNum.Text = receiptNum
 End Sub
 
 Private Sub btnSendMMS_Click()
     Dim Messages As New Collection
     Dim FilePaths As New Collection
     Dim adsYN As Boolean
-    Dim ReceiptNum As String
+    Dim receiptNum As String
     Dim message As New PBMessage
     Dim requestNum As String
     Dim UserID As String
@@ -1528,16 +1551,16 @@ Private Sub btnSendMMS_Click()
     '팝빌 회원아이디
     UserID = txtUserID.Text
     
-    ReceiptNum = MessageService.SendMMS(txtCorpNum.Text, "", "", "", Messages, FilePaths, txtReserveDT.Text, adsYN, UserID, requestNum)
+    receiptNum = MessageService.SendMMS(txtCorpNum.Text, "", "", "", Messages, FilePaths, txtReserveDT.Text, adsYN, UserID, requestNum)
     
-    If ReceiptNum = "" Then
+    If receiptNum = "" Then
         MsgBox ("응답코드 : " + CStr(MessageService.LastErrCode) + vbCrLf + "응답메시지 : " + MessageService.LastErrMessage)
         Exit Sub
     End If
     
-    MsgBox "접수 번호 : " + ReceiptNum
+    MsgBox "접수 번호 : " + receiptNum
     
-    txtReceiptNum.Text = ReceiptNum
+    txtReceiptNum.Text = receiptNum
     
 End Sub
 
@@ -1547,7 +1570,7 @@ Private Sub btnSendMMS_hundred_Click()
     Dim adsYN As Boolean
     Dim message As PBMessage
     Dim i As Integer
-    Dim ReceiptNum As String
+    Dim receiptNum As String
     Dim requestNum As String
     Dim UserID As String
     
@@ -1618,22 +1641,22 @@ Private Sub btnSendMMS_hundred_Click()
     '팝빌 회원아이디
     UserID = txtUserID.Text
     
-    ReceiptNum = MessageService.SendMMS(txtCorpNum.Text, "", "", "", Messages, FilePaths, txtReserveDT.Text, adsYN, UserID, requestNum)
+    receiptNum = MessageService.SendMMS(txtCorpNum.Text, "", "", "", Messages, FilePaths, txtReserveDT.Text, adsYN, UserID, requestNum)
     
-    If ReceiptNum = "" Then
+    If receiptNum = "" Then
         MsgBox ("응답코드 : " + CStr(MessageService.LastErrCode) + vbCrLf + "응답메시지 : " + MessageService.LastErrMessage)
         Exit Sub
     End If
     
-    MsgBox "접수 번호 : " + ReceiptNum
-    txtReceiptNum.Text = ReceiptNum
+    MsgBox "접수 번호 : " + receiptNum
+    txtReceiptNum.Text = receiptNum
 End Sub
 
 Private Sub btnSendMMS_Same_Click()
     Dim Messages As New Collection
     Dim FilePaths As New Collection
     Dim adsYN As Boolean
-    Dim ReceiptNum As String
+    Dim receiptNum As String
     Dim message As PBMessage
     Dim sender As String
     Dim subject As String
@@ -1682,16 +1705,16 @@ Private Sub btnSendMMS_Same_Click()
     '팝빌 회원아이디
     UserID = txtUserID.Text
     
-    ReceiptNum = MessageService.SendMMS(txtCorpNum.Text, sender, subject, Contents, Messages, FilePaths, txtReserveDT.Text, adsYN, UserID, requestNum)
+    receiptNum = MessageService.SendMMS(txtCorpNum.Text, sender, subject, Contents, Messages, FilePaths, txtReserveDT.Text, adsYN, UserID, requestNum)
     
-    If ReceiptNum = "" Then
+    If receiptNum = "" Then
         MsgBox ("응답코드 : " + CStr(MessageService.LastErrCode) + vbCrLf + "응답메시지 : " + MessageService.LastErrMessage)
         Exit Sub
     End If
     
-    MsgBox "접수 번호 : " + ReceiptNum
+    MsgBox "접수 번호 : " + receiptNum
     
-    txtReceiptNum.Text = ReceiptNum
+    txtReceiptNum.Text = receiptNum
     
 End Sub
 
@@ -1700,7 +1723,7 @@ Private Sub btnSendSMS_hundredd_Click()
     Dim adsYN As Boolean
     Dim message As PBMessage
     Dim i As Integer
-    Dim ReceiptNum As String
+    Dim receiptNum As String
     Dim requestNum As String
     Dim UserID As String
     
@@ -1737,16 +1760,16 @@ Private Sub btnSendSMS_hundredd_Click()
     UserID = txtUserID.Text
     
     
-    ReceiptNum = MessageService.SendSMS(txtCorpNum.Text, "", "", Messages, txtReserveDT.Text, adsYN, UserID, requestNum)
+    receiptNum = MessageService.SendSMS(txtCorpNum.Text, "", "", Messages, txtReserveDT.Text, adsYN, UserID, requestNum)
     
-    If ReceiptNum = "" Then
+    If receiptNum = "" Then
         MsgBox ("응답코드 : " + CStr(MessageService.LastErrCode) + vbCrLf + "응답메시지 : " + MessageService.LastErrMessage)
         Exit Sub
     End If
     
-    MsgBox "접수 번호 : " + ReceiptNum
+    MsgBox "접수 번호 : " + receiptNum
     
-    txtReceiptNum.Text = ReceiptNum
+    txtReceiptNum.Text = receiptNum
     
 End Sub
 
@@ -1754,7 +1777,7 @@ Private Sub btnSendSMS_One_Click()
     Dim Messages As New Collection
     Dim adsYN As Boolean
     Dim message As New PBMessage
-    Dim ReceiptNum As String
+    Dim receiptNum As String
     Dim requestNum As String
     Dim UserID As String
     
@@ -1785,15 +1808,15 @@ Private Sub btnSendSMS_One_Click()
     '팝빌 회원아이디
     UserID = txtUserID.Text
     
-    ReceiptNum = MessageService.SendSMS(txtCorpNum.Text, "", "", Messages, txtReserveDT.Text, adsYN, UserID, requestNum)
+    receiptNum = MessageService.SendSMS(txtCorpNum.Text, "", "", Messages, txtReserveDT.Text, adsYN, UserID, requestNum)
     
-    If ReceiptNum = "" Then
+    If receiptNum = "" Then
         MsgBox ("응답코드 : " + CStr(MessageService.LastErrCode) + vbCrLf + "응답메시지 : " + MessageService.LastErrMessage)
         Exit Sub
     End If
     
-    MsgBox "접수 번호 : " + ReceiptNum
-    txtReceiptNum.Text = ReceiptNum
+    MsgBox "접수 번호 : " + receiptNum
+    txtReceiptNum.Text = receiptNum
     
 End Sub
 
@@ -1804,7 +1827,7 @@ Private Sub btnSendSMS_Same_Click()
     Dim Contents As String
     Dim message As PBMessage
     Dim i As Integer
-    Dim ReceiptNum As String
+    Dim receiptNum As String
     Dim requestNum As String
     Dim UserID As String
     
@@ -1837,23 +1860,23 @@ Private Sub btnSendSMS_Same_Click()
     '팝빌 회원아이디
     UserID = txtUserID.Text
     
-    ReceiptNum = MessageService.SendSMS(txtCorpNum.Text, sender, Contents, Messages, txtReserveDT.Text, adsYN, UserID, requestNum)
+    receiptNum = MessageService.SendSMS(txtCorpNum.Text, sender, Contents, Messages, txtReserveDT.Text, adsYN, UserID, requestNum)
     
-    If ReceiptNum = "" Then
+    If receiptNum = "" Then
         MsgBox ("응답코드 : " + CStr(MessageService.LastErrCode) + vbCrLf + "응답메시지 : " + MessageService.LastErrMessage)
         Exit Sub
     End If
     
-    MsgBox "접수 번호 : " + ReceiptNum
+    MsgBox "접수 번호 : " + receiptNum
     
-    txtReceiptNum.Text = ReceiptNum
+    txtReceiptNum.Text = receiptNum
     
 End Sub
 
 Private Sub btnSendXMS_Hundred_Click()
     Dim Messages As New Collection
     Dim adsYN As Boolean
-    Dim ReceiptNum As String
+    Dim receiptNum As String
     Dim message As PBMessage
     Dim i As Integer
     Dim requestNum As String
@@ -1917,16 +1940,16 @@ Private Sub btnSendXMS_Hundred_Click()
     '팝빌 회원아이디
     UserID = txtUserID.Text
     
-    ReceiptNum = MessageService.SendXMS(txtCorpNum.Text, "", "", "", Messages, txtReserveDT.Text, adsYN, UserID, requestNum)
+    receiptNum = MessageService.SendXMS(txtCorpNum.Text, "", "", "", Messages, txtReserveDT.Text, adsYN, UserID, requestNum)
     
-    If ReceiptNum = "" Then
+    If receiptNum = "" Then
         MsgBox ("응답코드 : " + CStr(MessageService.LastErrCode) + vbCrLf + "응답메시지 : " + MessageService.LastErrMessage)
         Exit Sub
     End If
     
-    MsgBox "접수 번호 : " + ReceiptNum
+    MsgBox "접수 번호 : " + receiptNum
     
-    txtReceiptNum.Text = ReceiptNum
+    txtReceiptNum.Text = receiptNum
     
 End Sub
 
@@ -1934,7 +1957,7 @@ Private Sub btnSendXMS_One_Click()
     Dim Messages As New Collection
     Dim adsYN As Boolean
     Dim message As New PBMessage
-    Dim ReceiptNum As String
+    Dim receiptNum As String
     Dim requestNum As String
     Dim UserID As String
     
@@ -1968,15 +1991,15 @@ Private Sub btnSendXMS_One_Click()
     '팝빌 회원아이디
     UserID = txtUserID.Text
     
-    ReceiptNum = MessageService.SendXMS(txtCorpNum.Text, "", "", "", Messages, txtReserveDT.Text, adsYN, UserID, requestNum)
+    receiptNum = MessageService.SendXMS(txtCorpNum.Text, "", "", "", Messages, txtReserveDT.Text, adsYN, UserID, requestNum)
     
-    If ReceiptNum = "" Then
+    If receiptNum = "" Then
         MsgBox ("응답코드 : " + CStr(MessageService.LastErrCode) + vbCrLf + "응답메시지 : " + MessageService.LastErrMessage)
         Exit Sub
     End If
     
-    MsgBox "접수 번호 : " + ReceiptNum
-    txtReceiptNum.Text = ReceiptNum
+    MsgBox "접수 번호 : " + receiptNum
+    txtReceiptNum.Text = receiptNum
 End Sub
 
 Private Sub btnSendXMS_Same_Click()
@@ -1987,7 +2010,7 @@ Private Sub btnSendXMS_Same_Click()
     Dim Contents As String
     Dim message As PBMessage
     Dim i As Integer
-    Dim ReceiptNum As String
+    Dim receiptNum As String
     Dim requestNum As String
     Dim UserID As String
     
@@ -2023,17 +2046,17 @@ Private Sub btnSendXMS_Same_Click()
     '팝빌 회원아이디
     UserID = txtUserID.Text
     
-    ReceiptNum = MessageService.SendLMS(txtCorpNum.Text, sender, subject, Contents, _
+    receiptNum = MessageService.SendLMS(txtCorpNum.Text, sender, subject, Contents, _
                                         Messages, txtReserveDT.Text, adsYN, UserID, requestNum)
     
-    If ReceiptNum = "" Then
+    If receiptNum = "" Then
         MsgBox ("응답코드 : " + CStr(MessageService.LastErrCode) + vbCrLf + "응답메시지 : " + MessageService.LastErrMessage)
         Exit Sub
     End If
     
-    MsgBox "접수 번호 : " + ReceiptNum
+    MsgBox "접수 번호 : " + receiptNum
     
-    txtReceiptNum.Text = ReceiptNum
+    txtReceiptNum.Text = receiptNum
 End Sub
 
 '=========================================================================
