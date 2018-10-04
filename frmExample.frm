@@ -1030,13 +1030,13 @@ Private Sub btnGetStates_Click()
     
     Dim tmp As String
     
-    tmp = "rNum | sn | stat | rlt | sDT | rDT | net" + vbCrLf
+    tmp = "rNum | sn | stat | rlt | sDT | rDT | net | srt" + vbCrLf
     
     Dim info As PBMessageBriefInfo
     
     For Each info In resultList
         tmp = tmp + info.rNum + " | " + info.sn + " | " + info.stat + " | " + info.rlt + " | " + info.sDT + " | "
-        tmp = tmp + info.rDT + " | " + info.net + vbCrLf
+        tmp = tmp + info.rDT + " | " + info.net + " | " + info.srt + vbCrLf
     Next
     
     MsgBox tmp
@@ -1246,7 +1246,7 @@ Private Sub btnSearch_Click()
     Order = "D"
     
     '조회 검색어, 발신자명 또는 수신자명 기재
-    QString = "발신자"
+    QString = ""
 
     Set msgSearchList = MessageService.Search(txtCorpNum.Text, SDate, EDate, state, Item, ReserveYN, SenderYN, Page, PerPage, Order, QString)
      
