@@ -103,7 +103,7 @@ Begin VB.Form frmExample
          TabIndex        =   50
          Top             =   240
          Width           =   2055
-         Begin VB.CommandButton btnGetURL_SENDER 
+         Begin VB.CommandButton btnGetSenderNumberMgtURL 
             Caption         =   "발신번호 관리 팝업"
             Height          =   495
             Left            =   120
@@ -136,7 +136,7 @@ Begin VB.Form frmExample
          Top             =   1680
          Width           =   1695
       End
-      Begin VB.CommandButton btnSearchPopup 
+      Begin VB.CommandButton btnGetSentListURL 
          Caption         =   "전송내역조회 팝업"
          Height          =   495
          Left            =   8760
@@ -359,7 +359,7 @@ Begin VB.Form frmExample
          TabIndex        =   53
          Top             =   240
          Width           =   1935
-         Begin VB.CommandButton btnGetPopbillURL_CHRG 
+         Begin VB.CommandButton btnGetChargeURL 
             Caption         =   "포인트 충전 URL"
             Height          =   410
             Left            =   120
@@ -504,7 +504,7 @@ Begin VB.Form frmExample
          TabIndex        =   5
          Top             =   240
          Width           =   1815
-         Begin VB.CommandButton btnGetPopbillURL_LOGIN 
+         Begin VB.CommandButton btnGetAccessURL 
             Caption         =   " 팝빌 로그인 URL"
             Height          =   410
             Left            =   120
@@ -566,7 +566,7 @@ Attribute VB_Exposed = False
 ' 팝빌 문자 API VB 6.0 SDK Example
 '
 ' - VB6 SDK 연동환경 설정방법 안내 : http://blog.linkhub.co.kr/569/
-' - 업데이트 일자 : 2018-10-04
+' - 업데이트 일자 : 2018-11-21
 ' - 연동 기술지원 연락처 : 1600-9854 / 070-4304-2991
 ' - 연동 기술지원 이메일 : code@linkhub.co.kr
 '
@@ -661,6 +661,8 @@ Private Sub btnCheckIsMember_Click()
     MsgBox ("응답코드 : " + CStr(Response.code) + vbCrLf + "응답메시지 : " + Response.message)
 End Sub
 
+
+
 '=========================================================================
 ' 080 서비스 수신거부 목록을 확인합니다.
 '=========================================================================
@@ -731,6 +733,10 @@ Private Sub btnGetChargeInfo_Click()
     
     MsgBox tmp
 End Sub
+
+
+
+
 
 '=========================================================================
 ' 연동회원의 회사정보를 확인합니다.
@@ -949,11 +955,10 @@ End Sub
 ' 연동회원 포인트 충전 URL을 반환합니다.
 ' - URL 보안정책에 따라 반환된 URL은 30초의 유효시간을 갖습니다.
 '=========================================================================
-
-Private Sub btnGetPopbillURL_CHRG_Click()
+Private Sub btnGetChargeURL_Click()
     Dim url As String
     
-    url = MessageService.GetPopbillURL(txtCorpNum.Text, txtUserID.Text, "CHRG")
+    url = MessageService.GetChargeURL(txtCorpNum.Text, txtUserID.Text)
     
     If url = "" Then
         MsgBox ("응답코드 : " + CStr(MessageService.LastErrCode) + vbCrLf + "응답메시지 : " + MessageService.LastErrMessage)
@@ -967,11 +972,11 @@ End Sub
 ' 팝빌(www.popbill.com)에 로그인된 팝빌 URL을 반환합니다.
 ' - 보안정책에 따라 반환된 URL은 30초의 유효시간을 갖습니다.
 '=========================================================================
+Private Sub btnGetAccessURL_Click()
 
-Private Sub btnGetPopbillURL_LOGIN_Click()
     Dim url As String
     
-    url = MessageService.GetPopbillURL(txtCorpNum.Text, txtUserID.Text, "LOGIN")
+    url = MessageService.GetAccessURL(txtCorpNum.Text, txtUserID.Text)
     
     If url = "" Then
         MsgBox ("응답코드 : " + CStr(MessageService.LastErrCode) + vbCrLf + "응답메시지 : " + MessageService.LastErrMessage)
@@ -1007,6 +1012,10 @@ Private Sub btnGetSenderNumberList_Click()
     MsgBox tmp
     
 End Sub
+
+
+
+
 
 '=========================================================================
 ' 문자전송요청에 대한 전송결과를 확인합니다.
@@ -1047,11 +1056,11 @@ End Sub
 ' 발신번호 관리 팝업 URL을 반환합니다.
 ' - 반환된 URL은 보안정책에 따라 30초의 유효시간을 갖습니다.
 '=========================================================================
+Private Sub btnGetSenderNumberMgtURL_Click()
 
-Private Sub btnGetURL_SENDER_Click()
     Dim url As String
     
-    url = MessageService.GetURL(txtCorpNum.Text, txtUserID.Text, "SENDER")
+    url = MessageService.GetSenderNumberMgtURL(txtCorpNum.Text, txtUserID.Text)
     
     If url = "" Then
         MsgBox ("응답코드 : " + CStr(MessageService.LastErrCode) + vbCrLf + "응답메시지 : " + MessageService.LastErrMessage)
@@ -1323,11 +1332,10 @@ End Sub
 ' 문자메시지 전송내역 팝업 URL을 반환합니다.
 ' - 보안정책에 따라 반환된 URL은 30초의 유효시간을 갖습니다.
 '=========================================================================
-
-Private Sub btnSearchPopup_Click()
+Private Sub btnGetSentListURL_Click()
     Dim url As String
     
-    url = MessageService.GetURL(txtCorpNum.Text, txtUserID.Text, "BOX")
+    url = MessageService.GetSentListURL(txtCorpNum.Text, txtUserID.Text)
     
     If url = "" Then
         MsgBox ("응답코드 : " + CStr(MessageService.LastErrCode) + vbCrLf + "응답메시지 : " + MessageService.LastErrMessage)
