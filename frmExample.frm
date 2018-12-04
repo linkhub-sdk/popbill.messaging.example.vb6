@@ -16,7 +16,7 @@ Begin VB.Form frmExample
       Left            =   6240
       TabIndex        =   37
       Top             =   5475
-      Width           =   1050
+      Width           =   1110
    End
    Begin VB.Frame Frame10 
       Caption         =   "포토 전송기능"
@@ -24,14 +24,14 @@ Begin VB.Form frmExample
       Left            =   4920
       TabIndex        =   34
       Top             =   5160
-      Width           =   3705
+      Width           =   3825
       Begin VB.CommandButton btnSendMMS 
          Caption         =   "1건 전송"
          Height          =   465
-         Left            =   240
+         Left            =   120
          TabIndex        =   36
          Top             =   315
-         Width           =   930
+         Width           =   1110
       End
       Begin VB.CommandButton btnSendMMS_Same 
          Caption         =   "대량전송"
@@ -39,7 +39,7 @@ Begin VB.Form frmExample
          Left            =   2520
          TabIndex        =   35
          Top             =   315
-         Width           =   975
+         Width           =   1110
       End
    End
    Begin VB.CommandButton btnUnitCost_MMS 
@@ -98,8 +98,8 @@ Begin VB.Form frmExample
       End
       Begin VB.Frame Frame14 
          Caption         =   "발신번호 관리"
-         Height          =   1695
-         Left            =   10800
+         Height          =   1455
+         Left            =   10680
          TabIndex        =   50
          Top             =   240
          Width           =   2055
@@ -108,7 +108,7 @@ Begin VB.Form frmExample
             Height          =   495
             Left            =   120
             TabIndex        =   52
-            Top             =   960
+            Top             =   840
             Width           =   1815
          End
          Begin VB.CommandButton btnGetSenderNumberList 
@@ -116,7 +116,7 @@ Begin VB.Form frmExample
             Height          =   495
             Left            =   120
             TabIndex        =   51
-            Top             =   360
+            Top             =   240
             Width           =   1815
          End
       End
@@ -175,14 +175,14 @@ Begin VB.Form frmExample
          Left            =   480
          TabIndex        =   25
          Top             =   1920
-         Width           =   3825
+         Width           =   3945
          Begin VB.CommandButton btnSendXMS_One 
             Caption         =   "1건 전송"
             Height          =   465
-            Left            =   360
+            Left            =   240
             TabIndex        =   28
             Top             =   315
-            Width           =   930
+            Width           =   1110
          End
          Begin VB.CommandButton btnSendXMS_Hundred 
             Caption         =   "100건 전송"
@@ -198,7 +198,7 @@ Begin VB.Form frmExample
             Left            =   2640
             TabIndex        =   26
             Top             =   315
-            Width           =   1020
+            Width           =   1110
          End
       End
       Begin VB.Frame Frame8 
@@ -207,14 +207,14 @@ Begin VB.Form frmExample
          Left            =   4680
          TabIndex        =   21
          Top             =   840
-         Width           =   3705
+         Width           =   3825
          Begin VB.CommandButton btnSendLMS_One 
             Caption         =   "1건 전송"
             Height          =   465
-            Left            =   240
+            Left            =   120
             TabIndex        =   24
             Top             =   315
-            Width           =   930
+            Width           =   1110
          End
          Begin VB.CommandButton btnSendLMS_Hundred 
             Caption         =   "100건 전송"
@@ -230,7 +230,7 @@ Begin VB.Form frmExample
             Left            =   2520
             TabIndex        =   22
             Top             =   315
-            Width           =   1020
+            Width           =   1110
          End
       End
       Begin VB.TextBox txtReceiptNum 
@@ -246,14 +246,14 @@ Begin VB.Form frmExample
          Left            =   480
          TabIndex        =   16
          Top             =   840
-         Width           =   3825
+         Width           =   3945
          Begin VB.CommandButton btnSendSMS_Same 
             Caption         =   "대량전송"
             Height          =   465
             Left            =   2640
             TabIndex        =   19
             Top             =   315
-            Width           =   1020
+            Width           =   1110
          End
          Begin VB.CommandButton btnSendSMS_hundredd 
             Caption         =   "100건 전송"
@@ -266,10 +266,10 @@ Begin VB.Form frmExample
          Begin VB.CommandButton btnSendSMS_One 
             Caption         =   "1건 전송"
             Height          =   465
-            Left            =   360
+            Left            =   240
             TabIndex        =   17
             Top             =   315
-            Width           =   930
+            Width           =   1110
          End
       End
       Begin VB.TextBox txtReserveDT 
@@ -1018,7 +1018,7 @@ End Sub
 
 
 '=========================================================================
-' 문자전송요청에 대한 전송결과를 확인합니다.
+' 문자 전송내역 요약정보를 확인합니다.
 '=========================================================================
 
 Private Sub btnGetStates_Click()
