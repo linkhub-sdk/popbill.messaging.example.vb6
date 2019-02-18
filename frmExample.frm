@@ -14,7 +14,7 @@ Begin VB.Form frmExample
       Caption         =   "100건 전송"
       Height          =   465
       Left            =   6240
-      TabIndex        =   37
+      TabIndex        =   36
       Top             =   5475
       Width           =   1110
    End
@@ -22,14 +22,14 @@ Begin VB.Form frmExample
       Caption         =   "포토 전송기능"
       Height          =   945
       Left            =   4920
-      TabIndex        =   34
+      TabIndex        =   33
       Top             =   5160
       Width           =   3825
       Begin VB.CommandButton btnSendMMS 
          Caption         =   "1건 전송"
          Height          =   465
          Left            =   120
-         TabIndex        =   36
+         TabIndex        =   35
          Top             =   315
          Width           =   1110
       End
@@ -37,7 +37,7 @@ Begin VB.Form frmExample
          Caption         =   "동보전송"
          Height          =   465
          Left            =   2520
-         TabIndex        =   35
+         TabIndex        =   34
          Top             =   315
          Width           =   1110
       End
@@ -46,7 +46,7 @@ Begin VB.Form frmExample
       Caption         =   "MMS 전송단가 확인"
       Height          =   410
       Left            =   2320
-      TabIndex        =   33
+      TabIndex        =   32
       Top             =   2160
       Width           =   1815
    End
@@ -61,29 +61,29 @@ Begin VB.Form frmExample
          Caption         =   "요청번호 할당 전송건 처리"
          Height          =   1335
          Left            =   4920
-         TabIndex        =   62
+         TabIndex        =   61
          Top             =   3000
          Width           =   4215
-         Begin VB.CommandButton btnCancelReserveRN 
-            Caption         =   "예약 전송 취소"
-            Height          =   525
-            Left            =   2160
-            TabIndex        =   65
-            Top             =   720
-            Width           =   1935
-         End
          Begin VB.CommandButton btnGetMessagesRN 
             Caption         =   "전송상태확인"
             Height          =   525
             Left            =   120
-            TabIndex        =   64
+            TabIndex        =   65
             Top             =   720
             Width           =   1905
+         End
+         Begin VB.CommandButton btnCancelReserveRN 
+            Caption         =   "예약 전송 취소"
+            Height          =   525
+            Left            =   2160
+            TabIndex        =   63
+            Top             =   720
+            Width           =   1935
          End
          Begin VB.TextBox txtRequestNum 
             Height          =   435
             Left            =   1200
-            TabIndex        =   63
+            TabIndex        =   62
             Top             =   240
             Width           =   2850
          End
@@ -91,7 +91,7 @@ Begin VB.Form frmExample
             Caption         =   "요청번호 : "
             Height          =   375
             Left            =   240
-            TabIndex        =   66
+            TabIndex        =   64
             Top             =   360
             Width           =   1095
          End
@@ -100,14 +100,14 @@ Begin VB.Form frmExample
          Caption         =   "발신번호 관리"
          Height          =   1455
          Left            =   10680
-         TabIndex        =   50
+         TabIndex        =   49
          Top             =   240
          Width           =   2055
          Begin VB.CommandButton btnGetSenderNumberMgtURL 
             Caption         =   "발신번호 관리 팝업"
             Height          =   495
             Left            =   120
-            TabIndex        =   52
+            TabIndex        =   51
             Top             =   840
             Width           =   1815
          End
@@ -115,7 +115,7 @@ Begin VB.Form frmExample
             Caption         =   "발신번호 목록 조회"
             Height          =   495
             Left            =   120
-            TabIndex        =   51
+            TabIndex        =   50
             Top             =   240
             Width           =   1815
          End
@@ -124,7 +124,7 @@ Begin VB.Form frmExample
          Caption         =   "080 수신거부목록"
          Height          =   495
          Left            =   8760
-         TabIndex        =   47
+         TabIndex        =   46
          Top             =   2280
          Width           =   1695
       End
@@ -132,7 +132,7 @@ Begin VB.Form frmExample
          Caption         =   "전송내역 목록조회"
          Height          =   495
          Left            =   8760
-         TabIndex        =   46
+         TabIndex        =   45
          Top             =   1680
          Width           =   1695
       End
@@ -140,7 +140,7 @@ Begin VB.Form frmExample
          Caption         =   "전송내역조회 팝업"
          Height          =   495
          Left            =   8760
-         TabIndex        =   32
+         TabIndex        =   31
          Top             =   480
          Width           =   1695
       End
@@ -149,7 +149,7 @@ Begin VB.Form frmExample
          Left            =   480
          MultiLine       =   -1  'True
          ScrollBars      =   3  '양방향
-         TabIndex        =   31
+         TabIndex        =   30
          Top             =   4560
          Width           =   12255
       End
@@ -157,14 +157,6 @@ Begin VB.Form frmExample
          Caption         =   "예약 전송 취소"
          Height          =   525
          Left            =   2640
-         TabIndex        =   30
-         Top             =   3720
-         Width           =   1905
-      End
-      Begin VB.CommandButton btnGetMessages 
-         Caption         =   "전송상태확인"
-         Height          =   525
-         Left            =   600
          TabIndex        =   29
          Top             =   3720
          Width           =   1905
@@ -283,14 +275,14 @@ Begin VB.Form frmExample
          Caption         =   "부가기능"
          Height          =   2655
          Left            =   8640
-         TabIndex        =   48
+         TabIndex        =   47
          Top             =   240
          Width           =   1935
          Begin VB.CommandButton btnGetStates 
             Caption         =   "전송내역 요약정보"
             Height          =   495
             Left            =   120
-            TabIndex        =   59
+            TabIndex        =   58
             Top             =   840
             Width           =   1695
          End
@@ -299,14 +291,22 @@ Begin VB.Form frmExample
          Caption         =   "접수번호 관련 기능 (요청번호 미할당)"
          Height          =   1335
          Left            =   480
-         TabIndex        =   60
+         TabIndex        =   59
          Top             =   3000
          Width           =   4335
+         Begin VB.CommandButton btnGetMessages 
+            Caption         =   "전송상태확인"
+            Height          =   525
+            Left            =   120
+            TabIndex        =   66
+            Top             =   720
+            Width           =   1905
+         End
          Begin VB.Label 접수번호 
             Caption         =   "접수번호 : "
             Height          =   255
             Left            =   240
-            TabIndex        =   61
+            TabIndex        =   60
             Top             =   360
             Width           =   1095
          End
@@ -332,14 +332,14 @@ Begin VB.Form frmExample
          Caption         =   "파트너과금 포인트"
          Height          =   1935
          Left            =   8040
-         TabIndex        =   54
+         TabIndex        =   53
          Top             =   240
          Width           =   2415
          Begin VB.CommandButton btnGetPartnerURL_CHRG 
             Caption         =   "파트너 포인트 충전 URL"
             Height          =   410
             Left            =   120
-            TabIndex        =   58
+            TabIndex        =   57
             Top             =   840
             Width           =   2175
          End
@@ -347,7 +347,7 @@ Begin VB.Form frmExample
             Caption         =   "파트너 잔여포인트 확인"
             Height          =   410
             Left            =   120
-            TabIndex        =   57
+            TabIndex        =   56
             Top             =   360
             Width           =   2175
          End
@@ -356,14 +356,14 @@ Begin VB.Form frmExample
          Caption         =   "연동과금 포인트"
          Height          =   1935
          Left            =   6000
-         TabIndex        =   53
+         TabIndex        =   52
          Top             =   240
          Width           =   1935
          Begin VB.CommandButton btnGetChargeURL 
             Caption         =   "포인트 충전 URL"
             Height          =   410
             Left            =   120
-            TabIndex        =   56
+            TabIndex        =   55
             Top             =   840
             Width           =   1695
          End
@@ -371,7 +371,7 @@ Begin VB.Form frmExample
             Caption         =   "잔여 포인트 확인"
             Height          =   410
             Left            =   120
-            TabIndex        =   55
+            TabIndex        =   54
             Top             =   360
             Width           =   1695
          End
@@ -380,14 +380,14 @@ Begin VB.Form frmExample
          Caption         =   "회사정보 관련"
          Height          =   1935
          Left            =   14520
-         TabIndex        =   43
+         TabIndex        =   42
          Top             =   240
          Width           =   1815
          Begin VB.CommandButton btnUpdateCorpInfo 
             Caption         =   "회사정보 수정"
             Height          =   410
             Left            =   120
-            TabIndex        =   45
+            TabIndex        =   44
             Top             =   840
             Width           =   1575
          End
@@ -395,7 +395,7 @@ Begin VB.Form frmExample
             Caption         =   "회사정보 조회"
             Height          =   410
             Left            =   120
-            TabIndex        =   44
+            TabIndex        =   43
             Top             =   360
             Width           =   1575
          End
@@ -404,14 +404,14 @@ Begin VB.Form frmExample
          Caption         =   "담당자 관련"
          Height          =   1935
          Left            =   12480
-         TabIndex        =   39
+         TabIndex        =   38
          Top             =   240
          Width           =   1935
          Begin VB.CommandButton btnUpdateContact 
             Caption         =   "담당자 정보 수정"
             Height          =   410
             Left            =   120
-            TabIndex        =   42
+            TabIndex        =   41
             Top             =   1320
             Width           =   1695
          End
@@ -419,7 +419,7 @@ Begin VB.Form frmExample
             Caption         =   "담당자 목록 조회"
             Height          =   410
             Left            =   120
-            TabIndex        =   41
+            TabIndex        =   40
             Top             =   840
             Width           =   1695
          End
@@ -427,7 +427,7 @@ Begin VB.Form frmExample
             Caption         =   "담당자 추가"
             Height          =   410
             Left            =   120
-            TabIndex        =   40
+            TabIndex        =   39
             Top             =   360
             Width           =   1695
          End
@@ -443,7 +443,7 @@ Begin VB.Form frmExample
             Caption         =   "ID 중복 확인"
             Height          =   410
             Left            =   120
-            TabIndex        =   38
+            TabIndex        =   37
             Top             =   840
             Width           =   1455
          End
@@ -475,7 +475,7 @@ Begin VB.Form frmExample
             Caption         =   "과금정보 확인"
             Height          =   410
             Left            =   2160
-            TabIndex        =   49
+            TabIndex        =   48
             Top             =   360
             Width           =   1455
          End
@@ -1089,6 +1089,7 @@ Private Sub btnSendSMS_Hundred_Click()
     Dim requestNum As String
     Dim UserID As String
     
+    '전송정보 배열, 최대 1000건
     For i = 0 To 10
         
         Set message = New PBMessage
@@ -1159,9 +1160,9 @@ Private Sub btnSendSMS_Same_Click()
     '메시지 내용, 최대 90Byte 길이를 초과한 내용은 삭제되어 전송됩니다.
     Contents = "동보전송 내용 90byte로 길이가 조정되며, Messages의 내용이 없는 수신건에 동보처리됩니다."
     
+    '전송정보 배열, 최대 1000건
     For i = 0 To 10
             
-        '수신정보 배열 최대 1000건
         Set message = New PBMessage
         
         '수신번호
@@ -1270,9 +1271,9 @@ Private Sub btnSendLMS_Hundred_Click()
     Dim requestNum As String
     Dim UserID As String
     
+    '전송정보 배열, 최대 1000건
     For i = 0 To 100
         
-        '전송정보 배열, 최대 1000건
         Set message = New PBMessage
         
         '발신번호
@@ -1339,8 +1340,9 @@ Private Sub btnSendLMS_Same_Click()
     Dim requestNum As String
     Dim UserID As String
     
+    '전송정보 배열, 최대 1000건
     For i = 0 To 100
-        '수신정보 배열, 최대 1000건
+
         Set message = New PBMessage
         
         '수신번호
@@ -1480,6 +1482,7 @@ Private Sub btnSendMMS_Hundred_Click()
     
     FilePaths.Add CommonDialog1.FileName
   
+   '전송정보 배열, 최대 1000건
     For i = 0 To 50
         
         Set message = New PBMessage
@@ -1590,6 +1593,7 @@ Private Sub btnSendMMS_Same_Click()
     '동보메시지 내용
     Contents = "동보메시지 내용"
     
+    '전송정보 배열, 최대 1000건
     For i = 0 To 100
         
         Set message = New PBMessage
@@ -1703,7 +1707,9 @@ Private Sub btnSendXMS_Hundred_Click()
     Dim requestNum As String
     Dim UserID As String
     
+    '전송정보 배열, 최대 1000건
     For i = 0 To 10
+    
         Set message = New PBMessage
         
         '발신번호
@@ -1784,9 +1790,9 @@ Private Sub btnSendXMS_Same_Click()
     '메시지 내용, 90byte를 기준으로 단/장문이 자동인식되어 전송됩니다.
     content = "자동인식 발송은 내용의 길이를 90Byte기준으로 이하는 단문, 이상은 장문으로 자동 전송합니다."
     
+    '전송정보 배열, 최대 1000건
     For i = 0 To 100
         
-        '수신정보 배열, 최대 1000건
         Set message = New PBMessage
         
         '수신번호
@@ -1837,8 +1843,8 @@ Private Sub btnGetMessages_Click()
         Exit Sub
     End If
     
-    tmp = "state(전송상태 코드) | result(전송결과 코드) | subject(팩스제목) | messageType(메시지 타입) | content(메시지 내용) |  sendnum(발신번호) | senderName(발신자명) | "
-    tmp = tmp + "receiveNum(수신자명) | receiveName(수신번호) | receiptDT(접수일시) | reserveDT(예약일시) | "
+    tmp = "state(전송상태 코드) | result(전송결과 코드) | subject(메시지 제목) | messageType(메시지 유형) | content(메시지 내용) |  sendNum(발신번호) | senderName(발신자명) | "
+    tmp = tmp + "receiveNum(수신번호) | receiveName(수신자명) | receiptDT(접수일시) | reserveDT(예약일시) | "
     tmp = tmp + "sendDT(전송일시) | resultDT(전송결과 수신일시) | tranNet(전송처리 이동통신사명) | receiptNum(접수번호) | requestNum(요청번호)" + vbCrLf
     
     For Each sentMessage In sentMessages
@@ -1849,14 +1855,14 @@ Private Sub btnGetMessages_Click()
         '전송결과 코드
         tmp = tmp + CStr(sentMessage.result) + " | "
         
-        '팩스제목
+        '메시지 제목
         tmp = tmp + sentMessage.subject + " | "
         
-        '메시지 타입
+        '메시지 유형
         tmp = tmp + sentMessage.messageType + " | "
         
         '메시지 내용
-        'tmp = tmp + sentMessage.content + " | " ' 내용 표시는 길이관계상 예제에서 생략합니다.
+        tmp = tmp + sentMessage.content + " | "
         
         '발신번호
         tmp = tmp + sentMessage.sendNum + " | "
@@ -1930,8 +1936,8 @@ Dim sentMessages As Collection
         Exit Sub
     End If
     
-    tmp = "state(전송상태 코드) | result(전송결과 코드) | subject(팩스제목) | messageType(메시지 타입) | content(메시지 내용) |  sendnum(발신번호) | senderName(발신자명) | "
-    tmp = tmp + "receiveNum(수신자명) | receiveName(수신번호) | receiptDT(접수일시) | reserveDT(예약일시) | "
+    tmp = "state(전송상태 코드) | result(전송결과 코드) | subject(메시지 제목) | messageType(메시지 유형) | content(메시지 내용) |  sendNum(발신번호) | senderName(발신자명) | "
+    tmp = tmp + "receiveNum(수신번호) | receiveName(수신자명) | receiptDT(접수일시) | reserveDT(예약일시) | "
     tmp = tmp + "sendDT(전송일시) | resultDT(전송결과 수신일시) | tranNet(전송처리 이동통신사명) | receiptNum(접수번호) | requestNum(요청번호)" + vbCrLf
     
     For Each sentMessage In sentMessages
@@ -1949,7 +1955,7 @@ Dim sentMessages As Collection
         tmp = tmp + sentMessage.messageType + " | "
         
         ' 메시지 내용
-        'tmp = tmp + sentMessage.content + " | " ' 내용 표시는 길이관계상 예제에서 생략합니다.
+        tmp = tmp + sentMessage.content + " | "
         
         ' 발신번호
         tmp = tmp + sentMessage.sendNum + " | "
@@ -2144,7 +2150,7 @@ Private Sub btnGetStates_Click()
     Dim resultList As Collection
     Dim ReciptNumList As New Collection
     
-    ', 최대 1000건
+    '문자 접수번호 배열, 최대 1000건
     ReciptNumList.Add "018061814000000039"
     ReciptNumList.Add "018061815000000002"
 
