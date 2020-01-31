@@ -565,7 +565,7 @@ Attribute VB_Exposed = False
 '
 ' 팝빌 문자 API VB 6.0 SDK Example
 '
-' - 업데이트 일자 : 2019-12-02
+' - 업데이트 일자 : 2020-01-31
 ' - 연동 기술지원 연락처 : 1600-9854 / 070-4304-2991
 ' - 연동 기술지원 이메일 : code@linkhub.co.kr
 '
@@ -593,6 +593,7 @@ Private MessageService As New PBMSGService
 '=========================================================================
 ' 파트너의 연동회원으로 가입된 사업자번호인지 확인합니다.
 ' - LinkID는 인증정보로 설정되어 있는 링크아이디 값입니다.
+' - https://docs.popbill.com/message/vb/api#CheckIsMember
 '=========================================================================
 Private Sub btnCheckIsMember_Click()
     Dim Response As PBResponse
@@ -609,6 +610,7 @@ End Sub
 
 '=========================================================================
 ' 팝빌 회원아이디 중복여부를 확인합니다.
+' - https://docs.popbill.com/message/vb/api#CheckID
 '=========================================================================
 Private Sub btnCheckID_Click()
     Dim Response As PBResponse
@@ -625,6 +627,7 @@ End Sub
 
 '=========================================================================
 ' 팝빌 연동회원 가입을 요청합니다.
+' - https://docs.popbill.com/message/vb/api#JoinMember
 '=========================================================================
 Private Sub btnJoinMember_Click()
     Dim joinData As New PBJoinForm
@@ -684,6 +687,7 @@ End Sub
 
 '=========================================================================
 ' 연동회원의 문자 API 서비스 과금정보를 확인합니다.
+' - https://docs.popbill.com/message/vb/api#GetChargeInfo
 '=========================================================================
 Private Sub btnGetChargeInfo_Click()
     Dim ChargeInfo As PBChargeInfo
@@ -709,6 +713,7 @@ End Sub
 
 '=========================================================================
 ' 단문(SMS) 전송단가를 확인합니다.
+' - https://docs.popbill.com/message/vb/api#GetUnitCost
 '=========================================================================
 Private Sub btnGetUnitCost_Click()
     Dim unitCost As Single
@@ -725,6 +730,7 @@ End Sub
 
 '=========================================================================
 ' 장문(LMS) 전송단가를 확인합니다.
+' - https://docs.popbill.com/message/vb/api#GetUnitCost
 '=========================================================================
 Private Sub btnUnitCost_LMS_Click()
     Dim unitCost As Single
@@ -741,6 +747,7 @@ End Sub
 
 '=========================================================================
 ' 포토(MMS)메시지 전송단가를 확인합니다.
+' - https://docs.popbill.com/message/vb/api#GetUnitCost
 '=========================================================================
 Private Sub btnUnitCost_MMS_Click()
     Dim unitCost As Single
@@ -758,6 +765,7 @@ End Sub
 '=========================================================================
 ' 연동회원 포인트 충전 URL을 반환합니다.
 ' - URL 보안정책에 따라 반환된 URL은 30초의 유효시간을 갖습니다.
+' - https://docs.popbill.com/message/vb/api#GetAccessURL
 '==========================================================================
 Private Sub btnGetAccessURL_Click()
     Dim url As String
@@ -774,6 +782,7 @@ End Sub
 
 '=========================================================================
 ' 연동회원의 담당자를 신규로 등록합니다.
+' - https://docs.popbill.com/message/vb/api#RegistContact
 '=========================================================================
 Private Sub btnRegistContact_Click()
     Dim joinData As New PBContactInfo
@@ -818,6 +827,7 @@ End Sub
 
 '=========================================================================
 ' 연동회원의 담당자 목록을 확인합니다.
+' - https://docs.popbill.com/message/vb/api#ListContact
 '=========================================================================
 Private Sub btnListContact_Click()
     Dim resultList As Collection
@@ -844,6 +854,7 @@ End Sub
 
 '=========================================================================
 ' 연동회원의 담당자 정보를 수정합니다.
+' - https://docs.popbill.com/message/vb/api#UpdateContact
 '=========================================================================
 Private Sub btnUpdateContact_Click()
     Dim joinData As New PBContactInfo
@@ -885,6 +896,7 @@ End Sub
 
 '=========================================================================
 ' 연동회원의 회사정보를 확인합니다.
+' - https://docs.popbill.com/message/vb/api#GetCorpInfo
 '=========================================================================
 
 Private Sub btnGetCorpInfo_Click()
@@ -909,6 +921,7 @@ End Sub
 
 '=========================================================================
 ' 연동회원의 회사정보를 수정합니다
+' - https://docs.popbill.com/message/vb/api#UpdateCorpInfo
 '=========================================================================
 Private Sub btnUpdateCorpInfo_Click()
     Dim CorpInfo As New PBCorpInfo
@@ -943,6 +956,7 @@ End Sub
 ' 연동회원의 잔여포인트를 확인합니다.
 ' - 과금방식이 파트너과금인 경우 파트너 잔여포인트(GetPartnerBalance API)
 '   를 통해 확인하시기 바랍니다.
+' - https://docs.popbill.com/message/vb/api#GetBalance
 '=========================================================================
 Private Sub btnGetBalance_Click()
     Dim balance As Double
@@ -960,6 +974,7 @@ End Sub
 '=========================================================================
 ' 연동회원 포인트 충전 URL을 반환합니다.
 ' - URL 보안정책에 따라 반환된 URL은 30초의 유효시간을 갖습니다.
+' - https://docs.popbill.com/message/vb/api#GetChargeURL
 '=========================================================================
 Private Sub btnGetChargeURL_Click()
 
@@ -979,6 +994,7 @@ End Sub
 ' 파트너의 잔여포인트를 확인합니다.
 ' - 과금방식이 연동과금인 경우 연동회원 잔여포인트(GetBalance API)를
 '   이용하시기 바랍니다.
+' - https://docs.popbill.com/message/vb/api#GetPartnerBalance
 '=========================================================================
 Private Sub btnGetPartnerBalance_Click()
     Dim balance As Double
@@ -996,6 +1012,7 @@ End Sub
 '=========================================================================
 ' 파트너 포인트 충전 URL을 반환합니다.
 ' - URL 보안정책에 따라 반환된 URL은 30초의 유효시간을 갖습니다.
+' - https://docs.popbill.com/message/vb/api#GetPartnerURL
 '=========================================================================
 Private Sub btnGetPartnerURL_CHRG_Click()
     Dim url As String
@@ -1014,9 +1031,7 @@ End Sub
 '1건의 SMS(단문)를 전송합니다.
 ' - 메시지 내용 길이가 90Byte 이상인 경우, 길이를 초과하는 메시지 내용은 자동으로 제거됩니다.
 ' - 팝빌에 등록되지 않은 발신번호로 메시지를 전송하는 경우 발신번호 미등록 오류로 처리됩니다.
-' - 발신번호 사전등록 방법. (사이트/API 등록방법 제공)
-'    1.팝빌 사이트 로그인 > [문자/팩스] > [문자] > [발신번호 사전등록] 에서 등록
-'    2.getSenderNumberMgtURL API를 통해 반환된 URL을 이용하여 발신번호 등록
+' - https://docs.popbill.com/message/vb/api#SendSMS
 '=========================================================================
 Private Sub btnSendSMS_One_Click()
     Dim Messages As New Collection
@@ -1069,9 +1084,7 @@ End Sub
 ' [대량전송] SMS(단문)를 전송합니다.
 ' - 메시지 길이가 90 byte 이상인 경우, 길이를 초과하는 메시지 내용은 자동으로 제거됩니다.
 ' - 팝빌에 등록되지 않은 발신번호로 메시지를 전송하는 경우 발신번호 미등록 오류로 처리됩니다.
-' - 발신번호 사전등록 방법. (사이트/API 등록방법 제공)
-'    1.팝빌 사이트 로그인 > [문자/팩스] > [문자] > [발신번호 사전등록] 에서 등록
-'    2.getSenderNumberMgtURL API를 통해 반환된 URL을 이용하여 발신번호 등록
+' - https://docs.popbill.com/message/vb/api#SendSMS
 '=========================================================================
 Private Sub btnSendSMS_Hundred_Click()
     Dim Messages As New Collection
@@ -1132,9 +1145,7 @@ End Sub
 ' [동보전송] SMS(단문)를 전송합니다.
 '  - 메시지 길이가 90 byte 이상인 경우, 길이를 초과하는 메시지 내용은 자동으로 제거됩니다.
 '  - 팝빌에 등록되지 않은 발신번호로 메시지를 전송하는 경우 발신번호 미등록 오류로 처리됩니다.
-'  - 발신번호 사전등록 방법. (사이트/API 등록방법 제공)
-'    1.팝빌 사이트 로그인 > [문자/팩스] > [문자] > [발신번호 사전등록] 에서 등록
-'    2.getSenderNumberMgtURL API를 통해 반환된 URL을 이용하여 발신번호 등록
+'  - https://docs.popbill.com/message/vb/api#SendSMS
 '=========================================================================
 Private Sub btnSendSMS_Same_Click()
     Dim Messages As New Collection
@@ -1193,9 +1204,7 @@ End Sub
 'LMS(장문)를 전송합니다.
 '  - 메시지 길이가 2,000Byte 이상인 경우, 길이를 초과하는 메시지 내용은 자동으로 제거됩니다.
 '  - 팝빌에 등록되지 않은 발신번호로 메시지를 전송하는 경우 발신번호 미등록 오류로 처리됩니다.
-'  - 발신번호 사전등록 방법. (사이트/API 등록방법 제공)
-'    1.팝빌 사이트 로그인 > [문자/팩스] > [문자] > [발신번호 사전등록] 에서 등록
-'    2.getSenderNumberMgtURL API를 통해 반환된 URL을 이용하여 발신번호 등록
+'  - https://docs.popbill.com/message/vb/api#SendLMS
 '=========================================================================
 Private Sub btnSendLMS_One_Click()
     Dim Messages As New Collection
@@ -1251,9 +1260,7 @@ End Sub
 ' [대량전송] LMS(장문)를 전송합니다.
 '  - 메시지 길이가 2,000Byte 이상인 경우, 길이를 초과하는 메시지 내용은 자동으로 제거됩니다.
 '  - 팝빌에 등록되지 않은 발신번호로 메시지를 전송하는 경우 발신번호 미등록 오류로 처리됩니다.
-'  - 발신번호 사전등록 방법. (사이트/API 등록방법 제공)
-'    1.팝빌 사이트 로그인 > [문자/팩스] > [문자] > [발신번호 사전등록] 에서 등록
-'    2.getSenderNumberMgtURL API를 통해 반환된 URL을 이용하여 발신번호 등록
+'  - https://docs.popbill.com/message/vb/api#SendLMS
 '=========================================================================
 Private Sub btnSendLMS_Hundred_Click()
     Dim Messages As New Collection
@@ -1316,9 +1323,7 @@ End Sub
 ' [동보전송] LMS(장문)를 전송합니다.
 '  - 메시지 길이가 2,000Byte 이상인 경우, 길이를 초과하는 메시지 내용은 자동으로 제거됩니다.
 '  - 팝빌에 등록되지 않은 발신번호로 메시지를 전송하는 경우 발신번호 미등록 오류로 처리됩니다.
-'  - 발신번호 사전등록 방법. (사이트/API 등록방법 제공)
-'    1.팝빌 사이트 로그인 > [문자/팩스] > [문자] > [발신번호 사전등록] 에서 등록
-'    2.getSenderNumberMgtURL API를 통해 반환된 URL을 이용하여 발신번호 등록
+'  - https://docs.popbill.com/message/vb/api#SendLMS
 '=========================================================================
 Private Sub btnSendLMS_Same_Click()
     Dim Messages As New Collection
@@ -1386,9 +1391,7 @@ End Sub
 ' - 메시지 길이가 2,000Byte 이상인 경우, 길이를 초과하는 메시지 내용은 자동으로 제거됩니다.
 ' - 이미지 파일의 크기는 최대 300Kbtye (JPEG), 가로/세로 1000px 이하 권장
 ' - 팝빌에 등록되지 않은 발신번호로 메시지를 전송하는 경우 발신번호 미등록 오류로 처리됩니다.
-' - 발신번호 사전등록 방법. (사이트/API 등록방법 제공)
-'    1.팝빌 사이트 로그인 > [문자/팩스] > [문자] > [발신번호 사전등록] 에서 등록
-'    2.getSenderNumberMgtURL API를 통해 반환된 URL을 이용하여 발신번호 등록
+' - https://docs.popbill.com/message/vb/api#SendMMS
 '=========================================================================
 Private Sub btnSendMMS_Click()
    Dim Messages As New Collection
@@ -1454,9 +1457,7 @@ End Sub
 '  - 메시지 길이가 2,000Byte 이상인 경우, 길이를 초과하는 메시지 내용은 자동으로 제거됩니다.
 '  - 이미지 파일의 크기는 최대 300Kbtye (JPEG), 가로/세로 1000px 이하 권장
 '  - 팝빌에 등록되지 않은 발신번호로 메시지를 전송하는 경우 발신번호 미등록 오류로 처리됩니다.
-'  - 발신번호 사전등록 방법. (사이트/API 등록방법 제공)
-'    1.팝빌 사이트 로그인 > [문자/팩스] > [문자] > [발신번호 사전등록] 에서 등록
-'    2.getSenderNumberMgtURL API를 통해 반환된 URL을 이용하여 발신번호 등록
+'  - https://docs.popbill.com/message/vb/api#SendMMS
 '=========================================================================
 Private Sub btnSendMMS_Hundred_Click()
     Dim Messages As New Collection
@@ -1553,9 +1554,7 @@ End Sub
 '  - 메시지 길이가 2,000Byte 이상인 경우, 길이를 초과하는 메시지 내용은 자동으로 제거됩니다.
 '  - 이미지 파일의 크기는 최대 300Kbtye (JPEG), 가로/세로 1000px 이하 권장
 '  - 팝빌에 등록되지 않은 발신번호로 메시지를 전송하는 경우 발신번호 미등록 오류로 처리됩니다.
-'  - 발신번호 사전등록 방법. (사이트/API 등록방법 제공)
-'    1.팝빌 사이트 로그인 > [문자/팩스] > [문자] > [발신번호 사전등록] 에서 등록
-'    2.getSenderNumberMgtURL API를 통해 반환된 URL을 이용하여 발신번호 등록
+'  - https://docs.popbill.com/message/vb/api#SendMMS
 '=========================================================================
 Private Sub btnSendMMS_Same_Click()
     Dim Messages As New Collection
@@ -1627,9 +1626,7 @@ End Sub
 '  - 메시지 내용의 길이(90byte)에 따라 SMS/LMS(단문/장문)를 자동인식하여 전송합니다.
 '  - 90byte 초과시 LMS(장문)으로 인식 합니다.
 '  - 팝빌에 등록되지 않은 발신번호로 메시지를 전송하는 경우 발신번호 미등록 오류로 처리됩니다.
-'  - 발신번호 사전등록 방법. (사이트/API 등록방법 제공)
-'    1.팝빌 사이트 로그인 > [문자/팩스] > [문자] > [발신번호 사전등록] 에서 등록
-'    2.getSenderNumberMgtURL API를 통해 반환된 URL을 이용하여 발신번호 등록
+'  - https://docs.popbill.com/message/vb/api#SendXMS
 '=========================================================================
 Private Sub btnSendXMS_One_Click()
     Dim Messages As New Collection
@@ -1687,9 +1684,7 @@ End Sub
 '  - 메시지 내용의 길이(90byte)에 따라 SMS/LMS(단문/장문)를 자동인식하여 전송합니다.
 '  - 90byte 초과시 LMS(장문)으로 인식 합니다.
 '  - 팝빌에 등록되지 않은 발신번호로 메시지를 전송하는 경우 발신번호 미등록 오류로 처리됩니다.
-'  - 발신번호 사전등록 방법. (사이트/API 등록방법 제공)
-'    1.팝빌 사이트 로그인 > [문자/팩스] > [문자] > [발신번호 사전등록] 에서 등록
-'    2.getSenderNumberMgtURL API를 통해 반환된 URL을 이용하여 발신번호 등록
+'  - https://docs.popbill.com/message/vb/api#SendXMS
 '=========================================================================
 Private Sub btnSendXMS_Hundred_Click()
     Dim Messages As New Collection
@@ -1754,9 +1749,7 @@ End Sub
 '  - 메시지 내용의 길이(90byte)에 따라 SMS/LMS(단문/장문)를 자동인식하여 전송합니다.
 '  - 90byte 초과시 LMS(장문)으로 인식 합니다.
 '  - 팝빌에 등록되지 않은 발신번호로 메시지를 전송하는 경우 발신번호 미등록 오류로 처리됩니다.
-'  - 발신번호 사전등록 방법. (사이트/API 등록방법 제공)
-'    1.팝빌 사이트 로그인 > [문자/팩스] > [문자] > [발신번호 사전등록] 에서 등록
-'    2.getSenderNumberMgtURL API를 통해 반환된 URL을 이용하여 발신번호 등록
+'  - https://docs.popbill.com/message/vb/api#SendXMS
 '=========================================================================
 Private Sub btnSendXMS_Same_Click()
     Dim Messages As New Collection
@@ -1822,7 +1815,7 @@ End Sub
 
 '=========================================================================
 ' 문자전송요청시 발급받은 접수번호(receiptNum)로 전송상태를 확인합니다.
-' - 응답항목에 대한 자세한 사항은 "[문자 API 연동매뉴얼] >  3.3.1. GetMessages (전송내역 확인)을 참조하시기 바랍니다.
+' - https://docs.popbill.com/message/vb/api#GetMessages
 '=========================================================================
 Private Sub btnGetMessages_Click()
     Dim sentMessages As Collection
@@ -1897,8 +1890,9 @@ Private Sub btnGetMessages_Click()
 End Sub
 
 '=========================================================================
-'문자전송요청시 발급받은 접수번호(receiptNum)로 예약문자 전송을 취소합니다.
-'- 예약취소는 예약전송시간 10분전까지만 가능합니다.
+' 문자 전송요청시 발급받은 접수번호(receiptNum)로 예약문자 전송을 취소합니다.
+' - 예약취소는 예약전송시간 10분전까지만 가능합니다.
+' - https://docs.popbill.com/message/vb/api#CancelReserve
 '=========================================================================
 Private Sub btnCancelReserve_Click()
     Dim Response As PBResponse
@@ -1914,8 +1908,8 @@ Private Sub btnCancelReserve_Click()
 End Sub
 
 '=========================================================================
-' 문자전송요청시 할당한 전송요청번호(requestNum)로 전송상태를 확인합니다
-' - 응답항목에 대한 자세한 사항은 "[문자 API 연동매뉴얼] > 3.3.2. GetMessagesRN (전송내역 확인 - 요청번호 할당)을 참조하시기 바랍니다.
+' 문자 전송요청시 할당한 전송요청번호(requestNum)로 전송상태를 확인합니다
+' - https://docs.popbill.com/message/vb/api#GetMessagesRN
 '=========================================================================
 Private Sub btnGetMessagesRN_Click()
 Dim sentMessages As Collection
@@ -1991,8 +1985,9 @@ Dim sentMessages As Collection
 End Sub
 
 '=========================================================================
-'문자전송요청시 할당한 전송요청번호(requestNum)로 예약문자전송을 취소합니다.
-'- 예약취소는 예약전송시간 10분전까지만 가능합니다.
+' 문자 전송요청시 할당한 전송요청번호(requestNum)로 예약문자전송을 취소합니다.
+' - 예약취소는 예약전송시간 10분전까지만 가능합니다.
+' - https://docs.popbill.com/message/vb/api#CancelReserveRN
 '=========================================================================
 Private Sub btnCancelReserveRN_Click()
     Dim Response As PBResponse
@@ -2010,6 +2005,7 @@ End Sub
 '=========================================================================
 ' 검색조건을 사용하여 문자전송 내역을 조회합니다.
 ' - 최대 검색기간 : 6개월 이내
+' - https://docs.popbill.com/message/vb/api#Search
 '=========================================================================
 Private Sub btnSearch_Click()
     Dim msgSearchList As PBSearchList
@@ -2138,6 +2134,7 @@ End Sub
 
 '=========================================================================
 ' 문자 전송내역 요약정보를 확인합니다. (최대 1000건)
+' - https://docs.popbill.com/message/vb/api#GetStates
 '=========================================================================
 Private Sub btnGetStates_Click()
     Dim resultList As Collection
@@ -2174,6 +2171,7 @@ End Sub
 '=========================================================================
 ' 문자메시지 전송내역 팝업 URL을 반환합니다.
 ' - 보안정책에 따라 반환된 URL은 30초의 유효시간을 갖습니다.
+' - https://docs.popbill.com/message/vb/api#GetSentListURL
 '=========================================================================
 Private Sub btnGetSentListURL_Click()
 
@@ -2191,6 +2189,7 @@ End Sub
 
 '=========================================================================
 ' 080 서비스 수신거부 목록을 확인합니다.
+' - https://docs.popbill.com/message/vb/api#GetAutoDenyList
 '=========================================================================
 Private Sub btnGetAutoDenyList_Click()
     Dim AutoDenyList As Collection
@@ -2215,6 +2214,7 @@ End Sub
 
 '=========================================================================
 ' 팝빌에 등록된 문자 발신번호 목록을 확인합니다.
+' - https://docs.popbill.com/message/vb/api#GetSenderNumberList
 '=========================================================================
 Private Sub btnGetSenderNuberList_Click()
     Dim SenderNumberList As Collection
@@ -2240,6 +2240,7 @@ End Sub
 '=========================================================================
 ' 문자 발신번호 관리 팝업 URL을 반환합니다.
 ' - 보안정책에 따라 반환된 URL은 30초의 유효시간을 갖습니다.
+' - https://docs.popbill.com/message/vb/api#GetSenderNumberMgtURL
 '=========================================================================
 Private Sub btnGetSenderNumberMgtURL_Click()
 
@@ -2256,6 +2257,7 @@ Private Sub btnGetSenderNumberMgtURL_Click()
 End Sub
 
 Private Sub Form_Load()
+
     '문자서비스 모듈 초기화
     MessageService.Initialize LinkID, SecretKey
     
