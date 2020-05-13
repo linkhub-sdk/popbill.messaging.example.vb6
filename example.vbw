@@ -14,4 +14,4 @@ PBSearchList = 44, 58, 1286, 766,
 PBChargeInfo = 220, 290, 1472, 908, C
 PBAutoDenyInfo = 0, 0, 1255, 590, C
 PBMsgSenderNumber = 36, 125, 1291, 715, C
-PBMessageBriefInfo = 79, 73, 1333, 663, C
+PBMessageBriefInfo = 79, 73, 1333, 663, 
