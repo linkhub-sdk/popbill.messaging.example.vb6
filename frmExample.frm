@@ -605,7 +605,7 @@ Attribute VB_Exposed = False
 '
 ' 팝빌 문자 API VB 6.0 SDK Example
 '
-' - 업데이트 일자 : 2021-10-07
+' - 업데이트 일자 : 2021-10-13
 ' - 연동 기술지원 연락처 : 1600-9854 / 070-4304-2991
 ' - 연동 기술지원 이메일 : code@linkhub.co.kr
 '
@@ -808,17 +808,17 @@ End Sub
 ' - https://docs.popbill.com/message/vb/api#GetAccessURL
 '==========================================================================
 Private Sub btnGetAccessURL_Click()
-    Dim URL As String
+    Dim url As String
     
-    URL = MessageService.GetAccessURL(txtCorpNum.Text, txtUserID.Text)
+    url = MessageService.GetAccessURL(txtCorpNum.Text, txtUserID.Text)
     
-    If URL = "" Then
+    If url = "" Then
         MsgBox ("응답코드 : " + CStr(MessageService.LastErrCode) + vbCrLf + "응답메시지 : " + MessageService.LastErrMessage)
         Exit Sub
     End If
     
-    MsgBox "URL : " + vbCrLf + URL
-    txtURL.Text = URL
+    MsgBox "URL : " + vbCrLf + url
+    txtURL.Text = url
 End Sub
 
 '=========================================================================
@@ -1040,17 +1040,17 @@ End Sub
 '=========================================================================
 Private Sub btnGetChargeURL_Click()
 
-    Dim URL As String
+    Dim url As String
     
-    URL = MessageService.GetChargeURL(txtCorpNum.Text, txtUserID.Text)
+    url = MessageService.GetChargeURL(txtCorpNum.Text, txtUserID.Text)
     
-    If URL = "" Then
+    If url = "" Then
         MsgBox ("응답코드 : " + CStr(MessageService.LastErrCode) + vbCrLf + "응답메시지 : " + MessageService.LastErrMessage)
         Exit Sub
     End If
     
-    MsgBox "URL : " + vbCrLf + URL
-    txtURL.Text = URL
+    MsgBox "URL : " + vbCrLf + url
+    txtURL.Text = url
 End Sub
 
 '=========================================================================
@@ -1059,17 +1059,17 @@ End Sub
 ' - https://docs.popbill.com/message/vb/api#GetPaymentURL
 '=========================================================================
 Private Sub btnGetPaymentURL_Click()
-    Dim URL As String
+    Dim url As String
            
-    URL = MessageService.GetPaymentURL(txtCorpNum.Text, txtUserID.Text)
+    url = MessageService.GetPaymentURL(txtCorpNum.Text, txtUserID.Text)
     
-    If URL = "" Then
+    If url = "" Then
         MsgBox ("응답코드 : " + CStr(MessageService.LastErrCode) + vbCrLf + "응답메시지 : " + MessageService.LastErrMessage)
         Exit Sub
     End If
     
-    MsgBox "URL : " + vbCrLf + URL
-    txtURL.Text = URL
+    MsgBox "URL : " + vbCrLf + url
+    txtURL.Text = url
 End Sub
 
 '=========================================================================
@@ -1078,17 +1078,17 @@ End Sub
 ' - https://docs.popbill.com/message/vb/api#GetUseHistoryURL
 '=========================================================================
 Private Sub btnGetUseHistoryURL_Click()
-    Dim URL As String
+    Dim url As String
            
-    URL = MessageService.GetUseHistoryURL(txtCorpNum.Text, txtUserID.Text)
+    url = MessageService.GetUseHistoryURL(txtCorpNum.Text, txtUserID.Text)
     
-    If URL = "" Then
+    If url = "" Then
         MsgBox ("응답코드 : " + CStr(MessageService.LastErrCode) + vbCrLf + "응답메시지 : " + MessageService.LastErrMessage)
         Exit Sub
     End If
     
-    MsgBox "URL : " + vbCrLf + URL
-    txtURL.Text = URL
+    MsgBox "URL : " + vbCrLf + url
+    txtURL.Text = url
 End Sub
 
 '=========================================================================
@@ -1115,17 +1115,17 @@ End Sub
 ' - https://docs.popbill.com/message/vb/api#GetPartnerURL
 '=========================================================================
 Private Sub btnGetPartnerURL_CHRG_Click()
-    Dim URL As String
+    Dim url As String
     
-    URL = MessageService.GetPartnerURL(txtCorpNum.Text, "CHRG")
+    url = MessageService.GetPartnerURL(txtCorpNum.Text, "CHRG")
     
-    If URL = "" Then
+    If url = "" Then
         MsgBox ("응답코드 : " + CStr(MessageService.LastErrCode) + vbCrLf + "응답메시지 : " + MessageService.LastErrMessage)
         Exit Sub
     End If
     
-    MsgBox "URL : " + vbCrLf + URL
-    txtURL.Text = URL
+    MsgBox "URL : " + vbCrLf + url
+    txtURL.Text = url
 End Sub
 
 '=========================================================================
@@ -2254,17 +2254,17 @@ End Sub
 '=========================================================================
 Private Sub btnGetSentListURL_Click()
 
-    Dim URL As String
+    Dim url As String
     
-    URL = MessageService.GetSentListURL(txtCorpNum.Text, txtUserID.Text)
+    url = MessageService.GetSentListURL(txtCorpNum.Text, txtUserID.Text)
     
-    If URL = "" Then
+    If url = "" Then
         MsgBox ("응답코드 : " + CStr(MessageService.LastErrCode) + vbCrLf + "응답메시지 : " + MessageService.LastErrMessage)
         Exit Sub
     End If
     
-    MsgBox "URL : " + vbCrLf + URL
-    txtURL.Text = URL
+    MsgBox "URL : " + vbCrLf + url
+    txtURL.Text = url
 End Sub
 
 '=========================================================================
@@ -2324,17 +2324,17 @@ End Sub
 '=========================================================================
 Private Sub btnGetSenderNumberMgtURL_Click()
 
-    Dim URL As String
+    Dim url As String
     
-    URL = MessageService.GetSenderNumberMgtURL(txtCorpNum.Text, txtUserID.Text)
+    url = MessageService.GetSenderNumberMgtURL(txtCorpNum.Text, txtUserID.Text)
     
-    If URL = "" Then
+    If url = "" Then
         MsgBox ("응답코드 : " + CStr(MessageService.LastErrCode) + vbCrLf + "응답메시지 : " + MessageService.LastErrMessage)
         Exit Sub
     End If
     
-    MsgBox "URL : " + vbCrLf + URL
-    txtURL.Text = URL
+    MsgBox "URL : " + vbCrLf + url
+    txtURL.Text = url
 End Sub
 
 Private Sub Form_Load()
