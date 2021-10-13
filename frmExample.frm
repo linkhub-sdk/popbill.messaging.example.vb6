@@ -853,7 +853,7 @@ Private Sub btnRegistContact_Click()
     '담당자 권한, 1-개인 / 2-읽기 / 3-회사
     joinData.searchRole = 3
         
-    Set Response = MessageService.RegistContact(txtCorpNum.Text, joinData)
+    Set Response = MessageService.RegistContact(txtCorpNum.Text, joinData, txtUserID.Text)
     
     If Response Is Nothing Then
         MsgBox ("응답코드 : " + CStr(MessageService.LastErrCode) + vbCrLf + "응답메시지 : " + MessageService.LastErrMessage)
