@@ -605,15 +605,15 @@ Attribute VB_Exposed = False
 '
 ' 팝빌 문자 API VB 6.0 SDK Example
 '
-' - 업데이트 일자 : 2021-10-13
-' - 연동 기술지원 연락처 : 1600-9854 / 070-4304-2991
-' - 연동 기술지원 이메일 : code@linkhub.co.kr
+' - 업데이트 일자 : 2022-01-17
+' - 연동 기술지원 연락처 : 1600-9854
+' - 연동 기술지원 이메일 : code@linkhubcorp.com
+' - VB6 SDK 적용방법 안내 : https://docs.popbill.com/message/tutorial/vb
 '
 ' <테스트 연동개발 준비사항>
-' 1) 29, 32번 라인에 선언된 링크아이디(LinkID)와 비밀키(SecretKey)를
+' 1) 30, 33번 라인에 선언된 링크아이디(LinkID)와 비밀키(SecretKey)를
 '    링크허브 가입시 메일로 발급받은 인증정보를 참조하여 변경합니다.
-' 2) 팝빌 개발용 사이트(test.popbill.com)에 연동회원으로 가입합니다.
-' 3) 문자를 전송하기 위해 발신번호 사전등록을 합니다. (등록방법은 사이트/API 두가지 방식이 있습니다.)
+' 2) 문자를 전송하기 위해 발신번호 사전등록을 합니다. (등록방법은 사이트/API 두가지 방식이 있습니다.)
 '     - 팝빌 사이트 로그인 > [문자/팩스] > [문자] > [발신번호 사전등록] 메뉴에서 등록
 '     - getSenderNumberMgtURL API를 통해 반환된 URL을 이용하여 발신번호 등록
 
@@ -2101,10 +2101,10 @@ Private Sub btnSearch_Click()
     Dim QString As String
     
     '[필수] 시작일자, yyyyMMdd
-    SDate = "20210901"
+    SDate = "20220101"
     
     '[필수] 종료일자, yyyyMMdd
-    EDate = "20210910"
+    EDate = "20220130"
     
     '전송상태값 배열, 1-대기, 2-성공, 3-실패, 4-취소
     state.Add "1"
@@ -2345,13 +2345,10 @@ Private Sub Form_Load()
     '연동환경 설정값 True-개발용, False-상업용
     MessageService.IsTest = True
     
-    '인증토큰 IP제한기능 사용여부, True-권장
+    '인증토큰 IP제한기능 사용여부, True-사용, False-미사용, 기본값(True)
     MessageService.IPRestrictOnOff = True
     
-    ' 팝빌 API 서비스 고정 IP 사용여부, True-사용, False-미사용, 기본값(False)
-    MessageService.UseStaticIP = False
-    
-    ' 로컬시스템 시간 사용여부 True-사용, Fasle-미사용, 기본값(False)
+    '로컬시스템 시간 사용여부 True-사용, Fasle-미사용, 기본값(False)
     MessageService.UseLocalTimeYN = False
     
 End Sub
