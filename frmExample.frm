@@ -603,28 +603,29 @@ Attribute VB_PredeclaredId = True
 Attribute VB_Exposed = False
 '=========================================================================
 '
-' 팝빌 문자 API VB 6.0 SDK Example
+' 팝빌 문자 API VB SDK Example
 '
-' - 업데이트 일자 : 2022-01-17
+' - 업데이트 일자 : 2022-04-06
 ' - 연동 기술지원 연락처 : 1600-9854
 ' - 연동 기술지원 이메일 : code@linkhubcorp.com
-' - VB6 SDK 적용방법 안내 : https://docs.popbill.com/message/tutorial/vb
+' - VB SDK 적용방법 안내 : https://docs.popbill.com/message/tutorial/vb
+
 '
 ' <테스트 연동개발 준비사항>
-' 1) 30, 33번 라인에 선언된 링크아이디(LinkID)와 비밀키(SecretKey)를
+' 1) 23, 26번 라인에 선언된 링크아이디(LinkID)와 비밀키(SecretKey)를
 '    링크허브 가입시 메일로 발급받은 인증정보를 참조하여 변경합니다.
 ' 2) 문자를 전송하기 위해 발신번호 사전등록을 합니다. (등록방법은 사이트/API 두가지 방식이 있습니다.)
 '     - 팝빌 사이트 로그인 > [문자/팩스] > [문자] > [발신번호 사전등록] 메뉴에서 등록
 '     - getSenderNumberMgtURL API를 통해 반환된 URL을 이용하여 발신번호 등록
-
+'
 '=========================================================================
 
 Option Explicit
 
 '링크아이디
-Private Const linkID = "TESTER"
+Private Const LinkID = "TESTER"
 
-'비밀키. 유출에 주의하시기 바랍니다.
+'비밀키
 Private Const SecretKey = "SwWxqU+0TErBXy/9TVjIPEnI0VTUMMSQZtJf3Ed8q3I="
 
 '문자 서비스 클래스 선언
@@ -632,13 +633,12 @@ Private MessageService As New PBMSGService
 
 '=========================================================================
 ' 사업자번호를 조회하여 연동회원 가입여부를 확인합니다.
-' - LinkID는 인증정보로 설정되어 있는 링크아이디 값입니다.
 ' - https://docs.popbill.com/message/vb/api#CheckIsMember
 '=========================================================================
 Private Sub btnCheckIsMember_Click()
     Dim Response As PBResponse
     
-    Set Response = MessageService.CheckIsMember(txtCorpNum.Text, linkID)
+    Set Response = MessageService.CheckIsMember(txtCorpNum.Text, LinkID)
     
     If Response Is Nothing Then
         MsgBox ("응답코드 : " + CStr(MessageService.LastErrCode) + vbCrLf + "응답메시지 : " + MessageService.LastErrMessage)
@@ -673,14 +673,14 @@ Private Sub btnJoinMember_Click()
     Dim joinData As New PBJoinForm
     Dim Response As PBResponse
     
-    '아이디, 6자이상 50자 미만
+    '아이디, 6자이상 50자 이하
     joinData.id = "userid"
     
     '비밀번호, 8자 이상 20자 이하(영문, 숫자, 특수문자 조합)
     joinData.Password = "asdf$%^123"
     
     '파트너링크 아이디
-    joinData.linkID = linkID
+    joinData.LinkID = LinkID
     
     '사업자번호, '-'제외, 10자리
     joinData.CorpNum = "1234567890"
@@ -708,12 +708,7 @@ Private Sub btnJoinMember_Click()
     
     '담당자 연락처, 최대 20자
     joinData.ContactTEL = "02-999-9999"
-    
-    '담당자 휴대폰번호, 최대 20자
-    joinData.ContactHP = "010-1234-5678"
-    
-    '담당자 팩스번호, 최대 20자
-    joinData.ContactFAX = "02-999-9998"
+
     
     Set Response = MessageService.JoinMember(joinData)
     
@@ -726,7 +721,7 @@ Private Sub btnJoinMember_Click()
 End Sub
 
 '=========================================================================
-' 팝빌 문자(SMS)API 서비스 과금정보를 확인합니다.
+' 팝빌 문자 API 서비스 과금정보를 확인합니다.
 ' - https://docs.popbill.com/message/vb/api#GetChargeInfo
 '=========================================================================
 Private Sub btnGetChargeInfo_Click()
@@ -808,17 +803,17 @@ End Sub
 ' - https://docs.popbill.com/message/vb/api#GetAccessURL
 '==========================================================================
 Private Sub btnGetAccessURL_Click()
-    Dim url As String
+    Dim URL As String
     
-    url = MessageService.GetAccessURL(txtCorpNum.Text, txtUserID.Text)
+    URL = MessageService.GetAccessURL(txtCorpNum.Text, txtUserID.Text)
     
-    If url = "" Then
+    If URL = "" Then
         MsgBox ("응답코드 : " + CStr(MessageService.LastErrCode) + vbCrLf + "응답메시지 : " + MessageService.LastErrMessage)
         Exit Sub
     End If
     
-    MsgBox "URL : " + vbCrLf + url
-    txtURL.Text = url
+    MsgBox "URL : " + vbCrLf + URL
+    txtURL.Text = URL
 End Sub
 
 '=========================================================================
@@ -829,11 +824,11 @@ Private Sub btnRegistContact_Click()
     Dim joinData As New PBContactInfo
     Dim Response As PBResponse
     
-    '담당자 아이디, 6자 이상 50자 미만
-    joinData.id = "testkorea"
+    '담당자 아이디, 6자 이상 50자 이하
+    joinData.id = "vbaMessage001"
     
     '비밀번호, 8자 이상 20자 이하(영문, 숫자, 특수문자 조합)
-    joinData.Password = "asdf#$%123"
+    joinData.Password = "asdf$%^123"
     
     '담당자명, 최대 100자
     joinData.personName = "담당자명"
@@ -841,19 +836,13 @@ Private Sub btnRegistContact_Click()
     '담당자 연락처, 최대 20자
     joinData.tel = "070-1234-1234"
     
-    '담당자 휴대폰번호, 최대 20자
-    joinData.hp = "010-1234-1234"
-    
-    '담당자 팩스번,최대 20자
-    joinData.fax = "070-1234-1234"
-    
     '담당자 메일주소, 최대 100자
     joinData.email = "test@test.com"
     
     '담당자 권한, 1-개인 / 2-읽기 / 3-회사
     joinData.searchRole = 3
         
-    Set Response = MessageService.RegistContact(txtCorpNum.Text, joinData, txtUserID.Text)
+    Set Response = MessageService.RegistContact(txtCorpNum.Text, joinData)
     
     If Response Is Nothing Then
         MsgBox ("응답코드 : " + CStr(MessageService.LastErrCode) + vbCrLf + "응답메시지 : " + MessageService.LastErrMessage)
@@ -865,15 +854,14 @@ End Sub
 
 '=========================================================================
 ' 연동회원 사업자번호에 등록된 담당자(팝빌 로그인 계정) 정보를 확인합니다.
-' https://docs.popbill.com/message/vb/api#GetContactInfo
+' - https://docs.popbill.com/message/vb/api#GetContactInfo
 '=========================================================================
 Private Sub btnGetContactInfo_Click()
     Dim tmp As String
     Dim info As PBContactInfo
     Dim ContactID As String
     
-    '확인할 담당자 아이디
-    ContactID = ""
+    ContactID = "testkorea"
     
     Set info = MessageService.GetContactInfo(txtCorpNum.Text, ContactID, txtUserID.Text)
     
@@ -882,12 +870,12 @@ Private Sub btnGetContactInfo_Click()
         Exit Sub
     End If
     
-    tmp = "id(아이디) | personName(성명) | email(이메일) | hp(휴대폰번호) |  fax(팩스번호) | tel(연락처) | " _
+    tmp = "id(아이디) | personName(성명) | email(이메일) | tel(연락처) | " _
          + "regDT(등록일시) | searchRole(담당자 권한) | mgrYN(관리자 여부) | state(상태) " + vbCrLf
     
    
-    tmp = tmp + info.id + " | " + info.personName + " | " + info.email + " | " + info.hp + " | " + info.fax _
-        + info.tel + " | " + info.regDT + " | " + CStr(info.searchRole) + " | " + CStr(info.mgrYN) + " | " + CStr(info.state) + vbCrLf
+    tmp = tmp + info.id + " | " + info.personName + " | " + info.email + " | " + info.tel + " | " _
+            + info.regDT + " | " + CStr(info.searchRole) + " | " + CStr(info.mgrYN) + " | " + CStr(info.state) + vbCrLf
         
     MsgBox tmp
 End Sub
@@ -908,11 +896,11 @@ Private Sub btnListContact_Click()
         Exit Sub
     End If
     
-    tmp = "id(아이디) | personName(성명) | email(이메일) | hp(휴대폰번호) |  fax(팩스번호) | tel(연락처) | " _
+    tmp = "id(아이디) | personName(성명) | email(이메일) | tel(연락처) | " _
          + "regDT(등록일시) | searchRole(담당자 권한) | mgrYN(관리자 여부) | state(상태) " + vbCrLf
     
     For Each info In resultList
-        tmp = tmp + info.id + " | " + info.personName + " | " + info.email + " | " + info.hp + " | " + info.fax _
+        tmp = tmp + info.id + " | " + info.personName + " | " + info.email + " | " _
         + info.tel + " | " + info.regDT + " | " + CStr(info.searchRole) + " | " + CStr(info.mgrYN) + " | " + CStr(info.state) + vbCrLf
     Next
     
@@ -928,19 +916,13 @@ Private Sub btnUpdateContact_Click()
     Dim Response As PBResponse
     
     '담당자 아이디
-    joinData.id = txtUserID.Text
+    joinData.id = "vbaMessage001"
     
     '담당자 성명, 최대 100자
     joinData.personName = "담당자명_수정"
     
     '담당자 연락처, 최대 20자
     joinData.tel = "070-1234-1234"
-    
-    '담당자 휴대폰번호, 최대 20자
-    joinData.hp = "010-1234-1234"
-        
-    '담당자 팩스번호, 최대 20자
-    joinData.fax = "070-1234-1234"
     
     '담당자 이메일, 최대 100자
     joinData.email = "test@test.com"
@@ -984,7 +966,7 @@ Private Sub btnGetCorpInfo_Click()
 End Sub
 
 '=========================================================================
-' 연동회원의 회사정보를 수정합니다
+' 연동회원의 회사정보를 수정합니다.
 ' - https://docs.popbill.com/message/vb/api#UpdateCorpInfo
 '=========================================================================
 Private Sub btnUpdateCorpInfo_Click()
@@ -1018,7 +1000,6 @@ End Sub
 
 '=========================================================================
 ' 연동회원의 잔여포인트를 확인합니다.
-' - 과금방식이 파트너과금인 경우 파트너 잔여포인트(GetPartnerBalance API)를 통해 확인하시기 바랍니다.
 ' - https://docs.popbill.com/message/vb/api#GetBalance
 '=========================================================================
 Private Sub btnGetBalance_Click()
@@ -1041,17 +1022,17 @@ End Sub
 '=========================================================================
 Private Sub btnGetChargeURL_Click()
 
-    Dim url As String
+    Dim URL As String
     
-    url = MessageService.GetChargeURL(txtCorpNum.Text, txtUserID.Text)
+    URL = MessageService.GetChargeURL(txtCorpNum.Text, txtUserID.Text)
     
-    If url = "" Then
+    If URL = "" Then
         MsgBox ("응답코드 : " + CStr(MessageService.LastErrCode) + vbCrLf + "응답메시지 : " + MessageService.LastErrMessage)
         Exit Sub
     End If
     
-    MsgBox "URL : " + vbCrLf + url
-    txtURL.Text = url
+    MsgBox "URL : " + vbCrLf + URL
+    txtURL.Text = URL
 End Sub
 
 '=========================================================================
@@ -1060,17 +1041,17 @@ End Sub
 ' - https://docs.popbill.com/message/vb/api#GetPaymentURL
 '=========================================================================
 Private Sub btnGetPaymentURL_Click()
-    Dim url As String
+    Dim URL As String
            
-    url = MessageService.GetPaymentURL(txtCorpNum.Text, txtUserID.Text)
+    URL = MessageService.GetPaymentURL(txtCorpNum.Text, txtUserID.Text)
     
-    If url = "" Then
+    If URL = "" Then
         MsgBox ("응답코드 : " + CStr(MessageService.LastErrCode) + vbCrLf + "응답메시지 : " + MessageService.LastErrMessage)
         Exit Sub
     End If
     
-    MsgBox "URL : " + vbCrLf + url
-    txtURL.Text = url
+    MsgBox "URL : " + vbCrLf + URL
+    txtURL.Text = URL
 End Sub
 
 '=========================================================================
@@ -1079,22 +1060,21 @@ End Sub
 ' - https://docs.popbill.com/message/vb/api#GetUseHistoryURL
 '=========================================================================
 Private Sub btnGetUseHistoryURL_Click()
-    Dim url As String
+    Dim URL As String
            
-    url = MessageService.GetUseHistoryURL(txtCorpNum.Text, txtUserID.Text)
+    URL = MessageService.GetUseHistoryURL(txtCorpNum.Text, txtUserID.Text)
     
-    If url = "" Then
+    If URL = "" Then
         MsgBox ("응답코드 : " + CStr(MessageService.LastErrCode) + vbCrLf + "응답메시지 : " + MessageService.LastErrMessage)
         Exit Sub
     End If
     
-    MsgBox "URL : " + vbCrLf + url
-    txtURL.Text = url
+    MsgBox "URL : " + vbCrLf + URL
+    txtURL.Text = URL
 End Sub
 
 '=========================================================================
 ' 파트너의 잔여포인트를 확인합니다.
-' - 과금방식이 연동과금인 경우 연동회원 잔여포인트(GetBalance API)를 이용하시기 바랍니다.
 ' - https://docs.popbill.com/message/vb/api#GetPartnerBalance
 '=========================================================================
 Private Sub btnGetPartnerBalance_Click()
@@ -1111,22 +1091,22 @@ Private Sub btnGetPartnerBalance_Click()
 End Sub
 
 '=========================================================================
-' 파트너 포인트 충전 팝업 URL을 반환합니다.
+' 파트너 포인트 충전을 위한 페이지의 팝업 URL을 반환합니다.
 ' - 반환되는 URL은 보안 정책상 30초 동안 유효하며, 시간을 초과한 후에는 해당 URL을 통한 페이지 접근이 불가합니다.
 ' - https://docs.popbill.com/message/vb/api#GetPartnerURL
 '=========================================================================
 Private Sub btnGetPartnerURL_CHRG_Click()
-    Dim url As String
+    Dim URL As String
     
-    url = MessageService.GetPartnerURL(txtCorpNum.Text, "CHRG")
+    URL = MessageService.GetPartnerURL(txtCorpNum.Text, "CHRG")
     
-    If url = "" Then
+    If URL = "" Then
         MsgBox ("응답코드 : " + CStr(MessageService.LastErrCode) + vbCrLf + "응답메시지 : " + MessageService.LastErrMessage)
         Exit Sub
     End If
     
-    MsgBox "URL : " + vbCrLf + url
-    txtURL.Text = url
+    MsgBox "URL : " + vbCrLf + URL
+    txtURL.Text = URL
 End Sub
 
 '=========================================================================
@@ -1145,7 +1125,7 @@ Private Sub btnSendSMS_One_Click()
     message.sender = "07043042991"
     
     '발신자명
-    message.senderName = "발신자명"
+    message.SenderName = "발신자명"
     
     '수신번호
     message.receiver = "010111222"
@@ -1203,7 +1183,7 @@ Private Sub btnSendSMS_Hundred_Click()
         message.sender = "07043042991"
         
         '발신자명
-        message.senderName = "발신자명"
+        message.SenderName = "발신자명"
         
         '수신번호
         message.receiver = "010111222"
@@ -1242,7 +1222,7 @@ End Sub
 
 '=========================================================================
 ' 최대 90byte의 단문(SMS) 메시지 다수건 전송을 팝빌에 접수합니다. (최대 1,000건)
-' - 모든 수신자에게 동일한 내용을 전송합니다(동보전송).
+' - 모든 수신자에게 동일한 내용을 전송하거나(동보전송).
 ' - https://docs.popbill.com/message/vb/api#SendSMS
 '=========================================================================
 Private Sub btnSendSMS_Same_Click()
@@ -1314,7 +1294,7 @@ Private Sub btnSendLMS_One_Click()
     message.sender = "07043042991"
     
     '발신자명
-    message.senderName = "발신자명"
+    message.SenderName = "발신자명"
     
     '수신번호
     message.receiver = "010111222"
@@ -1367,7 +1347,7 @@ Private Sub btnSendLMS_Hundred_Click()
     Dim UserID As String
     
     '전송정보 배열, 최대 1000건
-    For i = 0 To 100
+    For i = 0 To 10
         
         Set message = New PBMessage
         
@@ -1375,7 +1355,7 @@ Private Sub btnSendLMS_Hundred_Click()
         message.sender = "07043042991"
         
         '발신자명
-        message.senderName = "발신자명"
+        message.SenderName = "발신자명"
         
         '수신번호
         message.receiver = "010111222"
@@ -1416,7 +1396,7 @@ End Sub
 
 '=========================================================================
 ' 최대 2,000byte의 장문(LMS) 메시지 다수건 전송을 팝빌에 접수합니다. (최대 1,000건)
-' - 모든 수신자에게 동일한 내용을 전송합니다(동보전송).
+' - 모든 수신자에게 동일한 내용을 전송하거나(동보전송).
 ' - https://docs.popbill.com/message/vb/api#SendLMS
 '=========================================================================
 Private Sub btnSendLMS_Same_Click()
@@ -1426,15 +1406,15 @@ Private Sub btnSendLMS_Same_Click()
     Dim adsYN As Boolean
     Dim receiptNum As String
     Dim sender As String
-    Dim senderName As String
+    Dim SenderName As String
     Dim subject As String
     Dim Contents As String
     Dim requestNum As String
     Dim UserID As String
     
     '전송정보 배열, 최대 1000건
-    For i = 0 To 100
-
+    For i = 0 To 10
+    
         Set message = New PBMessage
         
         '수신번호
@@ -1449,7 +1429,7 @@ Private Sub btnSendLMS_Same_Click()
     sender = "07043042991"
     
     '발신자명
-    senderName = "발신자명"
+    SenderName = "발신자명"
     
     '메시지 제목
     subject = "동보전송 메시지 제목"
@@ -1483,7 +1463,7 @@ End Sub
 '=========================================================================
 ' 최대 2,000byte의 메시지와 이미지로 구성된 포토문자(MMS) 1건 전송을 팝빌에 접수합니다.
 ' - 이미지 파일 포맷/규격 : 최대 300Kbyte(JPEG, JPG), 가로/세로 1,000px 이하 권장
-' - https://docs.popbill.com/message/vb/api#SendMMS
+' - https://docs.popbill.com/message/vba/api#SendMMS
 '=========================================================================
 Private Sub btnSendMMS_Click()
    Dim Messages As New Collection
@@ -1506,7 +1486,7 @@ Private Sub btnSendMMS_Click()
     message.sender = "07043042991"
     
     '발신자명
-    message.senderName = "발신자명"
+    message.SenderName = "발신자명"
     
     '수신번호
     message.receiver = "010111222"
@@ -1576,7 +1556,7 @@ Private Sub btnSendMMS_Hundred_Click()
         message.sender = "07043042991"
         
         '발신자명
-        message.senderName = "발신자명"
+        message.SenderName = "발신자명"
         
         '수신번호
         message.receiver = "010111222"
@@ -1601,7 +1581,7 @@ Private Sub btnSendMMS_Hundred_Click()
         message.sender = "07043042991"
         
         '발신자명
-        message.senderName = "발신자명"
+        message.SenderName = "발신자명"
         
         '수신번호
         message.receiver = "010111222"
@@ -1712,7 +1692,7 @@ Private Sub btnSendMMS_Same_Click()
 End Sub
 
 '=========================================================================
-' 메시지 크기(90byte)에 따라 단문/장문(SMS/LMS)을 자동으로 인식하여 1건의 메시지를 전송을 팝빌에 접수합니다.
+' X메시지 길이(90byte)에 따라 단문/장문(SMS/LMS)을 자동으로 인식하여 1건의 메시지를 전송을 팝빌에 접수합니다.
 ' - https://docs.popbill.com/message/vb/api#SendXMS
 '=========================================================================
 Private Sub btnSendXMS_One_Click()
@@ -1727,7 +1707,7 @@ Private Sub btnSendXMS_One_Click()
     message.sender = "07043042991"
     
     '발신자명
-    message.senderName = "발신자명"
+    message.SenderName = "발신자명"
     
     '수신자 번호
     message.receiver = "010111222"
@@ -1767,7 +1747,7 @@ Private Sub btnSendXMS_One_Click()
 End Sub
 
 '=========================================================================
-' 메시지 크기(90byte)에 따라 단문/장문(SMS/LMS)을 자동으로 인식하여 다수건의 메시지 전송을 팝빌에 접수합니다. (최대 1,000건)
+' 메시지 길이(90byte)에 따라 단문/장문(SMS/LMS)을 자동으로 인식하여 다수건의 메시지 전송을 팝빌에 접수합니다. (최대 1,000건)
 ' - 수신자마다 개별 내용을 전송할 수 있습니다(대량전송).
 ' - https://docs.popbill.com/message/vb/api#SendXMS
 '=========================================================================
@@ -1789,7 +1769,7 @@ Private Sub btnSendXMS_Hundred_Click()
         message.sender = "07043042991"
         
         '발신자명
-        message.senderName = "발신자명"
+        message.SenderName = "발신자명"
         
         '수신번호
         message.receiver = "11112222"
@@ -1830,8 +1810,8 @@ Private Sub btnSendXMS_Hundred_Click()
 End Sub
 
 '=========================================================================
-' 메시지 크기(90byte)에 따라 단문/장문(SMS/LMS)을 자동으로 인식하여 다수건의 메시지 전송을 팝빌에 접수합니다. (최대 1,000건)
-' - 모든 수신자에게 동일한 내용을 전송합니다(동보전송).
+' 메시지 길이(90byte)에 따라 단문/장문(SMS/LMS)을 자동으로 인식하여 다수건의 메시지 전송을 팝빌에 접수합니다. (최대 1,000건)
+' - 모든 수신자에게 동일한 내용을 전송하거나(동보전송).
 ' - https://docs.popbill.com/message/vb/api#SendXMS
 '=========================================================================
 Private Sub btnSendXMS_Same_Click()
@@ -1843,7 +1823,7 @@ Private Sub btnSendXMS_Same_Click()
     Dim adsYN As Boolean
     Dim receiptNum As String
     Dim sender As String
-    Dim senderName As String
+    Dim SenderName As String
     Dim requestNum As String
     Dim UserID As String
     
@@ -1851,7 +1831,7 @@ Private Sub btnSendXMS_Same_Click()
     sender = "07043042991"
     
     '발신자명
-    senderName = "발신자명"
+    SenderName = "발신자명"
     
     '메시지 제목
     subject = "동보전송 제목, 장문에 적용됨"
@@ -1860,7 +1840,7 @@ Private Sub btnSendXMS_Same_Click()
     content = "자동인식 발송은 내용의 길이를 90Byte기준으로 이하는 단문, 이상은 장문으로 자동 전송합니다."
     
     '전송정보 배열, 최대 1000건
-    For i = 0 To 100
+    For i = 0 To 10
         
         Set message = New PBMessage
         
@@ -1912,7 +1892,7 @@ Private Sub btnGetMessages_Click()
         Exit Sub
     End If
     
-    tmp = "state(전송상태 코드) | result(전송결과 코드) | subject(메시지 제목) | messageType(메시지 유형) | content(메시지 내용) |  sendNum(발신번호) | senderName(발신자명) | "
+    tmp = "state(전송상태 코드) | result(전송결과 코드) | subject(메시지 제목) | messageType(메시지 유형) | content(메시지 내용) | sendNum(발신번호) | senderName(발신자명) | "
     tmp = tmp + "receiveNum(수신번호) | receiveName(수신자명) | receiptDT(접수일시) | reserveDT(예약일시) | "
     tmp = tmp + "sendDT(전송일시) | resultDT(전송결과 수신일시) | tranNet(전송처리 이동통신사명) | receiptNum(접수번호) | requestNum(요청번호)" + vbCrLf
     
@@ -1937,13 +1917,13 @@ Private Sub btnGetMessages_Click()
         tmp = tmp + sentMessage.sendNum + " | "
         
         '발신자명
-        tmp = tmp + sentMessage.senderName + " | "
-        
-        '수신자명
-        tmp = tmp + sentMessage.receiveName + " | "
+        tmp = tmp + sentMessage.SenderName + " | "
         
         '수신번호
         tmp = tmp + sentMessage.receiveNum + " | "
+        
+        '수신자명
+        tmp = tmp + sentMessage.receiveName + " | "
         
         '접수일시
         tmp = tmp + sentMessage.receiptDT + " | "
@@ -2005,7 +1985,7 @@ Dim sentMessages As Collection
         Exit Sub
     End If
     
-    tmp = "state(전송상태 코드) | result(전송결과 코드) | subject(메시지 제목) | messageType(메시지 유형) | content(메시지 내용) |  sendNum(발신번호) | senderName(발신자명) | "
+    tmp = "state(전송상태 코드) | result(전송결과 코드) | subject(메시지 제목) | messageType(메시지 유형) | content(메시지 내용) | sendNum(발신번호) | senderName(발신자명) | "
     tmp = tmp + "receiveNum(수신번호) | receiveName(수신자명) | receiptDT(접수일시) | reserveDT(예약일시) | "
     tmp = tmp + "sendDT(전송일시) | resultDT(전송결과 수신일시) | tranNet(전송처리 이동통신사명) | receiptNum(접수번호) | requestNum(요청번호)" + vbCrLf
     
@@ -2024,13 +2004,13 @@ Dim sentMessages As Collection
         tmp = tmp + sentMessage.messageType + " | "
         
         ' 메시지 내용
-        tmp = tmp + sentMessage.content + " | "
+        'tmp = tmp + sentMessage.content + " | "
         
         ' 발신번호
         tmp = tmp + sentMessage.sendNum + " | "
         
         ' 발신자명
-        tmp = tmp + sentMessage.senderName + " | "
+        tmp = tmp + sentMessage.SenderName + " | "
         
         ' 수신번호
         tmp = tmp + sentMessage.receiveNum + " | "
@@ -2067,7 +2047,7 @@ Dim sentMessages As Collection
 End Sub
 
 '=========================================================================
-' 팝빌에서 반환받은 접수번호를 통해 예약접수된 문자 메시지 전송을 취소합니다. (예약시간 10분 전까지 가능)
+' 파트너가 할당한 전송요청 번호를 통해 예약접수된 문자 전송을 취소합니다. (예약시간 10분 전까지 가능)
 ' - https://docs.popbill.com/message/vb/api#CancelReserveRN
 '=========================================================================
 Private Sub btnCancelReserveRN_Click()
@@ -2084,7 +2064,7 @@ Private Sub btnCancelReserveRN_Click()
 End Sub
 
 '=========================================================================
-' 검색조건에 해당하는 문자 전송내역을 조회합니다. (조회기간 단위 : 최대 2개월)
+' 검색조건을 사용하여 문자전송 내역을 조회합니다. (조회기간 단위 : 최대 2개월)
 ' - 문자 접수일시로부터 6개월 이내 접수건만 조회할 수 있습니다.
 ' - https://docs.popbill.com/message/vb/api#Search
 '=========================================================================
@@ -2151,8 +2131,8 @@ Private Sub btnSearch_Click()
     tmp = tmp + "pageCount (페이지 개수) : " + CStr(msgSearchList.pageCount) + vbCrLf
     tmp = tmp + "message (응답메시지) : " + msgSearchList.message + vbCrLf + vbCrLf
     
-    tmp = "state(전송상태 코드) | result(전송결과 코드) | subject(팩스제목) | messageType(메시지 타입) | content(메시지 내용) |  sendnum(발신번호) | senderName(발신자명) | "
-    tmp = tmp + "receiveNum(수신자명) | receiveName(수신번호) | receiptDT(접수일시) | reserveDT(예약일시) | "
+    tmp = "state(전송상태 코드) | result(전송결과 코드) | subject(메시지 제목) | messageType(메시지 유형) | content(메시지 내용) | sendnum(발신번호) | senderName(발신자명) | "
+    tmp = tmp + "receiveNum(수신번호) | receiveName(수신자명) | receiptDT(접수일시) | reserveDT(예약일시) | "
     tmp = tmp + "sendDT(전송일시) | resultDT(전송결과 수신일시) | tranNet(전송처리 이동통신사명) | receiptNum(접수번호) | requestNum(요청번호)" + vbCrLf
             
     Dim info As PBSentMsg
@@ -2172,13 +2152,13 @@ Private Sub btnSearch_Click()
         tmp = tmp + info.messageType + " | "
         
         '메시지 내용
-        'tmp = tmp + sentMessage.content + " | " ' 내용 표시는 길이관계상 예제에서 생략합니다.
+        tmp = tmp + info.content + " | "
         
         '발신번호
         tmp = tmp + info.sendNum + " | "
         
         '발신자명
-        tmp = tmp + info.senderName + " | "
+        tmp = tmp + info.SenderName + " | "
         
         '수신번호
         tmp = tmp + info.receiveNum + " | "
@@ -2255,17 +2235,17 @@ End Sub
 '=========================================================================
 Private Sub btnGetSentListURL_Click()
 
-    Dim url As String
+    Dim URL As String
     
-    url = MessageService.GetSentListURL(txtCorpNum.Text, txtUserID.Text)
+    URL = MessageService.GetSentListURL(txtCorpNum.Text, txtUserID.Text)
     
-    If url = "" Then
+    If URL = "" Then
         MsgBox ("응답코드 : " + CStr(MessageService.LastErrCode) + vbCrLf + "응답메시지 : " + MessageService.LastErrMessage)
         Exit Sub
     End If
     
-    MsgBox "URL : " + vbCrLf + url
-    txtURL.Text = url
+    MsgBox "URL : " + vbCrLf + URL
+    txtURL.Text = URL
 End Sub
 
 '=========================================================================
@@ -2319,31 +2299,53 @@ Private Sub btnGetSenderNuberList_Click()
 End Sub
 
 '=========================================================================
+' 문자 발신번호 등록여부를 확인합니다.
+' - 발신번호 상태가 '승인'인 경우에만 리턴값 'Response'의 변수 'code'가 1로 반환됩니다.
+' - https://docs.popbill.com/message/vb/api#CheckSenderNumber
+'=========================================================================
+Private Sub btnCheckSenderNumber_Click()
+    Dim Response As PBResponse
+    Dim SenderNumber As String
+    
+    SenderNumber = "070-4304-2991"
+    
+    Set Response = MessageService.CheckSenderNumber(txtCorpNum.Text, SenderNumber, txtUserID.Text)
+    
+    If Response Is Nothing Then
+        MsgBox ("응답코드 : " + CStr(MessageService.LastErrCode) + vbCrLf + "응답메시지 : " + MessageService.LastErrMessage)
+        Exit Sub
+    End If
+    
+    MsgBox ("응답코드 : " + CStr(Response.code) + vbCrLf + "응답메시지 : " + Response.message)
+    
+End Sub
+
+'=========================================================================
 ' 발신번호를 등록하고 내역을 확인하는 문자 발신번호 관리 페이지 팝업 URL을 반환합니다.
 ' - 반환되는 URL은 보안 정책상 30초 동안 유효하며, 시간을 초과한 후에는 해당 URL을 통한 페이지 접근이 불가합니다.
 ' - https://docs.popbill.com/message/vb/api#GetSenderNumberMgtURL
 '=========================================================================
 Private Sub btnGetSenderNumberMgtURL_Click()
 
-    Dim url As String
+    Dim URL As String
     
-    url = MessageService.GetSenderNumberMgtURL(txtCorpNum.Text, txtUserID.Text)
+    URL = MessageService.GetSenderNumberMgtURL(txtCorpNum.Text, txtUserID.Text)
     
-    If url = "" Then
+    If URL = "" Then
         MsgBox ("응답코드 : " + CStr(MessageService.LastErrCode) + vbCrLf + "응답메시지 : " + MessageService.LastErrMessage)
         Exit Sub
     End If
     
-    MsgBox "URL : " + vbCrLf + url
-    txtURL.Text = url
+    MsgBox "URL : " + vbCrLf + URL
+    txtURL.Text = URL
 End Sub
 
 Private Sub Form_Load()
 
-    '문자서비스 모듈 초기화
-    MessageService.Initialize linkID, SecretKey
+    '문자모듈 초기화
+    MessageService.Initialize LinkID, SecretKey
     
-    '연동환경 설정값 True-개발용, False-상업용
+    '연동환경설정값, True-개발용 False-상업용
     MessageService.IsTest = True
     
     '인증토큰 IP제한기능 사용여부, True-사용, False-미사용, 기본값(True)
@@ -2351,6 +2353,7 @@ Private Sub Form_Load()
     
     '로컬시스템 시간 사용여부 True-사용, False-미사용, 기본값(False)
     MessageService.UseLocalTimeYN = False
-    
 End Sub
+
+
 
