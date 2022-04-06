@@ -105,17 +105,25 @@ Begin VB.Form frmExample
       End
       Begin VB.Frame Frame14 
          Caption         =   "발신번호 관리"
-         Height          =   1455
+         Height          =   2655
          Left            =   10680
          TabIndex        =   45
          Top             =   240
          Width           =   2055
+         Begin VB.CommandButton btnCheckSenderNumber 
+            Caption         =   "발신번호 등록 여부"
+            Height          =   495
+            Left            =   120
+            TabIndex        =   72
+            Top             =   240
+            Width           =   1815
+         End
          Begin VB.CommandButton btnGetSenderNumberMgtURL 
             Caption         =   "발신번호 관리 팝업"
             Height          =   495
             Left            =   120
             TabIndex        =   47
-            Top             =   840
+            Top             =   1440
             Width           =   1815
          End
          Begin VB.CommandButton btnGetSenderNuberList 
@@ -123,7 +131,7 @@ Begin VB.Form frmExample
             Height          =   495
             Left            =   120
             TabIndex        =   46
-            Top             =   240
+            Top             =   840
             Width           =   1815
          End
       End
@@ -623,7 +631,7 @@ Attribute VB_Exposed = False
 Option Explicit
 
 '링크아이디
-Private Const LinkID = "TESTER"
+Private Const linkID = "TESTER"
 
 '비밀키
 Private Const SecretKey = "SwWxqU+0TErBXy/9TVjIPEnI0VTUMMSQZtJf3Ed8q3I="
@@ -638,7 +646,7 @@ Private MessageService As New PBMSGService
 Private Sub btnCheckIsMember_Click()
     Dim Response As PBResponse
     
-    Set Response = MessageService.CheckIsMember(txtCorpNum.Text, LinkID)
+    Set Response = MessageService.CheckIsMember(txtCorpNum.Text, linkID)
     
     If Response Is Nothing Then
         MsgBox ("응답코드 : " + CStr(MessageService.LastErrCode) + vbCrLf + "응답메시지 : " + MessageService.LastErrMessage)
@@ -680,7 +688,7 @@ Private Sub btnJoinMember_Click()
     joinData.Password = "asdf$%^123"
     
     '파트너링크 아이디
-    joinData.LinkID = LinkID
+    joinData.linkID = linkID
     
     '사업자번호, '-'제외, 10자리
     joinData.CorpNum = "1234567890"
@@ -1125,7 +1133,7 @@ Private Sub btnSendSMS_One_Click()
     message.sender = "07043042991"
     
     '발신자명
-    message.SenderName = "발신자명"
+    message.senderName = "발신자명"
     
     '수신번호
     message.receiver = "010111222"
@@ -1183,7 +1191,7 @@ Private Sub btnSendSMS_Hundred_Click()
         message.sender = "07043042991"
         
         '발신자명
-        message.SenderName = "발신자명"
+        message.senderName = "발신자명"
         
         '수신번호
         message.receiver = "010111222"
@@ -1294,7 +1302,7 @@ Private Sub btnSendLMS_One_Click()
     message.sender = "07043042991"
     
     '발신자명
-    message.SenderName = "발신자명"
+    message.senderName = "발신자명"
     
     '수신번호
     message.receiver = "010111222"
@@ -1355,7 +1363,7 @@ Private Sub btnSendLMS_Hundred_Click()
         message.sender = "07043042991"
         
         '발신자명
-        message.SenderName = "발신자명"
+        message.senderName = "발신자명"
         
         '수신번호
         message.receiver = "010111222"
@@ -1406,7 +1414,7 @@ Private Sub btnSendLMS_Same_Click()
     Dim adsYN As Boolean
     Dim receiptNum As String
     Dim sender As String
-    Dim SenderName As String
+    Dim senderName As String
     Dim subject As String
     Dim Contents As String
     Dim requestNum As String
@@ -1429,7 +1437,7 @@ Private Sub btnSendLMS_Same_Click()
     sender = "07043042991"
     
     '발신자명
-    SenderName = "발신자명"
+    senderName = "발신자명"
     
     '메시지 제목
     subject = "동보전송 메시지 제목"
@@ -1486,7 +1494,7 @@ Private Sub btnSendMMS_Click()
     message.sender = "07043042991"
     
     '발신자명
-    message.SenderName = "발신자명"
+    message.senderName = "발신자명"
     
     '수신번호
     message.receiver = "010111222"
@@ -1556,7 +1564,7 @@ Private Sub btnSendMMS_Hundred_Click()
         message.sender = "07043042991"
         
         '발신자명
-        message.SenderName = "발신자명"
+        message.senderName = "발신자명"
         
         '수신번호
         message.receiver = "010111222"
@@ -1581,7 +1589,7 @@ Private Sub btnSendMMS_Hundred_Click()
         message.sender = "07043042991"
         
         '발신자명
-        message.SenderName = "발신자명"
+        message.senderName = "발신자명"
         
         '수신번호
         message.receiver = "010111222"
@@ -1707,7 +1715,7 @@ Private Sub btnSendXMS_One_Click()
     message.sender = "07043042991"
     
     '발신자명
-    message.SenderName = "발신자명"
+    message.senderName = "발신자명"
     
     '수신자 번호
     message.receiver = "010111222"
@@ -1769,7 +1777,7 @@ Private Sub btnSendXMS_Hundred_Click()
         message.sender = "07043042991"
         
         '발신자명
-        message.SenderName = "발신자명"
+        message.senderName = "발신자명"
         
         '수신번호
         message.receiver = "11112222"
@@ -1823,7 +1831,7 @@ Private Sub btnSendXMS_Same_Click()
     Dim adsYN As Boolean
     Dim receiptNum As String
     Dim sender As String
-    Dim SenderName As String
+    Dim senderName As String
     Dim requestNum As String
     Dim UserID As String
     
@@ -1831,7 +1839,7 @@ Private Sub btnSendXMS_Same_Click()
     sender = "07043042991"
     
     '발신자명
-    SenderName = "발신자명"
+    senderName = "발신자명"
     
     '메시지 제목
     subject = "동보전송 제목, 장문에 적용됨"
@@ -1917,7 +1925,7 @@ Private Sub btnGetMessages_Click()
         tmp = tmp + sentMessage.sendNum + " | "
         
         '발신자명
-        tmp = tmp + sentMessage.SenderName + " | "
+        tmp = tmp + sentMessage.senderName + " | "
         
         '수신번호
         tmp = tmp + sentMessage.receiveNum + " | "
@@ -2010,7 +2018,7 @@ Dim sentMessages As Collection
         tmp = tmp + sentMessage.sendNum + " | "
         
         ' 발신자명
-        tmp = tmp + sentMessage.SenderName + " | "
+        tmp = tmp + sentMessage.senderName + " | "
         
         ' 수신번호
         tmp = tmp + sentMessage.receiveNum + " | "
@@ -2158,7 +2166,7 @@ Private Sub btnSearch_Click()
         tmp = tmp + info.sendNum + " | "
         
         '발신자명
-        tmp = tmp + info.SenderName + " | "
+        tmp = tmp + info.senderName + " | "
         
         '수신번호
         tmp = tmp + info.receiveNum + " | "
@@ -2343,7 +2351,7 @@ End Sub
 Private Sub Form_Load()
 
     '문자모듈 초기화
-    MessageService.Initialize LinkID, SecretKey
+    MessageService.Initialize linkID, SecretKey
     
     '연동환경설정값, True-개발용 False-상업용
     MessageService.IsTest = True
