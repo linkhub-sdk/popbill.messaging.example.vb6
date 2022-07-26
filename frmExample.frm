@@ -613,7 +613,7 @@ Attribute VB_Exposed = False
 '
 ' 팝빌 문자 API VB SDK Example
 '
-' - 업데이트 일자 : 2022-04-06
+' - 업데이트 일자 : 2022-07-26
 ' - 연동 기술지원 연락처 : 1600-9854
 ' - 연동 기술지원 이메일 : code@linkhubcorp.com
 ' - VB SDK 적용방법 안내 : https://docs.popbill.com/message/tutorial/vb
@@ -1202,6 +1202,9 @@ Private Sub btnSendSMS_Hundred_Click()
         '메시지 내용, 최대 90Byte 길이를 초과한 내용은 삭제되어 전송됩니다.
         message.content = "발신 내용. 단문은 90Byte로 길이가 조정되어 전송됩니다."
         
+        '파트너 지정 키
+        message.interOPRefKey = "TEST" + CStr(i + 1)
+        
         Messages.Add message
     Next
     
@@ -1260,6 +1263,9 @@ Private Sub btnSendSMS_Same_Click()
         
         '수신자명
         message.receiverName = "수신자이름_" + CStr(i + 1)
+        
+        '파트너 지정 키
+        message.interOPRefKey = "TEST" + CStr(i + 1)
         
         Messages.Add message
     Next
@@ -1377,6 +1383,9 @@ Private Sub btnSendLMS_Hundred_Click()
         '메시지 내용, 최대 2000Byte 길이를 초과한 내용은 삭제되어 전송됩니다.
         message.content = "발신 내용. 장문은 2000Byte로 길이가 조정되어 전송됩니다. 팝빌은 최고의 전자세금계산서 서비스를 제공하고 있습니다."
         
+        '파트너 지정 키
+        message.interOPRefKey = "LMS_TEST" + CStr(i + 1)
+        
         Messages.Add message
     Next
     
@@ -1430,6 +1439,10 @@ Private Sub btnSendLMS_Same_Click()
         
         '수신자명
         message.receiverName = "수신자이름_" + CStr(i + 1)
+        
+        '파트너 지정 키
+        message.interOPRefKey = "LMS_TEST" + CStr(i + 1)
+        
         Messages.Add message
     Next
     
@@ -1578,6 +1591,9 @@ Private Sub btnSendMMS_Hundred_Click()
         '메시지 내용
         message.content = "발신 내용. 이 내용은 장문으로 전송될수 있도록 길이를 설정하였습니다. 팝빌은 국내 최고의 전자세금계산서 서비스 입니다."
         
+        '파트너 지정 키
+        message.interOPRefKey = "MMS_TEST" + CStr(i + 1)
+        
         Messages.Add message
     Next
     
@@ -1602,6 +1618,9 @@ Private Sub btnSendMMS_Hundred_Click()
         
         '메시지 내용
         message.content = "발신 내용. 이 내용은 단문으로 전송됩니다."
+        
+        '파트너 지정 키
+        message.interOPRefKey = "XMS_TEST" + CStr(i + 1)
         
         Messages.Add message
     Next
@@ -1673,6 +1692,9 @@ Private Sub btnSendMMS_Same_Click()
         
         '수신자명
         message.receiverName = "수신자이름_" + CStr(i + 1)
+        
+        '파트너 지정 키
+        message.interOPRefKey = "MMS_TEST" + CStr(i + 1)
         
         Messages.Add message
     Next
@@ -1791,6 +1813,9 @@ Private Sub btnSendXMS_Hundred_Click()
         '메시지 내용, 90byte기준으로 단/장문이 자동인식되어 전송됩니다.
         message.content = "발신 내용. 이 내용은 장문으로 전송될수 있도록 길이를 설정하였습니다. 팝빌은 국내 최고의 전자세금계산서 서비스 입니다."
         
+        '파트너 지정 키
+        message.interOPRefKey = "XMS_TEST" + CStr(i + 1)
+        
         Messages.Add message
     Next
 
@@ -1858,6 +1883,9 @@ Private Sub btnSendXMS_Same_Click()
         '수신자명
         message.receiverName = "수신자이름_" + CStr(i + 1)
         
+        '파트너 지정 키
+        message.interOPRefKey = "XMS_TEST" + CStr(i + 1)
+        
         Messages.Add message
     Next
     
@@ -1902,7 +1930,7 @@ Private Sub btnGetMessages_Click()
     
     tmp = "state(전송상태 코드) | result(전송결과 코드) | subject(메시지 제목) | messageType(메시지 유형) | content(메시지 내용) | sendNum(발신번호) | senderName(발신자명) | "
     tmp = tmp + "receiveNum(수신번호) | receiveName(수신자명) | receiptDT(접수일시) | reserveDT(예약일시) | "
-    tmp = tmp + "sendDT(전송일시) | resultDT(전송결과 수신일시) | tranNet(전송처리 이동통신사명) | receiptNum(접수번호) | requestNum(요청번호)" + vbCrLf
+    tmp = tmp + "sendDT(전송일시) | resultDT(전송결과 수신일시) | tranNet(전송처리 이동통신사명) | receiptNum(접수번호) | requestNum(요청번호) | interOPRefKey(파트너 지정 키)" + vbCrLf
     
     For Each sentMessage In sentMessages
         
@@ -1952,7 +1980,10 @@ Private Sub btnGetMessages_Click()
         tmp = tmp + sentMessage.receiptNum + " | "
        
         '요청번호
-        tmp = tmp + sentMessage.requestNum
+        tmp = tmp + sentMessage.requestNum + " | "
+        
+        '파트너 지정 키
+        tmp = tmp + sentMessage.interOPRefKey + " | "
         
         tmp = tmp + vbCrLf
     Next
@@ -1995,7 +2026,7 @@ Dim sentMessages As Collection
     
     tmp = "state(전송상태 코드) | result(전송결과 코드) | subject(메시지 제목) | messageType(메시지 유형) | content(메시지 내용) | sendNum(발신번호) | senderName(발신자명) | "
     tmp = tmp + "receiveNum(수신번호) | receiveName(수신자명) | receiptDT(접수일시) | reserveDT(예약일시) | "
-    tmp = tmp + "sendDT(전송일시) | resultDT(전송결과 수신일시) | tranNet(전송처리 이동통신사명) | receiptNum(접수번호) | requestNum(요청번호)" + vbCrLf
+    tmp = tmp + "sendDT(전송일시) | resultDT(전송결과 수신일시) | tranNet(전송처리 이동통신사명) | receiptNum(접수번호) | requestNum(요청번호) | interOPRefKey(파트너 지정 키)" + vbCrLf
     
     For Each sentMessage In sentMessages
             
@@ -2012,7 +2043,7 @@ Dim sentMessages As Collection
         tmp = tmp + sentMessage.messageType + " | "
         
         ' 메시지 내용
-        'tmp = tmp + sentMessage.content + " | "
+        tmp = tmp + sentMessage.content + " | "
         
         ' 발신번호
         tmp = tmp + sentMessage.sendNum + " | "
@@ -2045,7 +2076,10 @@ Dim sentMessages As Collection
         tmp = tmp + sentMessage.receiptNum + " | "
         
         ' 요청번호
-        tmp = tmp + sentMessage.requestNum
+        tmp = tmp + sentMessage.requestNum + " | "
+        
+        '파트너 지정 키
+        tmp = tmp + sentMessage.interOPRefKey
         
         tmp = tmp + vbCrLf
     Next
@@ -2090,10 +2124,10 @@ Private Sub btnSearch_Click()
     Dim QString As String
     
     '[필수] 시작일자, yyyyMMdd
-    SDate = "20220101"
+    SDate = "20220726"
     
     '[필수] 종료일자, yyyyMMdd
-    EDate = "20220130"
+    EDate = "20220726"
     
     '전송상태값 배열, 1-대기, 2-성공, 3-실패, 4-취소
     state.Add "1"
@@ -2141,7 +2175,7 @@ Private Sub btnSearch_Click()
     
     tmp = "state(전송상태 코드) | result(전송결과 코드) | subject(메시지 제목) | messageType(메시지 유형) | content(메시지 내용) | sendnum(발신번호) | senderName(발신자명) | "
     tmp = tmp + "receiveNum(수신번호) | receiveName(수신자명) | receiptDT(접수일시) | reserveDT(예약일시) | "
-    tmp = tmp + "sendDT(전송일시) | resultDT(전송결과 수신일시) | tranNet(전송처리 이동통신사명) | receiptNum(접수번호) | requestNum(요청번호)" + vbCrLf
+    tmp = tmp + "sendDT(전송일시) | resultDT(전송결과 수신일시) | tranNet(전송처리 이동통신사명) | receiptNum(접수번호) | requestNum(요청번호) | interOPRefKey(파트너 지정 키)" + vbCrLf
             
     Dim info As PBSentMsg
     
@@ -2193,7 +2227,10 @@ Private Sub btnSearch_Click()
         tmp = tmp + info.receiptNum + " | "
         
         '요청번호
-        tmp = tmp + info.requestNum
+        tmp = tmp + info.requestNum + " | "
+        
+        '파트너 지정 키
+        tmp = tmp + info.interOPRefKey
         
         tmp = tmp + vbCrLf
     Next
