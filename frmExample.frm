@@ -871,7 +871,7 @@ Private Sub btnGetContactInfo_Click()
     
     ContactID = "testkorea"
     
-    Set info = MessageService.GetContactInfo(txtCorpNum.Text, ContactID, txtUserID.Text)
+    Set info = MessageService.GetContactInfo(txtCorpNum.Text, ContactID)
     
     If info Is Nothing Then
         MsgBox ("응답코드 : " + CStr(MessageService.LastErrCode) + vbCrLf + "응답메시지 : " + MessageService.LastErrMessage)
@@ -2354,7 +2354,7 @@ Private Sub btnCheckSenderNumber_Click()
     
     SenderNumber = "070-4304-2991"
     
-    Set Response = MessageService.CheckSenderNumber(txtCorpNum.Text, SenderNumber, txtUserID.Text)
+    Set Response = MessageService.CheckSenderNumber(txtCorpNum.Text, SenderNumber)
     
     If Response Is Nothing Then
         MsgBox ("응답코드 : " + CStr(MessageService.LastErrCode) + vbCrLf + "응답메시지 : " + MessageService.LastErrMessage)
