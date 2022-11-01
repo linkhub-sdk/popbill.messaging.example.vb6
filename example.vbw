@@ -1,11 +1,11 @@
-frmExample = 38, 99, 1446, 771, , -34, 10, 1354, 896, C
+frmExample = 38, 99, 1446, 771, , 170, 12, 1558, 898, C
 cStringBuilder = 176, 232, 1430, 822, C
 Linkhub = 88, 116, 1330, 825, 
 LinkhubToken = 154, 203, 1408, 793, C
 PBAttachFile = 198, 261, 1470, 974, C
 PBJoinForm = 54, 122, 1247, 836, 
 PBResponse = 22, 29, 1264, 737, C
-PBMSGService = 88, 31, 1547, 745, 
+PBMSGService = 88, 31, 1547, 745, Z
 PBMessage = 119, 160, 1312, 873, 
 PBSentMsg = 176, 232, 1448, 945, 
 PBContactInfo = 110, 145, 1351, 854, 

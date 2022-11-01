@@ -10,6 +10,14 @@ Begin VB.Form frmExample
    ScaleHeight     =   12555
    ScaleWidth      =   17010
    StartUpPosition =   2  '화면 가운데
+   Begin VB.CommandButton btnCancelReservebyRCV 
+      Caption         =   "예약 전송 취소"
+      Height          =   425
+      Left            =   10800
+      TabIndex        =   79
+      Top             =   7420
+      Width           =   1700
+   End
    Begin VB.TextBox txtURL 
       Height          =   315
       Left            =   12840
@@ -31,7 +39,91 @@ Begin VB.Form frmExample
       Left            =   120
       TabIndex        =   13
       Top             =   3600
-      Width           =   13005
+      Width           =   16800
+      Begin VB.Frame Frame19 
+         Caption         =   "요청번호 할당 전송건 처리 (수신번호)"
+         Height          =   1335
+         Left            =   12720
+         TabIndex        =   75
+         Top             =   3000
+         Width           =   4000
+         Begin VB.TextBox txtReceivetNumRNbyRCV 
+            Height          =   270
+            Left            =   1200
+            TabIndex        =   83
+            Top             =   520
+            Width           =   2600
+         End
+         Begin VB.TextBox txtRequestNumbyRCV 
+            Height          =   270
+            Left            =   1200
+            TabIndex        =   77
+            Top             =   240
+            Width           =   2600
+         End
+         Begin VB.CommandButton btnCancelReserveRNbyRCV 
+            Caption         =   "예약 전송 취소"
+            Height          =   425
+            Left            =   2080
+            TabIndex        =   76
+            Top             =   820
+            Width           =   1700
+         End
+         Begin VB.Label Label8 
+            Caption         =   "수신번호 :"
+            Height          =   255
+            Left            =   120
+            TabIndex        =   84
+            Top             =   570
+            Width           =   855
+         End
+         Begin VB.Label Label6 
+            Caption         =   "요청번호 : "
+            Height          =   255
+            Left            =   120
+            TabIndex        =   78
+            Top             =   280
+            Width           =   1095
+         End
+      End
+      Begin VB.Frame Frame18 
+         Caption         =   "접수번호 관련 기능 (접수번호, 수신번호)"
+         Height          =   1335
+         Left            =   8640
+         TabIndex        =   73
+         Top             =   3000
+         Width           =   4000
+         Begin VB.TextBox txtReceiveNumbyRCV 
+            Height          =   270
+            Left            =   1200
+            TabIndex        =   81
+            Top             =   520
+            Width           =   2600
+         End
+         Begin VB.TextBox txtReceiptNumbyRCV 
+            Height          =   270
+            Left            =   1200
+            TabIndex        =   80
+            Top             =   240
+            Width           =   2600
+         End
+         Begin VB.Label Label7 
+            Caption         =   "수신번호 :"
+            Height          =   255
+            Left            =   120
+            TabIndex        =   82
+            Top             =   570
+            Width           =   1095
+         End
+         Begin VB.Label Label5 
+            Caption         =   "접수번호 : "
+            Height          =   255
+            Left            =   120
+            TabIndex        =   74
+            Top             =   280
+            Width           =   1095
+         End
+      End
       Begin VB.Frame Frame10 
          Caption         =   "포토 전송기능"
          Height          =   945
@@ -67,32 +159,32 @@ Begin VB.Form frmExample
       Begin VB.Frame Frame17 
          Caption         =   "요청번호 할당 전송건 처리"
          Height          =   1335
-         Left            =   4920
+         Left            =   4560
          TabIndex        =   56
          Top             =   3000
-         Width           =   4215
+         Width           =   4000
          Begin VB.CommandButton btnGetMessagesRN 
             Caption         =   "전송상태확인"
             Height          =   525
-            Left            =   120
+            Left            =   240
             TabIndex        =   60
             Top             =   720
-            Width           =   1905
+            Width           =   1700
          End
          Begin VB.CommandButton btnCancelReserveRN 
             Caption         =   "예약 전송 취소"
             Height          =   525
-            Left            =   2160
+            Left            =   2080
             TabIndex        =   58
             Top             =   720
-            Width           =   1935
+            Width           =   1700
          End
          Begin VB.TextBox txtRequestNum 
             Height          =   435
             Left            =   1200
             TabIndex        =   57
             Top             =   240
-            Width           =   2850
+            Width           =   2600
          End
          Begin VB.Label 요청번호 
             Caption         =   "요청번호 : "
@@ -171,10 +263,10 @@ Begin VB.Form frmExample
       Begin VB.CommandButton btnCancelReserve 
          Caption         =   "예약 전송 취소"
          Height          =   525
-         Left            =   2640
+         Left            =   2560
          TabIndex        =   29
          Top             =   3720
-         Width           =   1905
+         Width           =   1700
       End
       Begin VB.Frame Frame9 
          Caption         =   " 단/장문 자동인식 문자 전송 "
@@ -245,7 +337,7 @@ Begin VB.Form frmExample
          Left            =   1680
          TabIndex        =   20
          Top             =   3240
-         Width           =   2850
+         Width           =   2600
       End
       Begin VB.Frame Frame7 
          Caption         =   " 단문 문자 전송 "
@@ -308,14 +400,14 @@ Begin VB.Form frmExample
          Left            =   480
          TabIndex        =   54
          Top             =   3000
-         Width           =   4335
+         Width           =   4000
          Begin VB.CommandButton btnGetMessages 
             Caption         =   "전송상태확인"
             Height          =   525
-            Left            =   120
+            Left            =   240
             TabIndex        =   61
             Top             =   720
-            Width           =   1905
+            Width           =   1700
          End
          Begin VB.Label 접수번호 
             Caption         =   "접수번호 : "
@@ -613,7 +705,7 @@ Attribute VB_Exposed = False
 '
 ' 팝빌 문자 API VB SDK Example
 '
-' - 업데이트 일자 : 2022-07-26
+' - 업데이트 일자 : 2022-11-01
 ' - 연동 기술지원 연락처 : 1600-9854
 ' - 연동 기술지원 이메일 : code@linkhubcorp.com
 ' - VB SDK 적용방법 안내 : https://docs.popbill.com/message/tutorial/vb
@@ -638,6 +730,7 @@ Private Const SecretKey = "SwWxqU+0TErBXy/9TVjIPEnI0VTUMMSQZtJf3Ed8q3I="
 
 '문자 서비스 클래스 선언
 Private MessageService As New PBMSGService
+
 
 '=========================================================================
 ' 사업자번호를 조회하여 연동회원 가입여부를 확인합니다.
@@ -1166,6 +1259,8 @@ Private Sub btnSendSMS_One_Click()
     MsgBox "접수 번호 : " + receiptNum
     
     txtReceiptNum.Text = receiptNum
+    txtReceiptNumbyRCV.Text = receiptNum
+    
 End Sub
 
 '=========================================================================
@@ -1228,6 +1323,7 @@ Private Sub btnSendSMS_Hundred_Click()
     MsgBox "접수 번호 : " + receiptNum
     
     txtReceiptNum.Text = receiptNum
+    txtReceiptNumbyRCV.Text = receiptNum
     
 End Sub
 
@@ -1290,6 +1386,8 @@ Private Sub btnSendSMS_Same_Click()
     MsgBox "접수 번호 : " + receiptNum
     
     txtReceiptNum.Text = receiptNum
+    txtReceiptNumbyRCV.Text = receiptNum
+    
 End Sub
 
 '=========================================================================
@@ -1344,6 +1442,8 @@ Private Sub btnSendLMS_One_Click()
     MsgBox "접수 번호 : " + receiptNum
     
     txtReceiptNum.Text = receiptNum
+    txtReceiptNumbyRCV.Text = receiptNum
+    
 End Sub
 
 '=========================================================================
@@ -1409,6 +1509,8 @@ Private Sub btnSendLMS_Hundred_Click()
     MsgBox "접수 번호 : " + receiptNum
     
     txtReceiptNum.Text = receiptNum
+    txtReceiptNumbyRCV.Text = receiptNum
+    
 End Sub
 
 '=========================================================================
@@ -1478,6 +1580,7 @@ Private Sub btnSendLMS_Same_Click()
     MsgBox "접수 번호 : " + receiptNum
     
     txtReceiptNum.Text = receiptNum
+    txtReceiptNumbyRCV.Text = receiptNum
     
 End Sub
 
@@ -1541,7 +1644,9 @@ Private Sub btnSendMMS_Click()
     End If
     
     MsgBox "접수 번호 : " + receiptNum
+    
     txtReceiptNum.Text = receiptNum
+    txtReceiptNumbyRCV.Text = receiptNum
     
 End Sub
 
@@ -1643,7 +1748,9 @@ Private Sub btnSendMMS_Hundred_Click()
     End If
     
     MsgBox "접수 번호 : " + receiptNum
+    
     txtReceiptNum.Text = receiptNum
+    txtReceiptNumbyRCV.Text = receiptNum
 
 End Sub
 
@@ -1718,7 +1825,10 @@ Private Sub btnSendMMS_Same_Click()
     End If
     
     MsgBox "접수 번호 : " + receiptNum
+    
     txtReceiptNum.Text = receiptNum
+    txtReceiptNumbyRCV.Text = receiptNum
+    
 End Sub
 
 '=========================================================================
@@ -1773,6 +1883,7 @@ Private Sub btnSendXMS_One_Click()
     MsgBox "접수 번호 : " + receiptNum
     
     txtReceiptNum.Text = receiptNum
+    txtReceiptNumbyRCV.Text = receiptNum
     
 End Sub
 
@@ -1839,6 +1950,7 @@ Private Sub btnSendXMS_Hundred_Click()
     MsgBox "접수 번호 : " + receiptNum
     
     txtReceiptNum.Text = receiptNum
+    txtReceiptNumbyRCV.Text = receiptNum
     
 End Sub
 
@@ -1908,8 +2020,9 @@ Private Sub btnSendXMS_Same_Click()
     
     MsgBox "접수 번호 : " + receiptNum
     
-    
     txtReceiptNum.Text = receiptNum
+    txtReceiptNumbyRCV.Text = receiptNum
+    
 End Sub
 
 '=========================================================================
@@ -2096,6 +2209,45 @@ Private Sub btnCancelReserveRN_Click()
     Dim Response As PBResponse
     
     Set Response = MessageService.CancelReserveRN(txtCorpNum.Text, txtRequestNum.Text)
+    
+    If Response Is Nothing Then
+        MsgBox ("응답코드 : " + CStr(MessageService.LastErrCode) + vbCrLf + "응답메시지 : " + MessageService.LastErrMessage)
+        Exit Sub
+    End If
+    
+    MsgBox ("응답코드 : " + CStr(Response.code) + vbCrLf + "응답메시지 : " + Response.message)
+End Sub
+
+
+'=========================================================================
+' 팝빌에서 반환받은 접수번호와 수신번호를 통해 예약접수된 문자 메시지 전송을 취소합니다. (예약시간 10분 전까지 가능)
+' - https://docs.popbill.com/message/vb/api#CancelReservebyRCV
+'=========================================================================
+Private Sub btnCancelReservebyRCV_Click()
+
+    Dim Response As PBResponse
+    Dim postData As String
+
+    Set Response = MessageService.CancelReservebyRCV(txtCorpNum.Text, txtReceiptNumbyRCV.Text, txtReceiveNumbyRCV.Text)
+    
+    If Response Is Nothing Then
+        MsgBox ("응답코드 : " + CStr(MessageService.LastErrCode) + vbCrLf + "응답메시지 : " + MessageService.LastErrMessage)
+        Exit Sub
+    End If
+    
+    MsgBox ("응답코드 : " + CStr(Response.code) + vbCrLf + "응답메시지 : " + Response.message)
+End Sub
+
+'=========================================================================
+' 파트너가 할당한 전송요청 번호와 수신번호를 통해 예약접수된 문자 전송을 취소합니다. (예약시간 10분 전까지 가능)
+' - https://docs.popbill.com/message/vb/api#CancelReserveRNbyRCV
+'=========================================================================
+Private Sub btnCancelReserveRNbyRCV_Click()
+
+    Dim Response As PBResponse
+    Dim postData As String
+    
+    Set Response = MessageService.CancelReserveRNbyRCV(txtCorpNum.Text, txtRequestNumbyRCV.Text, txtReceivetNumRNbyRCV.Text)
     
     If Response Is Nothing Then
         MsgBox ("응답코드 : " + CStr(MessageService.LastErrCode) + vbCrLf + "응답메시지 : " + MessageService.LastErrMessage)
